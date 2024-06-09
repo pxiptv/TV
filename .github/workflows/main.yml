@@ -32,6 +32,14 @@ jobs:
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
         echo "已于 $DATE 自动更新电视节目地址" > README.md
 
+    - name: Upload generated files
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-files
+        path: |
+              IPTV.m3u
+              EPG.xml
+              
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
