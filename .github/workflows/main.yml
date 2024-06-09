@@ -14,29 +14,32 @@ permissions:
   contents: write
   
 jobs:
-  run_script:
+  run_job:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+      
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.10'
-
+        
     - name: Install dependencies
       run: |
-        pip install requests
+        python -m pip install --upgrade pip
         
-    - name: Install selenium
-      run: |
-        pip install selenium
-        
-    - name: Install eventlet
-      run: |
-        pip install eventlet  
+    - name: Run Python script
+      run: python main.py
+      
+    - name: Upload generated files
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-files
+        path: |
+          IPTV.m3u
+          others_output.txt
         
     - name: GetTime
       id: date
