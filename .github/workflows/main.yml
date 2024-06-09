@@ -42,8 +42,8 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S CST')"
 
-    - name: Run Python script
-      run: python main.py
+    #- name: Run Python script
+      #run: python main.py
       
     - name: Update
       run: |
