@@ -30,6 +30,10 @@ jobs:
       run: |
         pip install requests
         
+    - name: Install selenium
+      run: |
+        pip install selenium
+        
     - name: GetTime
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S CST')"
