@@ -46,3 +46,8 @@ jobs:
           git commit -m "Auto-update IPTV.m3u"
           git push
         fi
+        
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        cp IPTV.m3u history/"${current_datetime}_IPTV.m3u.txt"
+        git add history/"${current_datetime}_IPTV.m3u.txt"
+        git commit -m "Archive file with timestamp"
