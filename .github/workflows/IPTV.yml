@@ -38,27 +38,10 @@ jobs:
         sed -i '1i #EXTM3U' STV.m3u
         sed -i '/^\s*$/d' STV.m3u
         
-        # 数字源
-        rm -f DTV.m3u && wget https://raw.bgithub.xyz/YueChan/Live/main/IPTV.m3u -O DTV.m3u
-        sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.m3u
-        sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.m3u
-        sed -i '1i #EXTM3U' DTV.m3u
-        sed -i '/^\s*$/d' DTV.m3u
-        
-        # IHOT
-        rm -f IHOT.m3u && wget https://raw.bgithub.xyz/Kimentanm/aptv/master/m3u/iptv.m3u -O IHOT.m3u
-        sed -i -n '/IHOT爱\+/,+1p' IHOT.m3u
-        sed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.m3u
-        sed -i 's/\"浙江求索生活\"/\"求索生活\"/g' IHOT.m3u
-        sed -i '1i #EXTM3U' IHOT.m3u
-        sed -i '/^\s*$/d' IHOT.m3u
-
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
         cat CCTV.m3u >> IPTV.m3u
         cat STV.m3u >> IPTV.m3u
-        cat DTV.m3u >> IPTV.m3u
-        cat IHOT.m3u >> IPTV.m3u
         sed -i '/#EXTM3U/d' IPTV.m3u
         sed -i '1i #EXTM3U' IPTV.m3u
         sed -i '/^\s*$/d' IPTV.m3u
