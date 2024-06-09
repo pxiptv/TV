@@ -30,7 +30,7 @@ jobs:
 
         # 节目单
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "已于 $DATE 自动更新频道" > README.md
+        echo "已于 $DATE 自动更新电视节目地址" > README.md
 
     - name: Commit and push if changed
       run: |
@@ -48,6 +48,6 @@ jobs:
         fi
         
         current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp IPTV.m3u history/"${current_datetime}_IPTV.m3u.txt"
-        git add history/"${current_datetime}_IPTV.m3u.txt"
+        cp IPTV.m3u history/"${current_datetime}_IPTV.m3u"
+        git add history/"${current_datetime}_IPTV.m3u"
         git commit -m "Archive file with timestamp"
