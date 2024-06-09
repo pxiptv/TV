@@ -19,10 +19,21 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+   
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12.3'
+
+    - name: Install dependencies
+        run: pip install selenium==4.19.0 requests==2.31.0 futures==3.0.5 eventlet==0.36.1
+        
+    - name: Run itv_all
+      run: python ${{ github.workspace }}/main.py
 
     - name: GetTime
       run: echo "DATE=$(date +'%Y-%m-%d %H:%M:%S CST')" >> $GITHUB_ENV
-
+      
     - name: Update
       run: |
         # 频道
