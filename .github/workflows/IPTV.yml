@@ -53,12 +53,20 @@ jobs:
         sed -i '1i #EXTM3U' IHOT.m3u
         sed -i '/^\s*$/d' IHOT.m3u
 
+        # 港澳台
+        rm -f hk.m3u && wget https://gitee.com/happy-is-not-closed/IPTV/raw/main/IPTV.m3u -O hk.m3u
+        sed -i '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2/,+1d' hk.m3u
+        sed -i 's/\"国际频道\"/\"香港\"/g' hk.m3u
+        sed -i '1i #EXTM3U' hk.m3u
+        sed -i '/^\s*$/d' hk.m3u
+        
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
         cat CCTV.m3u >> IPTV.m3u
         cat STV.m3u >> IPTV.m3u
         cat DTV.m3u >> IPTV.m3u
         cat IHOT.m3u >> IPTV.m3u
+        cat hk.m3u >> IPTV.m3u
         sed -i '/#EXTM3U/d' IPTV.m3u
         sed -i '1i #EXTM3U' IPTV.m3u
         sed -i '/^\s*$/d' IPTV.m3u
