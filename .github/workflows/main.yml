@@ -30,21 +30,13 @@ jobs:
       run: |
         pip install requests
         
-    - name: GetTime
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S CST')"
-
     - name: Run Python script
       run: python main.py
       
-    - name: Upload generated files
-      uses: actions/upload-artifact@v2
-      with:
-        name: generated-files
-        path: |
-          IPTV.m3u
-          others_output.txt
-      
+    - name: GetTime
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S CST')"      
+           
     - name: Update
       run: |
         # 频道
