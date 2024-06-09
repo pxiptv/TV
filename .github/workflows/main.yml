@@ -29,15 +29,17 @@ jobs:
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
         echo "已于 $DATE 自动更新频道" > README.md
 
-    - name: Clean
+    - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git checkout --orphan latest_branch
-        git add -A
-        git commit -am "$DATE"
-        git branch -D main
-        git branch -m main
-
-    - name: Push
-      run: git push -f origin main
+        if [[ -f "IPTV.m3u" ]]; then
+          git add IPTV.m3u
+        fi
+        if [[ -f "EPG.xml" ]]; then
+          git add EPG.xml
+        fi
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-update IPTV.m3u"
+          git push
+        fi
