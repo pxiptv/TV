@@ -106,6 +106,7 @@ jobs:
         git add history/"${current_datetime}_IPTV.m3u"
         git add history/"${current_datetime}_IPTV.txt"
         git commit -m "Archive file with timestamp"
-      
+        git push
+        
 env:
   TZ: Asia/Shanghai
