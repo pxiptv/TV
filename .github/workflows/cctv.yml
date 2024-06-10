@@ -36,7 +36,8 @@ jobs:
 
     - name: Commit and push if changed
       run: |
-        echo "电视频道地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
+        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
+        echo "cctv.m3u cctv.txt EPG.xml 地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
@@ -45,6 +46,9 @@ jobs:
         fi
         if [[ -f "cctv.txt" ]]; then
           git add cctv.txt
+        fi
+        if [[ -f "EPG.xml" ]]; then
+          git add EPG.xml
         fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update cctv.m3u"
