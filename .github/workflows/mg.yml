@@ -1,0 +1,50 @@
+name: 咪咕体育 Update
+
+on:
+  schedule:
+    - cron: '15 0 * * *'
+  workflow_dispatch:
+    分支:
+      - main
+
+permissions:
+  contents: write
+  
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run Python script
+      run: python mg.py
+
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git diff
+        if [[ -f "mg.m3u" ]]; then
+          git add mg.m3u
+        fi
+        if [[ -f "mg.txt" ]]; then
+          git add mg.txt
+        fi
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-update mg.m3u"
+          git push
+        fi
+
+    env:
+      TZ: Asia/Shenzhen
