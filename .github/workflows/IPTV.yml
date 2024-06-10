@@ -109,7 +109,7 @@ jobs:
     - name: Push
       run: |
         git commit -m "init"
-        git push -f origin master
+        git push -f branch main
       
 env:
   TZ: Asia/Shanghai
