@@ -78,7 +78,7 @@ jobs:
         
         # 节目源
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "Auto Update IPTV in ${{ steps.date.outputs.date }}" > README.md
+        echo "电视频道地址已于 ${{ steps.date.outputs.date }} 更新" > README.md
               
     - name: Commit and push if changed
       run: |
