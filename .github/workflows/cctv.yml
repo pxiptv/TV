@@ -2,11 +2,14 @@ name: 央视 Update
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 1 * *'
   workflow_dispatch:
     分支:
       - main
 
+permissions:
+  contents: write
+  
 jobs:
   run_script:
     runs-on: ubuntu-latest
