@@ -47,7 +47,7 @@ jobs:
 
         # 港澳台
         rm -f hk.m3u && wget https://gitee.com/happy-is-not-closed/IPTV/raw/main/IPTV.m3u -O hk.m3u
-        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻/,+1p' hk.m3u
+        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' hk.m3u
         sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' hk.m3u
         sed -i '1i #EXTM3U' hk.m3u
         sed -i '/^\s*$/d' hk.m3u
