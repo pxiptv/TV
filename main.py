@@ -1,312 +1,163 @@
-import urllib.request
-import re #正则
-import os
+import re
+import requests
+import config
+from collections import OrderedDict
 from datetime import datetime
 
-# 定义要访问的多个URL
-urls = [
-    'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.bgithub.xyz/Guovin/TV/gd/result.txt', #每天自动更新1次
-    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt', #每天自动更新1次
-    'https://m3u.ibert.me/txt/fmml_ipv6.txt',
-    'https://m3u.ibert.me/txt/ycl_iptv.txt',
-    'https://m3u.ibert.me/txt/y_g.txt',
-    'https://m3u.ibert.me/txt/j_home.txt',
-    'https://raw.bgithub.xyz/gaotianliuyun/gao/master/list.txt',
-    'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt', #每天早晚各自动更新1次 2024-06-03 17:50
-    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次11:11 2024/05/13
-    'https://raw.bgithub.xyz/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次11:11 2024/05/13
-    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
-]
+def parse_template(template_file):
+    """
+    Parse the template file to extract channel names.
+    """
+    template_channels = OrderedDict()
+    current_category = None
 
-# 定义多个对象用于存储不同内容的行文本
-ys_lines = [] #央视频道
-ws_lines = [] #卫视频道
-ty_lines = [] #体育频道
-dy_lines = [] #电影频道
-dsj_lines = [] #电视剧频道
-gat_lines = [] #港澳台
-gj_lines = [] #国际台
-jlp_lines = [] #记录片
-dhp_lines = [] #动画片
-js_lines = [] #解说
-mx_lines = [] #明星
-ztp_lines = [] #主题片
-zy_lines = [] #综艺频道
-yy_lines = [] #音乐频道
-game_lines = [] #游戏频道
-zj_lines = [] #地方台-浙江频道
-gd_lines = [] #地方台-广东频道
-hn_lines = [] #地方台-湖南频道
-
-
-# favorite_lines = []
-
-other_lines = []
-
-def process_name_string(input_str):
-    parts = input_str.split(',')
-    processed_parts = []
-    for part in parts:
-        processed_part = process_part(part)
-        processed_parts.append(processed_part)
-    result_str = ','.join(processed_parts)
-    return result_str
-
-def process_part(part_str):
-    # 处理逻辑
-    if "CCTV" in part_str  and "://" not in part_str:
-        part_str=part_str.replace("IPV6", "")  #先剔除IPV6字样
-        part_str=part_str.replace("PLUS", "+")  #先剔除IPV6字样
-        filtered_str = ''.join(char for char in part_str if char.isdigit() or char == 'K' or char == '+')
-        if not filtered_str.strip(): #处理特殊情况，如果发现没有找到频道数字返回原名称
-            filtered_str=part_str.replace("CCTV", "")
-
-        if len(filtered_str) > 2 and re.search(r'4K|8K', filtered_str):   # 特殊处理CCTV中部分4K和8K名称
-            # 使用正则表达式替换，删除4K或8K后面的字符，并且保留4K或8K
-            filtered_str = re.sub(r'(4K|8K).*', r'\1', filtered_str)
-            if len(filtered_str) > 2: 
-                # 给4K或8K添加括号
-                filtered_str = re.sub(r'(4K|8K)', r'(\1)', filtered_str)
-
-        return "CCTV-"+filtered_str 
-        
-    elif "卫视" in part_str:
-        # 定义正则表达式模式，匹配“卫视”后面的内容
-        pattern = r'卫视「.*」'
-        # 使用sub函数替换匹配的内容为空字符串
-        result_str = re.sub(pattern, '卫视', part_str)
-        return result_str
-    
-    return part_str
-
-def process_url(url):
-    try:
-        # 打开URL并读取内容
-        with urllib.request.urlopen(url) as response:
-            # 以二进制方式读取数据
-            data = response.read()
-            # 将二进制数据解码为字符串
-            text = data.decode('utf-8')
-            channel_name=""
-            channel_address=""
-
-            # 逐行处理内容
-            lines = text.split('\n')
-            for line in lines:
-                if  "#genre#" not in line and "," in line and "://" in line:
-                    channel_name=line.split(',')[0].strip()
-                    channel_address=line.split(',')[1].strip()
-                    # 根据行内容判断存入哪个对象
-                    if "CCTV" in channel_name:
-                        ys_lines.append(process_name_string(line.strip()))
-                    #elif "卫视" in channel_name:
-                    elif channel_name in ws_dictionary:
-                        ws_lines.append(process_name_string(line.strip()))
-                    #elif "体育" in channel_name:
-                    elif channel_name in  ty_dictionary:  #体育频道
-                        ty_lines.append(process_name_string(line.strip()))
-                    elif channel_name in dy_dictionary:  #电影频道
-                        dy_lines.append(process_name_string(line.strip()))
-                    elif channel_name in dsj_dictionary:  #电视剧频道
-                        dsj_lines.append(process_name_string(line.strip()))
-                    elif channel_name in gat_dictionary:  #港澳台
-                        gat_lines.append(process_name_string(line.strip()))
-                    elif channel_name in gj_dictionary:  #国际台
-                        gj_lines.append(process_name_string(line.strip()))
-                    elif channel_name in jlp_dictionary:  #纪录片
-                        jlp_lines.append(process_name_string(line.strip()))
-                    elif channel_name in dhp_dictionary:  #动画片
-                        dhp_lines.append(process_name_string(line.strip()))
-                    elif channel_name in js_dictionary:  #解说
-                        js_lines.append(process_name_string(line.strip()))
-                    elif channel_name in mx_dictionary:  #明星
-                        mx_lines.append(process_name_string(line.strip()))
-                    elif channel_name in ztp_dictionary:  #主题片
-                        ztp_lines.append(process_name_string(line.strip()))
-                    elif channel_name in zy_dictionary:  #综艺频道
-                        zy_lines.append(process_name_string(line.strip()))
-                    elif channel_name in yy_dictionary:  #音乐频道
-                        yy_lines.append(process_name_string(line.strip()))
-                    elif channel_name in game_dictionary:  #游戏频道
-                        game_lines.append(process_name_string(line.strip()))
-                    elif channel_name in zj_dictionary:  #地方台-浙江频道
-                        zj_lines.append(process_name_string(line.strip()))
-                    elif channel_name in gd_dictionary:  #地方台-广东频道
-                        gd_lines.append(process_name_string(line.strip()))
-                    elif channel_name in hn_dictionary:  #地方台-湖南频道
-                        hn_lines.append(process_name_string(line.strip()))
-                    else:
-                        other_lines.append(line.strip())
-
-                
-    except Exception as e:
-        print(f"处理URL时发生错误：{e}")
-
-
-current_directory = os.getcwd()  #准备读取txt
-
-#读取文本方法
-def read_txt_to_array(file_name):
-    try:
-        with open(file_name, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
-            lines = [line.strip() for line in lines]
-            return lines
-    except FileNotFoundError:
-        print(f"File '{file_name}' not found.")
-        return []
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return []
-#读取文本
-ys_dictionary=read_txt_to_array('CCTV.txt') #仅排序用
-ws_dictionary=read_txt_to_array('卫视频道.txt') #过滤+排序
-ty_dictionary=read_txt_to_array('体育频道.txt') #过滤
-dy_dictionary=read_txt_to_array('电影.txt') #过滤
-dsj_dictionary=read_txt_to_array('电视剧.txt') #过滤
-gat_dictionary=read_txt_to_array('港澳台.txt') #过滤
-gj_dictionary=read_txt_to_array('国际台.txt') #过滤
-jlp_dictionary=read_txt_to_array('纪录片.txt') #过滤
-dhp_dictionary=read_txt_to_array('动画片.txt') #过滤
-js_dictionary=read_txt_to_array('解说频道.txt') #过滤
-mx_dictionary=read_txt_to_array('明星.txt') #过滤
-ztp_dictionary=read_txt_to_array('主题片.txt') #过滤
-zy_dictionary=read_txt_to_array('综艺频道.txt') #过滤
-yy_dictionary=read_txt_to_array('音乐频道.txt') #过滤
-game_dictionary=read_txt_to_array('游戏频道.txt') #过滤
-zj_dictionary=read_txt_to_array('地方台/浙江频道.txt') #过滤
-gd_dictionary=read_txt_to_array('地方台/广东频道.txt') #过滤
-hn_dictionary=read_txt_to_array('地方台/湖南频道.txt') #过滤
-
-
-#读取纠错频道名称方法
-def load_corrections_name(filename):
-    corrections = {}
-    with open(filename, 'r', encoding='utf-8') as f:
+    with open(template_file, "r", encoding="utf-8") as f:
         for line in f:
-            parts = line.strip().split(',')
-            correct_name = parts[0]
-            for name in parts[1:]:
-                corrections[name] = correct_name
-    return corrections
+            line = line.strip()
+            if line and not line.startswith("#"):
+                if "#genre#" in line:
+                    current_category = line.split(",")[0].strip()
+                    template_channels[current_category] = []
+                elif current_category:
+                    channel_name = line.split(",")[0].strip()
+                    template_channels[current_category].append(channel_name)
 
-#读取纠错文件
-corrections_name = load_corrections_name('corrections_name.txt')
+    return template_channels
 
-#纠错频道名称
-#correct_name_data(corrections_name,xxxx)
-def correct_name_data(corrections, data):
-    corrected_data = []
-    for line in data:
-        name, url = line.split(',', 1)
-        if name in corrections and name != corrections[name]:
-            name = corrections[name]
-        corrected_data.append(f"{name},{url}")
-    return corrected_data
+def fetch_channels(url):
+    """
+    Fetch channel items from a URL.
+    """
+    channels = OrderedDict()
 
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        response.encoding = 'utf-8'
+        lines = response.text.split("\n")
 
+        current_category = None
 
-def sort_data(order, data):
-    # 创建一个字典来存储每行数据的索引
-    order_dict = {name: i for i, name in enumerate(order)}
-    
-    # 定义一个排序键函数，处理不在 order_dict 中的字符串
-    def sort_key(line):
-        name = line.split(',')[0]
-        return order_dict.get(name, len(order))
-    
-    # 按照 order 中的顺序对数据进行排序
-    sorted_data = sorted(data, key=sort_key)
-    return sorted_data
+        for line in lines:
+            line = line.strip()
+            if "#genre#" in line:
+                current_category = line.split(",")[0].strip()
+                channels[current_category] = []
+            elif current_category:
+                match = re.match(r"^(.*?),(.*?)$", line)
+                if match:
+                    channel_name = match.group(1).strip()
+                    channel_url = match.group(2).strip()
+                    channels[current_category].append((channel_name, channel_url))
+                elif line:  # If it's not an empty line and doesn't match comma-separated pattern
+                    channels[current_category].append((line, ''))
+    except requests.RequestException as e:
+        print(f"Failed to fetch channels from the URL: {url}, Error: {e}")
 
+    return channels
 
-# 循环处理每个URL
-for url in urls:
-    print(f"处理URL: {url}")
-    process_url(url)
+def getChannelItems(template_channels, source_urls):
+    """
+    Get the channel items from the source URLs
+    """
+    channels = OrderedDict()
 
+    for category in template_channels:
+        channels[category] = OrderedDict()
 
+    for url in source_urls:
+        if url.endswith(".m3u"):
+            converted_url = f"https://fanmingming.com/txt?url={url}"
+            response = requests.get(converted_url)
+        else:
+            response = requests.get(url)
 
-# 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
-def extract_number(s):
-    num_str = s.split(',')[0].split('-')[1]  # 提取逗号前面的数字部分
-    numbers = re.findall(r'\d+', num_str)   #因为有+和K
-    return int(numbers[-1]) if numbers else 999
-# 定义一个自定义排序函数
-def custom_sort(s):
-    if "CCTV-4K" in s:
-        return 2  # 将包含 "4K" 的字符串排在后面
-    elif "CCTV-8K" in s:
-        return 3  # 将包含 "8K" 的字符串排在后面 
-    elif "(4K)" in s:
-        return 1  # 将包含 " (4K)" 的字符串排在后面
-    else:
-        return 0  # 其他字符串保持原顺序
+        if response.status_code == 200:
+            response.encoding = 'utf-8'
+            lines = response.text.split("\n")
 
-# 合并所有对象中的行文本（去重，排序后拼接）
-#["央视频道,#genre#"] + sorted(sorted(set(ys_lines),key=lambda x: extract_number(x)), key=custom_sort) + ['\n'] + \
-#["卫视频道,#genre#"] + sorted(set(ws_lines)) + ['\n'] + \
-#["主题片,#genre#"] + sorted(set(ztp_lines)) + ['\n'] + \
-#["电视剧频道,#genre#"] + sorted(set(dsj_lines)) + ['\n'] + \
-version=datetime.now().strftime("%Y%m%d")+",url"
-all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
-             ["上海频道,#genre#"] + sort_data(sh_dictionary,set(correct_name_data(corrections_name,sh_lines))) + ['\n'] + \
-             ["央视频道,#genre#"] + sort_data(ys_dictionary,set(correct_name_data(corrections_name,ys_lines))) + ['\n'] + \
-             ["卫视频道,#genre#"] + sort_data(ws_dictionary,set(correct_name_data(corrections_name,ws_lines))) + ['\n'] + \
-             ["体育频道,#genre#"] + sorted(set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
-             ["电影频道,#genre#"] + sort_data(dy_dictionary,set(correct_name_data(corrections_name,dy_lines))) + ['\n'] + \
-             ["电视剧频道,#genre#"] + sort_data(dsj_dictionary,set(correct_name_data(corrections_name,dsj_lines))) + ['\n'] + \
-             ["明星,#genre#"] + sort_data(mx_dictionary,set(correct_name_data(corrections_name,mx_lines))) + ['\n'] + \
-             ["主题片,#genre#"] + sort_data(ztp_dictionary,set(correct_name_data(corrections_name,ztp_lines))) + ['\n'] + \
-             ["港澳台,#genre#"] + sort_data(gat_dictionary,set(correct_name_data(corrections_name,gat_lines))) + ['\n'] + \
-             ["国际台,#genre#"] + sort_data(gj_dictionary,set(correct_name_data(corrections_name,gj_lines))) + ['\n'] + \
-             ["纪录片,#genre#"] + sort_data(jlp_dictionary,set(correct_name_data(corrections_name,jlp_lines)))+ ['\n'] + \
-             ["动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n'] + \
-             ["解说频道,#genre#"] + sorted(set(js_lines)) + ['\n'] + \
-             ["综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zy_lines))) + ['\n'] + \
-             ["音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n'] + \
-             ["游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n'] + \
-             ["浙江频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zj_lines))) + ['\n'] + \
-             ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
-             ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
+            current_category = None
 
+            for line in lines:
+                line = line.strip()
+                if "#genre#" in line:
+                    current_category = line.split(",")[0].strip()
+                else:
+                    match = re.match(r"^(.*?),(?!#genre#)(.*?)$", line)
+                    if match and current_category in channels:
+                        channel_name = match.group(1).strip()
+                        if channel_name in template_channels[current_category]:
+                            channels[current_category].setdefault(channel_name, []).append(match.group(2).strip())
+        else:
+            print(f"Failed to fetch channel items from the source URL: {url}")
 
-# 将合并后的文本写入文件
-output_file = "IPTV.txt"
-others_file = "others_output.txt"
-try:
-    with open(output_file, 'w', encoding='utf-8') as f:
-        for line in all_lines:
-            f.write(line + '\n')
-    print(f"合并后的文本已保存到文件: {output_file}")
+    return channels
 
-    with open(others_file, 'w', encoding='utf-8') as f:
-        for line in other_lines:
-            f.write(line + '\n')
-    print(f"Others已保存到文件: {others_file}")
+def match_channels(template_channels, all_channels):
+    """
+    Match the channels from all channels with the template channels.
+    """
+    matched_channels = OrderedDict()
 
-except Exception as e:
-    print(f"保存文件时发生错误：{e}")
+    for category, channel_list in template_channels.items():
+        matched_channels[category] = OrderedDict()
+        for channel_name in channel_list:
+            for online_category, online_channel_list in all_channels.items():
+                for online_channel_name, online_channel_url in online_channel_list:
+                    if channel_name == online_channel_name:
+                        matched_channels[category].setdefault(channel_name, []).append(online_channel_url)
 
-################# 添加生成m3u文件
-output_text = "#EXTM3U\n"
+    return matched_channels
 
-with open(output_file, "r", encoding='utf-8') as file:
-    input_text = file.read()
+def filter_source_urls(template_file):
+    """
+    Filter source URL.
+    """
+    template_channels = parse_template(template_file)
+    source_urls = config.source_urls
 
-lines = input_text.strip().split("\n")
-group_name = ""
-for line in lines:
-    parts = line.split(",")
-    if len(parts) == 2 and "#genre#" in line:
-        group_name = parts[0]
-    elif len(parts) == 2:
-        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-        output_text += f"{parts[1]}\n"
+    # Fetch channels from all source URLs
+    all_channels = OrderedDict()
+    for url in source_urls:
+        fetched_channels = fetch_channels(url)
+        for category, channel_list in fetched_channels.items():
+            if category in all_channels:
+                all_channels[category].extend(channel_list)
+            else:
+                all_channels[category] = channel_list
 
-with open("IPTV.m3u", "w", encoding='utf-8') as file:
-    file.write(output_text)
+    # Match the fetched channels with the template
+    matched_channels = match_channels(template_channels, all_channels)
 
-print("IPTV.m3u文件已生成。")
+    return matched_channels, template_channels
+
+def updateChannelUrlsM3U(channels, template_channels):
+    """
+    Update the category and channel URLs to the final file in M3U format
+    """
+    written_urls = set()  # Set to store written URLs
+
+    current_date = datetime.now().strftime("%Y-%m-%d")
+
+    with open("tv.m3u", "w", encoding="utf-8") as f_m3u:
+        f_m3u.write("#EXTM3U\n")
+
+        with open("tv.txt", "w", encoding="utf-8") as f_txt:
+            for category, channel_list in template_channels.items():
+                f_txt.write(f"{category},#genre#\n")
+                if category in channels:
+                    for channel_name in channel_list:
+                        if channel_name in channels[category]:
+                            for url in channels[category][channel_name]:
+                                if url and url not in written_urls and not any(blacklist in url for blacklist in config.url_blacklist):  # Check if URL is not already written and not in blacklist
+                                    f_m3u.write(f"#EXTINF:-1 tvg-id=\"\" tvg-name=\"{channel_name}\" tvg-logo=\"https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/{channel_name}.png\" group-title=\"{category}\",{channel_name}\n")
+                                    f_m3u.write(url + "\n")
+                                    f_txt.write(f"{channel_name},{url}\n")
+                                    written_urls.add(url)  # Add URL to written URLs set
+
+            f_txt.write("\n")
+
+if __name__ == "__main__":
+    template_file = "demo.txt"
+    channels, template_channels = filter_source_urls(template_file)
+    updateChannelUrlsM3U(channels, template_channels)
