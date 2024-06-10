@@ -17,6 +17,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      
+    - name: GetTime
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S')"
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -24,7 +28,7 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: |
+      run: 
         pip install requests
 
     - name: Run Python script
@@ -32,9 +36,10 @@ jobs:
 
     - name: Commit and push if changed
       run: |
+        echo "电视频道地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git diff
+        git commit -am "${{ steps.date.outputs.date }}"
         if [[ -f "mg.m3u" ]]; then
           git add mg.m3u
         fi
@@ -45,6 +50,15 @@ jobs:
           git commit -m "Auto-update mg.m3u"
           git push
         fi
+        git add README.md
+        
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        cp IPTV.m3u history/"${current_datetime}_mg.m3u"
+        cp IPTV.txt history/"${current_datetime}_mg.txt"
+        git add history/"${current_datetime}_mg.m3u"
+        git add history/"${current_datetime}_mg.txt"
+        git commit -m "Archive file with timestamp"
+        git push
 
     env:
       TZ: Asia/Shenzhen
