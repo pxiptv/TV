@@ -110,7 +110,7 @@ jobs:
       run: |
         git commit -m "init"
         git add hk.m3u
-        git push -f branch main
+        git push -f origin main
       
 env:
   TZ: Asia/Shanghai
