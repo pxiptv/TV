@@ -1,0 +1,50 @@
+name: 央视 Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    分支:
+      - main
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+        
+    - name: GetTime
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S CST')"
+
+    - name: Run Python script
+      run: python cctv.py
+
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        if [[ -f "cctv.m3u" ]]; then
+          git add cctv.m3u
+        fi
+        if [[ -f "cctv.txt" ]]; then
+          git add cctv.txt
+        fi
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-update cctv.m3u"
+          git push
+        fi
+        
+    env:
+      TZ: Asia/Shanghai
