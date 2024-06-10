@@ -36,6 +36,7 @@ jobs:
 
     - name: Commit and push if changed
       run: |
+        echo "电视频道地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
@@ -49,14 +50,13 @@ jobs:
           git commit -m "Auto-update cctv.m3u"
           git push
         fi
-        echo "电视频道地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
         git add README.md
         
         current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp IPTV.m3u history/"${current_datetime}_IPTV.m3u"
-        cp IPTV.txt history/"${current_datetime}_IPTV.txt"
-        git add history/"${current_datetime}_IPTV.m3u"
-        git add history/"${current_datetime}_IPTV.txt"
+        cp IPTV.m3u history/"${current_datetime}_cctv.m3u"
+        cp IPTV.txt history/"${current_datetime}_cctv.txt"
+        git add history/"${current_datetime}_cctv.m3u"
+        git add history/"${current_datetime}_cctv.txt"
         git commit -m "Archive file with timestamp"
         git push
         
