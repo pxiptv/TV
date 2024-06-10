@@ -107,7 +107,9 @@ jobs:
         git commit -m "Archive file with timestamp"
 
     - name: Push
-      run: git push -f origin master
+      run: |
+        git commit -m "init"
+        git push -f origin master
       
 env:
   TZ: Asia/Shanghai
