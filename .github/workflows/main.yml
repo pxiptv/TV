@@ -1,53 +1,50 @@
-name: Update
+name: 港澳台 Update
 
 on:
-  workflow_dispatch:
-  watch:
-    types: [started]
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '10 0 * * *'
+  workflow_dispatch:
+    分支:
+      - main
 
 permissions:
   contents: write
   
 jobs:
-  Update:
+  run_script:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: GetTime
-      run: echo "DATE=$(date +'%Y-%m-%d %H:%M:%S CST')" >> $GITHUB_ENV
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
 
-    - name: Update
+    - name: Install dependencies
       run: |
-        # 频道
-        rm -f IPTV.m3u && wget https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u -O IPTV.m3u
+        pip install requests
 
-        # 节目源
-        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "Auto Update IPTV in ${{ steps.date.outputs.date }}" > README.md
-              
+    - name: Run Python script
+      run: python main.py
+
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        if [[ -f "IPTV.m3u" ]]; then
-          git add IPTV.m3u
+        git diff
+        if [[ -f "tv.m3u" ]]; then
+          git add tv.m3u
         fi
-        if [[ -f "EPG.xml" ]]; then
-          git add EPG.xml
+        if [[ -f "tv.txt" ]]; then
+          git add tv.txt
         fi
         if ! git diff --staged --quiet; then
-          git commit -m "Auto-update IPTV.m3u"
+          git commit -m "Auto-update tv.m3u"
           git push
         fi
-        
-        current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp IPTV.m3u history/"${current_datetime}_IPTV.m3u"
-        git add history/"${current_datetime}_IPTV.m3u"
-        git commit -m "Archive file with timestamp"
 
-env:
-  TZ: Asia/Shanghai
+    env:
+      TZ: Asia/Shenzhen
