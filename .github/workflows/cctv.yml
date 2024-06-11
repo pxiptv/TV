@@ -38,6 +38,8 @@ jobs:
       run: |
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
         echo "cctv.m3u  cctv.txt  EPG.xml  地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
+        echo "/n # 本仓库访客数" > README.md
+        echo "/n # ![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
