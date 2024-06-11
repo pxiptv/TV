@@ -18,14 +18,6 @@ http://112.19.171.156:9999/udp/239.93.0.162:2192
 #EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
 http://play-flive.ifeng.com/live/06OLEGEGM4G.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
-http://118.254.157.12:8888/udp/239.76.246.134:1234
-#EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
-http://118.254.157.12:8888/udp/239.76.253.135:9000
-#EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
-http://118.254.156.78:8888/udp/239.76.246.134:1234
-#EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
-http://118.254.156.78:8888/udp/239.76.253.135:9000
-#EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
 http://116.162.6.191/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221226317/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="凤凰中文" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰中文.png" group-title="🇭🇰港澳台🇭🇰",凤凰中文
 https://playtv-live.ifeng.com/live/06OLEGEGM4G.m3u8
@@ -84,13 +76,7 @@ http://1.62.64.252/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pin72.flv
 #EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
 http://ali.hlspull.yximgs.com/live/huanqiuhklivetvjjpcpdvuejljyjjyfjoxvchjwhjwojjjhdjjlsjhbjfhjx.flv
 #EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
-http://118.254.157.12:8888/udp/239.76.246.135:1234
-#EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
-http://118.254.157.12:8888/udp/239.76.253.134:9000
-#EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
-http://118.254.156.78:8888/udp/239.76.246.135:1234
-#EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
-http://118.254.156.78:8888/udp/239.76.253.134:9000
+http://171.108.239.74:8181/tsfile/live/1024_1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
 http://116.162.6.191/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221226320/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="凤凰资讯" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/凤凰资讯.png" group-title="🇭🇰港澳台🇭🇰",凤凰资讯
@@ -224,6 +210,8 @@ http://grandprix2023.asuscomm.com:8889/bysid/1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="翡翠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/翡翠台.png" group-title="🇭🇰港澳台🇭🇰",翡翠台
 http://nz171l122.bb60246.ctm.net:8889/bysid/1.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="翡翠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/翡翠台.png" group-title="🇭🇰港澳台🇭🇰",翡翠台
+http://r.jdshipin.com/qClQf
+#EXTINF:-1 tvg-id="" tvg-name="翡翠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/翡翠台.png" group-title="🇭🇰港澳台🇭🇰",翡翠台
 http://ali.hlspull.yximgs.com/live/huanqiuhklivefhwwjpthjyjtjjjxcxbfhjjfjvhdtjdvbtvjsjxjfsjjcvbctvbfc.flv
 #EXTINF:-1 tvg-id="" tvg-name="翡翠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/翡翠台.png" group-title="🇭🇰港澳台🇭🇰",翡翠台
 http://171.38.43.236:8181/tsfile/live/1049_1.m3u8
@@ -262,9 +250,9 @@ http://nz171l122.bb60246.ctm.net:8892/bysid/2.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
 http://zw9999.cnstream.top:80/play/ubI0Nrlni6TwusjXuSxNxEzv3SLBhKEUmYG73triGDY/ts
 #EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
-http://ali.hlspull.yximgs.com/live/huanqiuhklivetcfjhvdjjxcodwoetjmncthvbstyreyhbnnvbdjjwthjyjtvbmj.flv
-#EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
 http://r.jdshipin.com/ZQ4kN
+#EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
+http://ali.hlspull.yximgs.com/live/huanqiuhklivetcfjhvdjjxcodwoetjmncthvbstyreyhbnnvbdjjwthjyjtvbmj.flv
 #EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
 http://36.36.200.212:9901/tsfile/live/1009_1.m3u8?key=txiptv&url=tvzb.com
 #EXTINF:-1 tvg-id="" tvg-name="明珠台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/明珠台.png" group-title="🇭🇰港澳台🇭🇰",明珠台
