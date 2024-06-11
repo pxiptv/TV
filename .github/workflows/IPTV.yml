@@ -78,7 +78,7 @@ jobs:
         
         # 节目源
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "电视频道地址 已于 ${{ steps.date.outputs.date }} 更新" > README.md
+        echo "IPTV.m3u 的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md
               
     - name: Commit and push if changed
       run: |
