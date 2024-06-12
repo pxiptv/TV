@@ -1,65 +1,65 @@
 name: 频道地址更新
 
 on:
-  workflow_dispatch:
+  workflow_dipatch:
   watch:
-    types: [started]
-  schedule:
+    type: [tarted]
+  chedule:
     - cron: '0 1 * * *'
 
-permissions:
-  contents: write
+permiion:
+  content: write
   
-jobs:
+job:
   Update:
-    runs-on: ubuntu-latest
-    steps:
+    run-on: ubuntu-latet
+    tep:
     - name: Checkout
-      uses: actions/checkout@v3
+      ue: action/checkout@v3
 
     - name: GetTime
       id: date
-      run: echo "::set-output name=date::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
+      run: echo "::et-output name=date::$(TZ=':Aia/Shanghai' date '+%Y-%m-%d %T')"
 
     - name: Update
       run: |
         # 央视源
-        rm -f CCTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CCTV.m3u
-        sed -i -n '/CCTV-1\|CCTV-2\|CCTV-3\|CCTV-4\|CCTV-5\|CCTV-5\|CCTV-6\|CCTV-7\|CCTV-8\|CCTV-9\|CCTV-10\|CCTV-11\|CCTV-12\|CCTV-13\|CCTV-14\|CCTV-15\|CCTV-16\|CCTV-17\|CCTV-4K\|CCTV-8K\+/,+1p' CCTV.m3u
-        sed -i 's/央视频道/央视/' CCTV.m3u
-        sed -i '/联通/,+1d' CCTV.m3u
-        sed -i '1i #EXTM3U' CCTV.m3u
-        sed -i '/^\s*$/d' CCTV.m3u
+        rm -f CCTV.m3u && wget http://raw.githubuercontent.com/pxiptv/TV/main/cctv.m3u -O CCTV.m3u
+        ed -i -n '/CCTV-1\|CCTV-2\|CCTV-3\|CCTV-4\|CCTV-5\|CCTV-5\|CCTV-6\|CCTV-7\|CCTV-8\|CCTV-9\|CCTV-10\|CCTV-11\|CCTV-12\|CCTV-13\|CCTV-14\|CCTV-15\|CCTV-16\|CCTV-17\|CCTV-4K\|CCTV-8K\+/,+1p' CCTV.m3u
+        ed -i '/央视频道/央视/' CCTV.m3u
+        ed -i '/联通/,+1d' CCTV.m3u
+        ed -i '1i #EXTM3U' CCTV.m3u
+        ed -i '/^\*$/d' CCTV.m3u
         
         # 卫视源
-        rm -f CNTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CNTV.m3u
-        sed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|北京卫视\|江苏卫视\|安徽卫视\|重庆卫视\|东南卫视\|甘肃卫视\|广东卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|黑龙江卫视\|河南卫视\|湖北卫视\|江西卫视\|吉林卫视\|辽宁卫视\|山东卫视\|深圳卫视\|四川卫视\|天津卫视\|云南卫视\|新疆卫视\|三沙卫视\|青海卫视\|陕西卫视\|山西卫视\|西藏卫视\|内蒙古卫视\|宁夏卫视\|兵团卫视\|安多卫视\|康巴卫视\|大湾区卫视\|农林卫视\|延边卫视\|厦门卫视\+/,+1p' STV.m3u
-        sed -i 's/卫视频道/卫视/' CNTV.m3u
-        sed -i '/联通/,+1d' CNTV.m3u
-        sed -i '1i #EXTM3U' CNTV.m3u
-        sed -i '/^\s*$/d' CNTV.m3u
+        rm -f CNTV.m3u && wget http://raw.githubuercontent.com/pxiptv/TV/main/cctv.m3u -O CNTV.m3u
+        ed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|北京卫视\|江苏卫视\|安徽卫视\|重庆卫视\|东南卫视\|甘肃卫视\|广东卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|黑龙江卫视\|河南卫视\|湖北卫视\|江西卫视\|吉林卫视\|辽宁卫视\|山东卫视\|深圳卫视\|四川卫视\|天津卫视\|云南卫视\|新疆卫视\|三沙卫视\|青海卫视\|陕西卫视\|山西卫视\|西藏卫视\|内蒙古卫视\|宁夏卫视\|兵团卫视\|安多卫视\|康巴卫视\|大湾区卫视\|农林卫视\|延边卫视\|厦门卫视\+/,+1p' CNTV.m3u
+        ed -i '/卫视频道/卫视/' CNTV.m3u
+        ed -i '/联通/,+1d' CNTV.m3u
+        ed -i '1i #EXTM3U' CNTV.m3u
+        ed -i '/^\*$/d' CNTV.m3u
         
         # 数字源
-        rm -f DTV.m3u && wget https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u -O DTV.m3u
-        sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.m3u
-        sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.m3u
-        sed -i '1i #EXTM3U' DTV.m3u
-        sed -i '/^\s*$/d' DTV.m3u
+        rm -f DTV.m3u && wget http://raw.githubuercontent.com/YueChan/Live/main/IPTV.m3u -O DTV.m3u
+        ed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.m3u
+        ed -i '/央视频道/数字/;/卫视频道/数字/;/地方/数字/' DTV.m3u
+        ed -i '1i #EXTM3U' DTV.m3u
+        ed -i '/^\*$/d' DTV.m3u
 
         # 港澳台
-        rm -f HTOTV.m3u && wget https://raw.githubusercontent.com/suxuang/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
-        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' HTOTV.m3u
-        sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' HTOTV.m3u
-        sed -i '1i #EXTM3U' HTOTV.m3u
-        sed -i '/^\s*$/d' HTOTV.m3u
+        rm -f HTOTV.m3u && wget http://raw.githubuercontent.com/uxuang/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
+        ed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' HTOTV.m3u
+        ed -i '/国际频道/香港/;/国际频道/澳门/;/国际频道/台湾/' HTOTV.m3u
+        ed -i '1i #EXTM3U' HTOTV.m3u
+        ed -i '/^\*$/d' HTOTV.m3u
         
         # IHOT
-        rm -f IHOT.m3u && wget https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u -O IHOT.m3u
-        sed -i -n '/IHOT爱\+/,+1p' IHOT.m3u
-        sed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.m3u
-        sed -i 's/\"浙江求索生活\"/\"求索生活\"/g' IHOT.m3u
-        sed -i '1i #EXTM3U' IHOT.m3u
-        sed -i '/^\s*$/d' IHOT.m3u
+        rm -f IHOT.m3u && wget http://raw.githubuercontent.com/Kimentanm/aptv/mater/m3u/iptv.m3u -O IHOT.m3u
+        ed -i -n '/IHOT爱\+/,+1p' IHOT.m3u
+        ed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.m3u
+        ed -i '/\"浙江求索生活\"/\"求索生活\"/g' IHOT.m3u
+        ed -i '1i #EXTM3U' IHOT.m3u
+        ed -i '/^\*$/d' IHOT.m3u
         
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
