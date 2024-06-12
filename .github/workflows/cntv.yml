@@ -58,4 +58,4 @@ jobs:
         git push
 
     env:
-      TZ: Asia/Shenzhen
+      TZ: Asia/Shanghai
