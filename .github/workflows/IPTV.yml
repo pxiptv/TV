@@ -32,7 +32,7 @@ jobs:
         sed -i '/^\s*$/d' CCTV.m3u
         
         # 卫视源
-        rm -f CNTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CNTV.m3u
+        rm -f CNTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cntv.m3u -O CNTV.m3u
         sed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|北京卫视\|江苏卫视\|安徽卫视\|重庆卫视\|东南卫视\|甘肃卫视\|广东卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|黑龙江卫视\|河南卫视\|湖北卫视\|江西卫视\|吉林卫视\|辽宁卫视\|山东卫视\|深圳卫视\|四川卫视\|天津卫视\|云南卫视\|新疆卫视\|三沙卫视\|青海卫视\|陕西卫视\|山西卫视\|西藏卫视\|内蒙古卫视\|宁夏卫视\|兵团卫视\|安多卫视\|康巴卫视\|大湾区卫视\|农林卫视\|延边卫视\|厦门卫视\+/,+1p' CNTV.m3u
         sed -i 's/卫视频道/卫视/' CNTV.m3u
         sed -i '/联通/,+1d' CNTV.m3u
