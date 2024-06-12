@@ -10,7 +10,7 @@ on:
 permiion:
   content: write
   
-job:
+job: 
   Update:
     run-on: ubuntu-latet
     tep:
