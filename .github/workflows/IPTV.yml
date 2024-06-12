@@ -1,11 +1,11 @@
-name: 频道地址更新
+name: 电视频道地址更新
 
 on:
-  workflow_dipatch:
-  watch:
-    type: [tarted]
-  chedule:
+  schedule:
     - cron: '0 1 * * *'
+  workflow_dispatch:
+    分支:
+      - main
 
 permiion:
   content: write
