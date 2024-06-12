@@ -37,31 +37,25 @@ jobs:
     - name: Commit and push if changed
       run: |
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "tv.m3u  tv.txt  EPG.xml  的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md
+        echo "htotv.m3u  htotv.txt  EPG.xml  的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
-        if [[ -f "tv.m3u" ]]; then
-          git add tv.m3u
+        if [[ -f "htotv.m3u" ]]; then
+          git add htotv.m3u
         fi
-        if [[ -f "tv.txt" ]]; then
-          git add tv.txt
+        if [[ -f "htotv.txt" ]]; then
+          git add htotv.txt
         fi
         if [[ -f "EPG.xml" ]]; then
           git add EPG.xml
         fi
         if ! git diff --staged --quiet; then
-          git commit -m "Auto-update tv.m3u"
+          git commit -m "Auto-update htotv.m3u"
           git push
         fi
         git add README.md
         
-        current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp IPTV.m3u history/"${current_datetime}_tv.m3u"
-        cp IPTV.txt history/"${current_datetime}_tv.txt"
-        git add history/"${current_datetime}_tv.m3u"
-        git add history/"${current_datetime}_tv.txt"
-        git commit -m "Archive file with timestamp"
         git push
 
     env:
