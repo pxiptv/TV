@@ -47,7 +47,7 @@ jobs:
         sed -i '/^\s*$/d' DTV.m3u
 
         # 港澳台
-        rm -f HTOTV.m3u && wget https://raw.githubusercontent.com/suxuang/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
+        rm -f HTOTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
         sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' HTOTV.m3u
         sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' HTOTV.m3u
         sed -i '1i #EXTM3U' HTOTV.m3u
