@@ -139,10 +139,10 @@ def updateChannelUrlsM3U(channels, template_channels):
 
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    with open("tv.m3u", "w", encoding="utf-8") as f_m3u:
+    with open("htotv.m3u", "w", encoding="utf-8") as f_m3u:
         f_m3u.write("#EXTM3U\n")
 
-        with open("tv.txt", "w", encoding="utf-8") as f_txt:
+        with open("htotv.txt", "w", encoding="utf-8") as f_txt:
             for category, channel_list in template_channels.items():
                 f_txt.write(f"{category},#genre#\n")
                 if category in channels:
