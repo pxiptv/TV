@@ -24,7 +24,7 @@ jobs:
     - name: Update
       run: |
         # 央视源
-        rm -f CCTV.m3u && wget https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u -O CCTV.m3u
+        rm -f CCTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CCTV.m3u
         sed -i -n '/CCTV-1\|CCTV-2\|CCTV-3\|CCTV-4\|CCTV-5\|CCTV-5\|CCTV-6\|CCTV-7\|CCTV-8\|CCTV-9\|CCTV-10\|CCTV-11\|CCTV-12\|CCTV-13\|CCTV-14\|CCTV-15\|CCTV-16\|CCTV-17\|CCTV-4K\|CCTV-8K\+/,+1p' CCTV.m3u
         sed -i 's/央视频道/央视/' CCTV.m3u
         sed -i '/联通/,+1d' CCTV.m3u
@@ -32,12 +32,12 @@ jobs:
         sed -i '/^\s*$/d' CCTV.m3u
         
         # 卫视源
-        rm -f STV.m3u && wget https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u -O STV.m3u
+        rm -f CNTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CNTV.m3u
         sed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|北京卫视\|江苏卫视\|安徽卫视\|重庆卫视\|东南卫视\|甘肃卫视\|广东卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|黑龙江卫视\|河南卫视\|湖北卫视\|江西卫视\|吉林卫视\|辽宁卫视\|山东卫视\|深圳卫视\|四川卫视\|天津卫视\|云南卫视\|新疆卫视\|三沙卫视\|青海卫视\|陕西卫视\|山西卫视\|西藏卫视\|内蒙古卫视\|宁夏卫视\|兵团卫视\|安多卫视\|康巴卫视\|大湾区卫视\|农林卫视\|延边卫视\|厦门卫视\+/,+1p' STV.m3u
-        sed -i 's/卫视频道/卫视/' STV.m3u
-        sed -i '/联通/,+1d' STV.m3u
-        sed -i '1i #EXTM3U' STV.m3u
-        sed -i '/^\s*$/d' STV.m3u
+        sed -i 's/卫视频道/卫视/' CNTV.m3u
+        sed -i '/联通/,+1d' CNTV.m3u
+        sed -i '1i #EXTM3U' CNTV.m3u
+        sed -i '/^\s*$/d' CNTV.m3u
         
         # 数字源
         rm -f DTV.m3u && wget https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u -O DTV.m3u
@@ -47,11 +47,11 @@ jobs:
         sed -i '/^\s*$/d' DTV.m3u
 
         # 港澳台
-        rm -f hk.m3u && wget https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u -O hk.m3u
-        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' hk.m3u
-        sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' hk.m3u
-        sed -i '1i #EXTM3U' hk.m3u
-        sed -i '/^\s*$/d' hk.m3u
+        rm -f HTOTV.m3u && wget https://raw.githubusercontent.com/suxuang/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
+        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|翡翠台\|明珠台\|J2\|中天新闻\|中视新闻\+/,+1p' HTOTV.m3u
+        sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' HTOTV.m3u
+        sed -i '1i #EXTM3U' HTOTV.m3u
+        sed -i '/^\s*$/d' HTOTV.m3u
         
         # IHOT
         rm -f IHOT.m3u && wget https://raw.githubusercontent.com/Kimentanm/aptv/master/m3u/iptv.m3u -O IHOT.m3u
@@ -64,10 +64,10 @@ jobs:
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
         cat CCTV.m3u >> IPTV.m3u
-        cat STV.m3u >> IPTV.m3u
+        cat CNTV.m3u >> IPTV.m3u
         cat DTV.m3u >> IPTV.m3u
         cat IHOT.m3u >> IPTV.m3u
-        cat hk.m3u >> IPTV.m3u
+        cat HTOTV.m3u >> IPTV.m3u
         sed -i '/#EXTM3U/d' IPTV.m3u
         sed -i '1i #EXTM3U' IPTV.m3u
         sed -i '/^\s*$/d' IPTV.m3u
