@@ -36,8 +36,6 @@ jobs:
 
     - name: Commit and push if changed
       run: |
-        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "cntv.m3u  cntv.txt  EPG.xml  的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
@@ -46,16 +44,10 @@ jobs:
         fi
         if [[ -f "cntv.txt" ]]; then
           git add cntv.txt
-        fi
-        if [[ -f "EPG.xml" ]]; then
-          git add EPG.xml
-        fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update cntv.m3u"
           git push
         fi
-        git add README.md
-        git push
 
     env:
       TZ: Asia/Shanghai
