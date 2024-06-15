@@ -15,9 +15,9 @@ def formatChannelName(name):
     name = name.replace("plus", "+")
     name = name.replace("PLUS", "+")
     name = name.replace("＋", "+")
-    name = name.replace("NewTV ", "NewTV")
-    name = name.replace("NEWTV", "NewTV")
-    name = name.replace("newtv", "NewTV")
+    name = name.replace("newtv ", "newtv")
+    name = name.replace("newtv", "newtv")
+    name = name.replace("newtv", "newtv")
     return name.lower()
     
 def parse_template(template_file):
@@ -155,10 +155,10 @@ def updateChannelUrlsM3U(channels, template_channels):
 
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    with open("NewTV.m3u", "w", encoding="utf-8") as f_m3u:
+    with open("newtv.m3u", "w", encoding="utf-8") as f_m3u:
         f_m3u.write("#EXTM3U\n")
 
-        with open("NewTV.txt", "w", encoding="utf-8") as f_txt:
+        with open("newtv.txt", "w", encoding="utf-8") as f_txt:
             for category, channel_list in template_channels.items():
                 f_txt.write(f"{category},#genre#\n")
                 if category in channels:
@@ -174,6 +174,6 @@ def updateChannelUrlsM3U(channels, template_channels):
             f_txt.write("\n")
 
 if __name__ == "__main__":
-    template_file = "NewTV_demo.txt"
+    template_file = "newtv_demo.txt"
     channels, template_channels = filter_source_urls(template_file)
     updateChannelUrlsM3U(channels, template_channels)
