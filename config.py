@@ -1,7 +1,7 @@
 source_urls = [
     'https://raw.github.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
-    'https://raw.github.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次11:11 2024/05/13
-    'https://raw.github.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次11:11 2024/05/13
+    'https://raw.github.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
+    'https://raw.github.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
     'https://raw.github.com/PizazzGY/TVBox_warehouse/main/live.txt',
     'https://raw.github.com/yuanzl77/IPTV/main/直播/ipv6.txt',
     'https://raw.github.com/Supprise0901/TVBox_live/main/live.txt',
