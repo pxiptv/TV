@@ -12,12 +12,9 @@ def formatChannelName(name):
         r"-|_|\((.*?)\)|\[(.*?)\]| |频道|标清|高清|HD|hd|超清|超高|超高清|中央|央视|台"
     )
     name = re.sub(sub_pattern, "", name)
-    name = name.replace("plus", "+")
-    name = name.replace("PLUS", "+")
-    name = name.replace("＋", "+")
-    name = name.replace("newtv ", "newtv")
-    name = name.replace("newtv", "newtv")
-    name = name.replace("newtv", "newtv")
+    name = name.replace("newtv ", "NewTV")
+    name = name.replace("newtv", "NewTV")
+    name = name.replace("NEWTV", "NewTV")
     return name.lower()
     
 def parse_template(template_file):
