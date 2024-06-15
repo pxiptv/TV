@@ -45,7 +45,19 @@ jobs:
       run: python ${{ github.workspace }}/NewTV.py
     - name: Run Python script
       run: python ${{ github.workspace }}/iHOT.py
-      
+
+    - name: Commit results
+        run: |
+            git config --local user.email "actions@github.com"
+            git config --local user.name "GitHub Action"
+            if [ -n "$(git status --porcelain)" ]; then
+            git add *.m3u *.txt
+            git commit -m "Automatic update"
+            git push
+            else
+              echo "No changes detected, skipping commit."
+            fi
+            
     - name: Update
       run: |
         # 央视源
