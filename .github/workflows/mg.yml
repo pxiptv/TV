@@ -2,7 +2,7 @@ name: 咪咕体育 Update
 
 on:
   schedule:
-    - cron: '15 0 * * *'
+    - cron: '15 0 1 * *'
   workflow_dispatch:
     分支:
       - main
