@@ -72717,6 +72717,9 @@
 	<programme channel="黑莓动画" start="20240616030400 +0800" stop="20240616033300 +0800">
 		<title lang="zh">10_星辰变 第一季</title>
 	</programme>
+	<programme channel="黑莓动画" start="20240616033300 +0800" stop="20240616035000 +0800">
+		<title lang="zh">09_全职法师第1季</title>
+	</programme>
 	<channel id="黑莓电影">
 		<display-name lang="zh">黑莓电影</display-name>
 	</channel>
@@ -73209,6 +73212,9 @@
 	<programme channel="newtv超级电影" start="20240616015200 +0800" stop="20240616032000 +0800">
 		<title lang="zh">九面怪侠</title>
 	</programme>
+	<programme channel="newtv超级电影" start="20240616032000 +0800" stop="20240616035400 +0800">
+		<title lang="zh">妒忌（上）</title>
+	</programme>
 	<channel id="newtv超级电视剧">
 		<display-name lang="zh">NEWTV超级电视剧</display-name>
 	</channel>
@@ -73227,6 +73233,9 @@
 	<programme channel="newtv超级电视剧" start="20240616030000 +0800" stop="20240616034200 +0800">
 		<title lang="zh">06_灵与肉</title>
 	</programme>
+	<programme channel="newtv超级电视剧" start="20240616034200 +0800" stop="20240616042300 +0800">
+		<title lang="zh">04_岁岁年年柿柿红</title>
+	</programme>
 	<channel id="newtv精品大剧">
 		<display-name lang="zh">NEWTV精品大剧</display-name>
 	</channel>
@@ -73242,6 +73251,9 @@
 	<programme channel="newtv精品大剧" start="20240616024200 +0800" stop="20240616032800 +0800">
 		<title lang="zh">31_大秦帝国之裂变</title>
 	</programme>
+	<programme channel="newtv精品大剧" start="20240616032800 +0800" stop="20240616041400 +0800">
+		<title lang="zh">32_大秦帝国之裂变</title>
+	</programme>
 	<channel id="newtv精品纪录">
 		<display-name lang="zh">NEWTV精品纪录</display-name>
 	</channel>
@@ -73256,6 +73268,9 @@
 	</programme>
 	<programme channel="newtv精品纪录" start="20240616023800 +0800" stop="20240616032600 +0800">
 		<title lang="zh">02_加里曼丹岛</title>
+	</programme>
+	<programme channel="newtv精品纪录" start="20240616032600 +0800" stop="20240616041500 +0800">
+		<title lang="zh">03_夏威夷群岛</title>
 	</programme>
 	<channel id="newtv古装剧场">
 		<display-name lang="zh">NEWTV古装剧场</display-name>
@@ -73338,6 +73353,9 @@
 	<programme channel="newtv动作电影" start="20240616015000 +0800" stop="20240616031900 +0800">
 		<title lang="zh">鲨卷风5：全球鲨暴</title>
 	</programme>
+	<programme channel="newtv动作电影" start="20240616031900 +0800" stop="20240616044500 +0800">
+		<title lang="zh">陈真之拳镇山河</title>
+	</programme>
 	<channel id="newtv怡伴健康">
 		<display-name lang="zh">NEWTV怡伴健康</display-name>
 	</channel>
@@ -73353,6 +73371,9 @@
 	<programme channel="newtv怡伴健康" start="20240616023500 +0800" stop="20240616032000 +0800">
 		<title lang="zh">25_清平乐</title>
 	</programme>
+	<programme channel="newtv怡伴健康" start="20240616032000 +0800" stop="20240616034700 +0800">
+		<title lang="zh">灵长动物家园（下）</title>
+	</programme>
 	<channel id="newtv潮妈辣婆">
 		<display-name lang="zh">NEWTV潮妈辣婆</display-name>
 	</channel>
@@ -73364,6 +73385,9 @@
 	</programme>
 	<programme channel="newtv潮妈辣婆" start="20240616024000 +0800" stop="20240616032600 +0800">
 		<title lang="zh">20_空巢姥爷</title>
+	</programme>
+	<programme channel="newtv潮妈辣婆" start="20240616032600 +0800" stop="20240616041200 +0800">
+		<title lang="zh">21_空巢姥爷</title>
 	</programme>
 	<channel id="newtv军事评论">
 		<display-name lang="zh">NEWTV军事评论</display-name>
@@ -73392,6 +73416,9 @@
 	<programme channel="newtv军事评论" start="20240616031600 +0800" stop="20240616033700 +0800">
 		<title lang="zh">北极战争b7北方的较量（下）</title>
 	</programme>
+	<programme channel="newtv军事评论" start="20240616033700 +0800" stop="20240616035900 +0800">
+		<title lang="zh">北极战争b7特殊行动（上）</title>
+	</programme>
 	<channel id="newtv炫舞未来">
 		<display-name lang="zh">NEWTV炫舞未来</display-name>
 	</channel>
@@ -73409,6 +73436,9 @@
 	</programme>
 	<programme channel="newtv炫舞未来" start="20240616031400 +0800" stop="20240616033000 +0800">
 		<title lang="zh">海那边的桃花开—毕刚（纯净版）</title>
+	</programme>
+	<programme channel="newtv炫舞未来" start="20240616033000 +0800" stop="20240616034900 +0800">
+		<title lang="zh">01_美丽新疆-李萍（完整版）</title>
 	</programme>
 	<channel id="newtv精品综合">
 		<display-name lang="zh">NEWTV精品综合</display-name>
@@ -73431,11 +73461,17 @@
 	<programme channel="newtv惊悚悬疑" start="20240616022400 +0800" stop="20240616034100 +0800">
 		<title lang="zh">张震讲故事之三更夜</title>
 	</programme>
+	<programme channel="newtv惊悚悬疑" start="20240616034100 +0800" stop="20240616050500 +0800">
+		<title lang="zh">法医秦明之致命小说</title>
+	</programme>
 	<channel id="newtv金牌综艺">
 		<display-name lang="zh">NEWTV金牌综艺</display-name>
 	</channel>
 	<programme channel="newtv金牌综艺" start="20240616003000 +0800" stop="20240616033600 +0800">
 		<title lang="zh">新游记</title>
+	</programme>
+	<programme channel="newtv金牌综艺" start="20240616033600 +0800" stop="20240616051800 +0800">
+		<title lang="zh">艺览天下（2022）</title>
 	</programme>
 	<channel id="newtv精品体育">
 		<display-name lang="zh">NEWTV精品体育</display-name>
