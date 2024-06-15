@@ -49,6 +49,10 @@ jobs:
           git commit -m "Auto-update cctv.m3u"
           git push
         fi
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-update cctv.txt"
+          git push
+        fi
         
     env:
       TZ: Asia/Shanghai
