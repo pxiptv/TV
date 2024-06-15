@@ -22,6 +22,9 @@ def formatChannelName(name):
     name = name.replace("財經", "财经")
     name = name.replace("華語", "华语")
     name = name.replace("華", "华")
+    name = name.replace("數", "数")
+    name = name.replace("實", "实")
+    name = name.replace("電影", "电影")
     return name.lower()
     
 def parse_template(template_file):
