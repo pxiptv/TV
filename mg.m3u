@@ -1,3 +1,49 @@
 #EXTM3U
 #EXTINF:-1 tvg-id="" tvg-name="咪咕视频1" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频1.png" group-title="📺咪咕体育📺",咪咕视频1
 http://39.134.66.66/PLTV/88888888/224/3221225643/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频1" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频1.png" group-title="📺咪咕体育📺",咪咕视频1
+http://39.135.133.144/PLTV/88888888/224/3221225739/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频2" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频2.png" group-title="📺咪咕体育📺",咪咕视频2
+http://39.134.66.66/PLTV/88888888/224/3221225648/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频2" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频2.png" group-title="📺咪咕体育📺",咪咕视频2
+http://39.135.133.180/PLTV/88888888/224/3221225754/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频3" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频3.png" group-title="📺咪咕体育📺",咪咕视频3
+http://39.134.66.66/PLTV/88888888/224/3221225639/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频3" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频3.png" group-title="📺咪咕体育📺",咪咕视频3
+http://39.135.133.157/PLTV/88888888/224/3221225905/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频4" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频4.png" group-title="📺咪咕体育📺",咪咕视频4
+http://39.134.66.66/PLTV/88888888/224/3221225652/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频4" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频4.png" group-title="📺咪咕体育📺",咪咕视频4
+http://39.135.133.156/PLTV/88888888/224/3221225910/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频6" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频6.png" group-title="📺咪咕体育📺",咪咕视频6
+http://39.134.66.66/PLTV/88888888/224/3221225645/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频6" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频6.png" group-title="📺咪咕体育📺",咪咕视频6
+http://39.135.133.156/PLTV/88888888/224/3221225639/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频7" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频7.png" group-title="📺咪咕体育📺",咪咕视频7
+http://39.134.66.66/PLTV/88888888/224/3221225650/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频7" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频7.png" group-title="📺咪咕体育📺",咪咕视频7
+http://39.135.133.154/PLTV/88888888/224/3221225648/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频8" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频8.png" group-title="📺咪咕体育📺",咪咕视频8
+http://39.134.66.66/PLTV/88888888/224/3221225641/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频8" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频8.png" group-title="📺咪咕体育📺",咪咕视频8
+http://39.135.133.156/PLTV/88888888/224/3221225654/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频9" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频9.png" group-title="📺咪咕体育📺",咪咕视频9
+http://39.134.66.66/PLTV/88888888/224/3221225617/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频9" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频9.png" group-title="📺咪咕体育📺",咪咕视频9
+http://39.135.133.166/PLTV/88888888/224/3221225756/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频10" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频10.png" group-title="📺咪咕体育📺",咪咕视频10
+http://39.134.66.66/PLTV/88888888/224/3221225651/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频10" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频10.png" group-title="📺咪咕体育📺",咪咕视频10
+http://39.135.133.156/PLTV/88888888/224/3221225760/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频11" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频11.png" group-title="📺咪咕体育📺",咪咕视频11
+http://39.134.66.66/PLTV/88888888/224/3221225619/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频12" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频12.png" group-title="📺咪咕体育📺",咪咕视频12
+http://39.134.66.66/PLTV/88888888/224/3221225611/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频13" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频13.png" group-title="📺咪咕体育📺",咪咕视频13
+http://39.134.66.66/PLTV/88888888/224/3221225649/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频14" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频14.png" group-title="📺咪咕体育📺",咪咕视频14
+http://39.134.66.66/PLTV/88888888/224/3221225620/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频15" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频15.png" group-title="📺咪咕体育📺",咪咕视频15
+http://39.134.66.66/PLTV/88888888/224/3221225613/index.m3u8
+#EXTINF:-1 tvg-id="" tvg-name="咪咕视频16" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/咪咕视频16.png" group-title="📺咪咕体育📺",咪咕视频16
+http://39.134.66.66/PLTV/88888888/224/3221225658/index.m3u8
