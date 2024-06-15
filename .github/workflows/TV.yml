@@ -1,51 +1,50 @@
-name: 节目地址更新
+name: 电视节目地址更新
 
 on:
-  workflow_dispatch:
-  watch:
-    types: [started]
   schedule:
     - cron: '50 0 * * *'
+  workflow_dispatch:
+    分支:
+      - main
 
 permissions:
   contents: write
   
 jobs:
-  build:
+  run_script:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout code
-        uses: actions/checkout@v2
-    - name: Delete workflow runs
-      uses: Mattraks/delete-workflow-runs@v2
-      with:
-        token: ${{ github.token }}
-        repository: ${{ github.repository }}
-        retain_days: 2
-        keep_minimum_runs: 6 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-    - name: Install dependencies
-      run: pip install opencv-python requests 
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
     - name: GetTime
       id: date
       run: echo "::set-output name=date::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
-    - name: Run CCTV
-        run: python ${{ github.workspace }}/cctv.py
-    - name: Run CNTV
-        run: python ${{ github.workspace }}/cntv.py
-    - name: Run HTOTV
-        run: python ${{ github.workspace }}/htotv.py
-    - name: Run MG
-        run: python ${{ github.workspace }}/mg.py
-    - name: Run DTV
-        run: python ${{ github.workspace }}/DTV.py
-    - name: Run NewTV
-        run: python ${{ github.workspace }}/NewTV.py
-    - name: Run iHOT
-        run: python ${{ github.workspace }}/iHOT.py
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run Python script
+      run: python cctv.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/cntv.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/htotv.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/mg.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/DTV.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/NewTV.py
+    - name: Run Python script
+      run: python ${{ github.workspace }}/iHOT.py
       
     - name: Update
       run: |
