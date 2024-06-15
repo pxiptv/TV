@@ -4,6 +4,26 @@ import config
 from collections import OrderedDict
 from datetime import datetime
 
+def formatChannelName(name):
+    """
+    Format the channel name with sub and replace and lower
+    """
+    sub_pattern = (
+        r"-|_|\((.*?)\)|\[(.*?)\]| |频道|标清|高清|HD|hd|超清|超高|超高清|中央|央视|台"
+    )
+    name = re.sub(sub_pattern, "", name)
+    name = name.replace("線", "线")
+    name = name.replace("聞", "闻")
+    name = name.replace("時", "时")
+    name = name.replace("視", "视")
+    name = name.replace("衛", "卫")
+    name = name.replace("東", "东")
+    name = name.replace("亞", "亚")
+    name = name.replace("財經", "财经")
+    name = name.replace("華語", "华语")
+    name = name.replace("華", "华")
+    return name.lower()
+    
 def parse_template(template_file):
     """
     Parse the template file to extract channel names.
