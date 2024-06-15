@@ -1,4 +1,4 @@
-name: DTV Update
+name: iHOT Update
 
 on:
   schedule:
@@ -32,25 +32,25 @@ jobs:
         pip install requests
 
     - name: Run Python script
-      run: python DTV.py
+      run: python iHOT.py
 
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
-        if [[ -f "dtv.m3u" ]]; then
-          git add dtv.m3u
+        if [[ -f "ihot.m3u" ]]; then
+          git add ihot.m3u
         fi
-        if [[ -f "dtv.txt" ]]; then
-          git add dtv.txt
+        if [[ -f "ihot.txt" ]]; then
+          git add ihot.txt
         fi
         if ! git diff --staged --quiet; then
-          git commit -m "Auto-update dtv.m3u"
+          git commit -m "Auto-update ihot.m3u"
           git push
         fi
         if ! git diff --staged --quiet; then
-          git commit -m "Auto-update dtv.txt"
+          git commit -m "Auto-update ihot.txt"
           git push
         fi
         
