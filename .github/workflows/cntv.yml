@@ -44,6 +44,7 @@ jobs:
         fi
         if [[ -f "cntv.txt" ]]; then
           git add cntv.txt
+        fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update cntv.m3u"
           git push
