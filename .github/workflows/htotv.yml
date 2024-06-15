@@ -2,7 +2,7 @@ name: 港澳台 Update
 
 on:
   schedule:
-    - cron: '10 0 * * *'
+    - cron: '10 0 1 * *'
   workflow_dispatch:
     分支:
       - main
