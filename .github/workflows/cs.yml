@@ -1,4 +1,4 @@
-name: NewTV update
+name: iHOT update
 
 on:
   schedule:
@@ -31,8 +31,8 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run NewTV update
-      run: python ${{ github.workspace }}/NewTV.py
+    - name: Run iHOT update
+      run: python ${{ github.workspace }}/iHOT.py
 
     - name: Commit results
       run: |
