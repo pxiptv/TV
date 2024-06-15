@@ -2,7 +2,7 @@ name: iHOT update
 
 on:
   schedule:
-    - cron: '50 0 * * *'
+    - cron: '50 0 1 * *'
   workflow_dispatch:
     分支:
       - main
