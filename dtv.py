@@ -158,7 +158,7 @@ def updateChannelUrlsM3U(channels, template_channels):
     with open("cctv.m3u", "w", encoding="utf-8") as f_m3u:
         f_m3u.write("#EXTM3U\n")
 
-        with open("cctv.txt", "w", encoding="utf-8") as f_txt:
+        with open("dtv.txt", "w", encoding="utf-8") as f_txt:
             for category, channel_list in template_channels.items():
                 f_txt.write(f"{category},#genre#\n")
                 if category in channels:
