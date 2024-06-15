@@ -33,20 +33,12 @@ jobs:
 
     - name: Run Python script
       run: python cntv.py
-
-    - name: Upload generated files
-      uses: actions/upload-artifact@v2
-      with:
-        name: generated-files
-        path: |
-              cntv.m3u
-              cntv.txt
               
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git commit -am "${{ steps.date.outputs.date }}"
+        git add -A
         if [[ -f "cntv.m3u" ]]; then
           git add cntv.m3u
         fi
