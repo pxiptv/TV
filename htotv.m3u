@@ -232,8 +232,6 @@ http://live.cooltv.top/tv/tvb.php?id=0&hq
 #EXTINF:-1 tvg-id="" tvg-name="无线新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/无线新闻.png" group-title="🇭🇰港澳台🇭🇰",无线新闻
 http://r.jdshipin.com/CkuBd
 #EXTINF:-1 tvg-id="" tvg-name="无线新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/无线新闻.png" group-title="🇭🇰港澳台🇭🇰",无线新闻
-http://grandprix2023.asuscomm.com:8892/bysid/83.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="无线新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/无线新闻.png" group-title="🇭🇰港澳台🇭🇰",无线新闻
 http://198.16.100.90:8278/inews_twn/playlist.m3u8?tid=MF7F8784108987841089&ct=19225&tsum=50d719a9ed62cc070153963585e6d9d3
 #EXTINF:-1 tvg-id="" tvg-name="无线新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/无线新闻.png" group-title="🇭🇰港澳台🇭🇰",无线新闻
 http://198.16.100.90:8278/inews_twn/playlist.m3u8?tid=MD8D9734527497345274&ct=19249&tsum=88c5d57f9fdce89810d61e1001910a80
@@ -335,8 +333,6 @@ http://r.jdshipin.com/Nr5jq
 http://zw9999.cnstream.top:80/play/ubI0Nrlni6TwusjXuSxNxHxPuwYBkq3c9qPtWNUkGtg/ts
 #EXTINF:-1 tvg-id="" tvg-name="J2" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/J2.png" group-title="🇭🇰港澳台🇭🇰",J2
 http://ali.hlspull.yximgs.com/live/huanqiuhklivefhwohdpthjyfiplhdftujfbvdimhdjnbjsjbcvxjfjsehbvbjtvbd2.flv
-#EXTINF:-1 tvg-id="" tvg-name="J2" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/J2.png" group-title="🇭🇰港澳台🇭🇰",J2
-https://ha.jmied.com/aa/aa.flv?auth_key=16619582323d9174957759709f8b53448167c0b6f6
 #EXTINF:-1 tvg-id="" tvg-name="耀才财经" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/耀才财经.png" group-title="🇭🇰港澳台🇭🇰",耀才财经
 http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8?wowzasessionid=64000
 #EXTINF:-1 tvg-id="" tvg-name="耀才财经" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/耀才财经.png" group-title="🇭🇰港澳台🇭🇰",耀才财经
@@ -348,15 +344,9 @@ https://v3.mediacast.hk/webcast/bshdlive-pc/playlist.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="耀才财经" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/耀才财经.png" group-title="🇭🇰港澳台🇭🇰",耀才财经
 http://202.69.67.66:443/webcast/bshdlive-pc/playlist.m3u8?wowzasessionid=64000?zgangd
 #EXTINF:-1 tvg-id="" tvg-name="耀才财经" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/耀才财经.png" group-title="🇭🇰港澳台🇭🇰",耀才财经
-http://202.69.67.66:443/webcast/bshdlivepc/playlist.m3u8?wowzasessionid=64000?zgangd
-#EXTINF:-1 tvg-id="" tvg-name="耀才财经" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/耀才财经.png" group-title="🇭🇰港澳台🇭🇰",耀才财经
 https://v3.mediacast.hk/webcast/bshdlive-pc/chunklist_w99771165.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="面包台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/面包台.png" group-title="🇭🇰港澳台🇭🇰",面包台
-https://video.breadtv.com:8091/hlslive24/online/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="面包台" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/面包台.png" group-title="🇭🇰港澳台🇭🇰",面包台
 https://video.bread-tv.com:8091/hls-live24/online/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="澳门Macau" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/澳门Macau.png" group-title="🇭🇰港澳台🇭🇰",澳门Macau
-http://grandprix2023.asuscomm.com:8891/bysid/96.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="中天新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/中天新闻.png" group-title="🇭🇰港澳台🇭🇰",中天新闻
 http://ali.hlspull.yximgs.com/live/huanqiuhklivepjjtvvjjjyjuujjfvbscvjdjtwjfsjjsjjjcvuyjemjejtxw.flv
 #EXTINF:-1 tvg-id="" tvg-name="中天新闻" tvg-logo="https://gitee.com/yuanzl77/TVBox-logo/raw/main/png/中天新闻.png" group-title="🇭🇰港澳台🇭🇰",中天新闻
