@@ -31,19 +31,19 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run Python script
+    - name: Run CCTV update
       run: python cctv.py
-    - name: Run Python script
+    - name: Run CNTV update
       run: python ${{ github.workspace }}/cntv.py
-    - name: Run Python script
+    - name: Run HTOTV update
       run: python ${{ github.workspace }}/htotv.py
-    - name: Run Python script
+    - name: Run MGTV update
       run: python ${{ github.workspace }}/mg.py
-    - name: Run Python script
+    - name: Run DTV update
       run: python ${{ github.workspace }}/DTV.py
-    - name: Run Python script
+    - name: Run NewTV update
       run: python ${{ github.workspace }}/NewTV.py
-    - name: Run Python script
+    - name: Run iHOT update
       run: python ${{ github.workspace }}/iHOT.py
 
     - name: Commit results
@@ -139,7 +139,7 @@ jobs:
         sed -i '1i #EXTM3U' NewTV.m3u
         sed -i '/^\s*$/d' NewTV.m3u
 
-        rm -f NewTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv..txt -O NewTV.txt
+        rm -f NewTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.txt -O NewTV.txt
         sed -i -n '/NewTV\+/,+1p' NewTV.txt
         sed -i '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1d' NewTV.txt
         sed -i 's/\"NewTV\"/\"NewTV\"/g' NewTV.txt
