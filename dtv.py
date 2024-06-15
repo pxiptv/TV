@@ -155,7 +155,7 @@ def updateChannelUrlsM3U(channels, template_channels):
 
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    with open("cctv.m3u", "w", encoding="utf-8") as f_m3u:
+    with open("dtv.m3u", "w", encoding="utf-8") as f_m3u:
         f_m3u.write("#EXTM3U\n")
 
         with open("dtv.txt", "w", encoding="utf-8") as f_txt:
