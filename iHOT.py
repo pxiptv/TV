@@ -12,8 +12,8 @@ def formatChannelName(name):
         r"-|_|\((.*?)\)|\[(.*?)\]| |频道|标清|高清|HD|hd|超清|超高|超高清|中央|央视|台"
     )
     name = re.sub(sub_pattern, "", name)
-    name = name.replace("IHOT", "iHOT")
-  name = name.replace("iHOT ", "iHOT")
+    name = name.replace("ihot", "ihot")
+  name = name.replace("ihot ", "ihot")
     return name.lower()
     
 def parse_template(template_file):
@@ -151,10 +151,10 @@ def updateChannelUrlsM3U(channels, template_channels):
 
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    with open("iHOT.m3u", "w", encoding="utf-8") as f_m3u:
+    with open("ihot.m3u", "w", encoding="utf-8") as f_m3u:
         f_m3u.write("#EXTM3U\n")
 
-        with open("iHOT.txt", "w", encoding="utf-8") as f_txt:
+        with open("ihot.txt", "w", encoding="utf-8") as f_txt:
             for category, channel_list in template_channels.items():
                 f_txt.write(f"{category},#genre#\n")
                 if category in channels:
