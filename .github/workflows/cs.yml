@@ -32,7 +32,7 @@ jobs:
         pip install requests
 
     - name: Run iHOT update
-      run: python ${{ github.workspace }}/iHOT.py
+      run: python iHOT.py
 
     - name: Commit results
       run: |
