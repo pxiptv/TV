@@ -13,7 +13,7 @@ def formatChannelName(name):
     )
     name = re.sub(sub_pattern, "", name)
     name = name.replace("ihot", "ihot")
-  name = name.replace("ihot ", "ihot")
+    name = name.replace("ihot ", "ihot")
     return name.lower()
     
 def parse_template(template_file):
