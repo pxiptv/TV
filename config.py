@@ -1,12 +1,12 @@
 source_urls = [
-    'https://raw.github.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
-    'https://raw.github.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
-    'https://raw.github.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
-    'https://raw.github.com/PizazzGY/TVBox_warehouse/main/live.txt',
+    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt', #每天自动更新1次
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
+    'https://raw.bgithub.xyz/PizazzGY/TVBox_warehouse/main/live.txt',
     'https://raw.bgithub.xyz/yuanzl77/IPTV/main/live.txt',
-    'https://raw.github.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.github.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.github.com/gaotianliuyun/gao/master/list.txt',
+    'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.bgithub.xyz/gaotianliuyun/gao/master/list.txt',
     'https://raw.bgithub.xyz/maitel2020/iptv-self-use/main/iptv.txt',
     'https://raw.bgithub.xyz/kimwang1978/collect-tv-txt/main/merged_output.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
