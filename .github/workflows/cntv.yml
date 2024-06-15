@@ -1,4 +1,4 @@
-name: 卫视 Update
+name: 央视 Update
 
 on:
   schedule:
@@ -33,12 +33,12 @@ jobs:
 
     - name: Run Python script
       run: python cntv.py
-              
+
     - name: Commit and push if changed
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add -A
+        git commit -am "${{ steps.date.outputs.date }}"
         if [[ -f "cntv.m3u" ]]; then
           git add cntv.m3u
         fi
@@ -49,6 +49,6 @@ jobs:
           git commit -m "Auto-update cntv.m3u"
           git push
         fi
-
+        
     env:
       TZ: Asia/Shanghai
