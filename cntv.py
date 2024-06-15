@@ -9,7 +9,7 @@ def formatChannelName(name):
     Format the channel name with sub and replace and lower
     """
     sub_pattern = (
-        r"-|_|\((.*?)\)|\[(.*?)\]| |频道|标清|高清|HD|hd|超清|超高|超高清|中央|央视|台"
+        r"-|_|\((.*?)\)|\[(.*?)\]| |频道|标清|高清|HD|hd|超清|超高|超高清|地方|卫视|台"
     )
     name = re.sub(sub_pattern, "", name)
     name = name.replace("-卫视", "卫视")
