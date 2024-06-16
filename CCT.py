@@ -286,7 +286,7 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
 
 
 # 将合并后的文本写入文件
-output_file = "merged_output.txt"
+output_file = "cctv.txt"
 others_file = "others_output.txt"
 try:
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -318,10 +318,10 @@ for line in lines:
         output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
         output_text += f"{parts[1]}\n"
 
-with open("merged_output.m3u", "w", encoding='utf-8') as file:
+with open("cctv.m3u", "w", encoding='utf-8') as file:
     file.write(output_text)
 
-print("merged_output.m3u文件已生成。")
+print("cctv.m3u文件已生成。")
 
 
 
