@@ -90,7 +90,7 @@ jobs:
           git add IPTV.txt
         fi
         if [[ -f "DTV.txt" ]]; then
-          git add "DTV.txt
+          git add DTV.txt
         fi
         if [[ -f "EPG.xml" ]]; then
           git add EPG.xml
