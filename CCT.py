@@ -99,11 +99,6 @@ def process_url(url):
             data = response.read()
             # 将二进制数据解码为字符串
             text = data.decode('utf-8')
-            lines = text.split('\n')
-            for line in lines:
-                if "#genre#" not in line and "," in line and "://" in line:
-                    channel_name = line.split(',')[0].strip()
-                    channel_address = line.split(',')[1].strip()
 
             # 逐行处理内容
             lines = text.split('\n')
@@ -118,7 +113,7 @@ def process_url(url):
                     elif channel_name in ws_dictionary:
                         ws_lines.append(process_name_string(line.strip()))
                     #elif "体育" in channel_name:
-                    elif channel_name in  ty_dictionary:  #体育频道
+                    elif channel_name in ty_dictionary:  #体育频道
                         ty_lines.append(process_name_string(line.strip()))
                     elif channel_name in dy_dictionary:  #电影频道
                         dy_lines.append(process_name_string(line.strip()))
@@ -156,7 +151,6 @@ def process_url(url):
                         hn_lines.append(process_name_string(line.strip()))
                     else:
                         other_lines.append(line.strip())
-
                 
     except Exception as e:
         print(f"处理URL时发生错误：{e}")
