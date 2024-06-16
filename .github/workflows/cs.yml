@@ -30,47 +30,30 @@ jobs:
     - name: Install dependencies
       run: |
         pip install requests
-
-    - name: Run DTV update
-      run: python ${{ github.workspace }}/DTV.py
-
-    - name: Commit results
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        if [ -n "$(git status --porcelain)" ]; then
-        git add *.m3u *.txt
-        git commit -m "Automatic update"
-        git push
-        else
-          echo "No changes detected, skipping commit."
-        fi
             
     - name: Update
       run: |
+        # NewTV
+        rm -f NewTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.m3u -O NewTV.m3u
+        sed -i -n '/NewTV\+/,+1p' NewTV.m3u
+        sed -i '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1d' NewTV.m3u
+        sed -i '1i #EXTM3U' NewTV.m3u
+        sed -i '/^\s*$/d' NewTV.m3u
 
-        
-        # 数字源
-        rm -f DTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/dtv.m3u -O DTV.m3u
-        sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.m3u
-        sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.m3u
-        sed -i '1i #EXTM3U' DTV.m3u
-        sed -i '/^\s*$/d' DTV.m3u
-
-        rm -f DTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/dtv.txt -O DTV.txt
-        sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.txt
-        sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.txt
-        sed -i '/^\s*$/d' DTV.txt
+        rm -f NewTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.txt -O NewTV.txt
+        sed -i -n '/NewTV\+/,+1p' NewTV.txt
+        sed -i '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1d' NewTV.txt
+        sed -i '/^\s*$/d' NewTV.txt
         
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
-        cat DTV.m3u >> IPTV.m3u
+        cat NewTV.m3u >> IPTV.m3u
         sed -i '/#EXTM3U/d' IPTV.m3u
         sed -i '1i #EXTM3U' IPTV.m3u
         sed -i '/^\s*$/d' IPTV.m3u
 
         rm -f IPTV.txt && touch IPTV.txt
-        cat DTV.txt >> IPTV.txt
+        cat NewTV.txt >> IPTV.txt
         sed -i '/^\s*$/d' IPTV.txt
                 
         # 节目源
@@ -88,8 +71,8 @@ jobs:
         if [[ -f "IPTV.txt" ]]; then
           git add IPTV.txt
         fi
-        if [[ -f "DTV.txt" ]]; then
-          git add DTV.txt
+        if [[ -f "NewTV.txt" ]]; then
+          git add NewTV.txt
         fi
         if [[ -f "EPG.xml" ]]; then
           git add EPG.xml
