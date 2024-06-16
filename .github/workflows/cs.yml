@@ -51,6 +51,7 @@ jobs:
         if [[ -f "NewTV.txt" ]]; then
           git add NewTV.txt
         fi
+        git push
         
 env:
   TZ: Asia/Shanghai
