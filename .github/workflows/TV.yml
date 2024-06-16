@@ -96,7 +96,6 @@ jobs:
         rm -f DTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/dtv.txt -O DTV.txt
         sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.txt
         sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.txt
-        sed -i '1i 🥝数字频道🥝,#genre#' DTV.txt
         sed -i '/^\s*$/d' DTV.txt
 
         # 港澳台
@@ -135,7 +134,6 @@ jobs:
         rm -f NewTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.txt -O NewTV.txt
         sed -i -n '/NewTV\+/,+1p' NewTV.txt
         sed -i '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1d' NewTV.txt
-        sed -i '1i 🦁NewTV频道🦁,#genre#' NewTV.txt
         sed -i '/^\s*$/d' NewTV.txt
         
         # 整合源
