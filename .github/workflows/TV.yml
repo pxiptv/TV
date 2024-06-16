@@ -88,6 +88,7 @@ jobs:
 
         rm -f DTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/dtv.txt -O DTV.txt
         sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.txt
+        sed -i '/🥝数字频道🥝,#genre#/d' DTV.txt
         sed -i '1i 🥝数字频道🥝,#genre#' DTV.txt
         sed -i '/^\s*$/d' DTV.txt
 
