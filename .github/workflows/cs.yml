@@ -36,13 +36,12 @@ jobs:
         # NewTV
         rm -f NewTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.m3u -O NewTV.m3u
         sed -i -n '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1p' NewTV.m3u
-        sed -i 's/NEWTV/NewTV/' NewTV.m3u
         sed -i '1i #EXTM3U' NewTV.m3u
         sed -i '/^\s*$/d' NewTV.m3u
         
         rm -f NewTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/newtv.txt -O NewTV.txt
         sed -i -n '/NewTV超级电影\|NewTV超级电视剧\|NewTV东北热剧\|NewTV海外剧场\|NewTV中国功夫\|NewTV军旅剧场\|NewTV惊悚悬疑\|NewTV潮妈辣婆\|NewTV精品纪录\|NewTV家庭剧场\|NewTV精品大剧\|NewTV军事评论\|NewTV明星大片\|NewTV欢乐剧场\|NewTV精品萌宠\|NewTV超级综艺\|NewTV金牌综艺\|NewTV精品体育\|NewTV超级体育/,+1p' NewTV.txt
-        sed -i 's/NEWTV/NewTV/' NewTV.txt
+        sed -i '1i 🦁NewTV频道🦁,#genre#' NewTV.txt
         sed -i '/^\s*$/d' NewTV.txt
 
         # 整合源
@@ -66,19 +65,12 @@ jobs:
         if [[ -f "IPTV.txt" ]]; then
           git add IPTV.txt
         fi
-        if [[ -f "NewTV.txt" ]]; then
-          git add NewTV.txt
-        fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update IPTV.m3u"
           git push
         fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update IPTV.txt"
-          git push
-        fi
-        if ! git diff --staged --quiet; then
-          git commit -m "Auto-update NewTV.txt"
           git push
         fi
    
