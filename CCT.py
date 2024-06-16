@@ -5,23 +5,33 @@ from datetime import datetime
 
 # 定义要访问的多个URL
 urls = [
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.githubusercontent.com/Guovin/TV/gd/result.txt', #每天自动更新1次
     'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
+    'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
+    'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
+    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+    'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
     'https://m3u.ibert.me/txt/y_g.txt',
     'https://m3u.ibert.me/txt/j_home.txt',
-    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://m3u.ibert.me/txt/j_iptv.txt',
+    'https://live.zhoujie218.top/dsyy/mylist.txt',
+    'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
     'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt', #每天早晚各自动更新1次 2024-06-03 17:50
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次11:11 2024/05/13
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次11:11 2024/05/13
-    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt',
+    'http://120.79.4.185/new/mdlive.txt',
+    'https://tv.youdu.fan:666/live/',
+    'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
 ]
 
 # 定义多个对象用于存储不同内容的行文本
-sh_lines = []
 ys_lines = [] #CCTV
 ws_lines = [] #卫视频道
 ty_lines = [] #体育频道
@@ -40,14 +50,8 @@ zy_lines = [] #综艺频道
 yy_lines = [] #音乐频道
 game_lines = [] #游戏频道
 radio_lines = [] #收音机频道
-
-zj_lines = [] #地方台-浙江频道
 gd_lines = [] #地方台-广东频道
 hn_lines = [] #地方台-湖南频道
-hain_lines = [] #地方台-海南频道
-nm_lines = [] #地方台-内蒙频道
-hb_lines = [] #地方台-湖北频道
-ln_lines = [] #地方台-辽宁频道
 
 
 
@@ -94,7 +98,7 @@ def process_part(part_str):
 def process_url(url):
     try:
         # 打开URL并读取内容
-        with urllib.request.urlopen(url) as response:
+        with urllib.请求.urlopen(url) as response:
             # 以二进制方式读取数据
             data = response.read()
             # 将二进制数据解码为字符串
@@ -121,8 +125,6 @@ def process_url(url):
                         dy_lines.append(process_name_string(line.strip()))
                     elif channel_name in dsj_dictionary:  #电视剧频道
                         dsj_lines.append(process_name_string(line.strip()))
-                    elif channel_name in sh_dictionary:  #上海频道
-                        sh_lines.append(process_name_string(line.strip()))
                     elif channel_name in gat_dictionary:  #港澳台
                         gat_lines.append(process_name_string(line.strip()))
                     elif channel_name in gj_dictionary:  #国际台
@@ -149,20 +151,10 @@ def process_url(url):
                         game_lines.append(process_name_string(line.strip()))
                     elif channel_name in radio_dictionary:  #收音机频道
                         radio_lines.append(process_name_string(line.strip()))
-                    elif channel_name in zj_dictionary:  #地方台-浙江频道
-                        zj_lines.append(process_name_string(line.strip()))
                     elif channel_name in gd_dictionary:  #地方台-广东频道
                         gd_lines.append(process_name_string(line.strip()))
                     elif channel_name in hn_dictionary:  #地方台-湖南频道
                         hn_lines.append(process_name_string(line.strip()))
-                    elif channel_name in hb_dictionary:  #地方台-湖北频道
-                        hb_lines.append(process_name_string(line.strip()))
-                    elif channel_name in hain_dictionary:  #地方台-海南频道
-                        hain_lines.append(process_name_string(line.strip()))
-                    elif channel_name in nm_dictionary:  #地方台-内蒙频道
-                        nm_lines.append(process_name_string(line.strip()))
-                    elif channel_name in ln_dictionary:  #地方台-辽宁频道
-                        ln_lines.append(process_name_string(line.strip()))
                     else:
                         other_lines.append(line.strip())
 
@@ -206,14 +198,8 @@ zy_dictionary=read_txt_to_array('综艺频道.txt') #过滤
 yy_dictionary=read_txt_to_array('音乐频道.txt') #过滤
 game_dictionary=read_txt_to_array('游戏频道.txt') #过滤
 radio_dictionary=read_txt_to_array('收音机频道.txt') #过滤
-
-zj_dictionary=read_txt_to_array('地方台/浙江频道.txt') #过滤
 gd_dictionary=read_txt_to_array('地方台/广东频道.txt') #过滤
 hn_dictionary=read_txt_to_array('地方台/湖南频道.txt') #过滤
-hain_dictionary=read_txt_to_array('地方台/海南频道.txt') #过滤
-nm_dictionary=read_txt_to_array('地方台/内蒙频道.txt') #过滤
-hb_dictionary=read_txt_to_array('地方台/湖北频道.txt') #过滤
-ln_dictionary=read_txt_to_array('地方台/辽宁频道.txt') #过滤
 
 #读取纠错频道名称方法
 def load_corrections_name(filename):
@@ -264,7 +250,7 @@ for url in urls:
 
 
 # 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
-def extract_number(s):
+def extract_number():
     num_str = s.split(',')[0].split('-')[1]  # 提取逗号前面的数字部分
     numbers = re.findall(r'\d+', num_str)   #因为有+和K
     return int(numbers[-1]) if numbers else 999
@@ -288,7 +274,6 @@ def custom_sort():
 #["电视剧频道,#genre#"] + sorted(set(dsj_lines)) + ['\n'] + \
 version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
 all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
-             ["上海频道,#genre#"] + sort_data(sh_dictionary,set(correct_name_data(corrections_name,sh_lines))) + ['\n'] + \
              ["央视频道,#genre#"] + sort_data(ys_dictionary,set(correct_name_data(corrections_name,ys_lines))) + ['\n'] + \
              ["卫视频道,#genre#"] + sort_data(ws_dictionary,set(correct_name_data(corrections_name,ws_lines))) + ['\n'] + \
              ["体育频道,#genre#"] + sort_data(ty_dictionary,set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
@@ -305,13 +290,8 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
              ["综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zy_lines))) + ['\n'] + \
              ["音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n'] + \
              ["游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n'] + \
-             ["浙江频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zj_lines))) + ['\n'] + \
              ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
-             ["湖北频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hb_lines))) + ['\n'] + \
              ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
-             ["海南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hain_lines))) + ['\n'] + \
-             ["内蒙频道,#genre#"] + sorted(set(correct_name_data(corrections_name,nm_lines))) + ['\n'] + \
-             ["辽宁频道,#genre#"] + sorted(set(correct_name_data(corrections_name,ln_lines))) + ['\n'] + \
              ["春晚,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
              ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
 
