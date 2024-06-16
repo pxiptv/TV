@@ -34,7 +34,17 @@ jobs:
     - name: Run CCTV update
       run: python ${{ github.workspace }}/CCT.py
       
-
-   
+    - name: Commit results
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        if [ -n "$(git status --porcelain)" ]; then
+        git add *.m3u *.txt
+        git commit -m "Automatic update"
+        git push
+        else
+          echo "No changes detected, skipping commit."
+        fi
+      
 env:
   TZ: Asia/Shanghai
