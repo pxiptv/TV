@@ -183,7 +183,6 @@ ws_dictionary=read_txt_to_array('卫视频道.txt') #过滤+排序
 ty_dictionary=read_txt_to_array('体育频道.txt') #过滤
 dy_dictionary=read_txt_to_array('电影.txt') #过滤
 dsj_dictionary=read_txt_to_array('电视剧.txt') #过滤
-sh_dictionary=read_txt_to_array('shanghai.txt') #过滤+排序
 gat_dictionary=read_txt_to_array('港澳台.txt') #过滤
 gj_dictionary=read_txt_to_array('国际台.txt') #过滤
 jlp_dictionary=read_txt_to_array('纪录片.txt') #过滤
@@ -269,7 +268,6 @@ def custom_sort():
         return 0  # 其他字符串保持原顺序
 
 # 合并所有对象中的行文本（去重，排序后拼接）
-#["上海频道,#genre#"] + sorted(set(sh_lines)) + ['\n'] + \
 #["央视频道,#genre#"] + sorted(sorted(set(ys_lines),key=lambda x: extract_number(x)), key=custom_sort) + ['\n'] + \
 #["卫视频道,#genre#"] + sorted(set(ws_lines)) + ['\n'] + \
 #["春晚,#genre#"] + sorted(set(cw_lines))
