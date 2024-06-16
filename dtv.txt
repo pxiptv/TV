@@ -195,8 +195,8 @@ CHC家庭影院,http://[2409:8087:4c0a:22:1::11]:6410/170000001115/UmaiCHAN63807
 金鹰纪实,http://183.185.172.208:8085/rtp/226.0.2.194:9464
 金鹰纪实,http://171.116.223.129:8085/rtp/226.0.2.194:9464
 金鹰纪实,http://202.102.201.244:40022/rtp/238.1.79.9:4184
-金鹰纪实,http://223.159.10.136:8099/tsfile/live/1009_1.m3u8?key=txiptv&playlive=0&authid=0
 金鹰纪实,http://124.228.160.126:9901/tsfile/live/0013_1.m3u8?key=txiptv&playlive=1&authid=0
+金鹰纪实,http://223.159.10.136:8099/tsfile/live/1009_1.m3u8?key=txiptv&playlive=0&authid=0
 金鹰纪实,https://live.goodiptv.club/api/bestv.php?id=jyjs8m/8000000
 金鹰纪实,http://171.108.239.82:8181/tsfile/live/1021_1.m3u8
 金鹰纪实,http://116.11.156.226:1188/tsfile/live/1047_1.m3u8
