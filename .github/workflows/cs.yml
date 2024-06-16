@@ -44,6 +44,9 @@ jobs:
         rm -f IHOT.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/ihot.txt -O IHOT.txt
         sed -i -n '/IHOT爱\+/,+1p' IHOT.txt
         sed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.txt
+        sed -i 's/\"IHOT\"/\"iHOT\"/g' IHOT.txt
+        sed -i '1i 🐶iHOT频道🐶,#genre#' IHOT.txt
+        sed -i '/^\s*$/d' IHOT.txt
         
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
