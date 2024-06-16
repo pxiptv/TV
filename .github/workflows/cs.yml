@@ -66,12 +66,19 @@ jobs:
         if [[ -f "IPTV.txt" ]]; then
           git add IPTV.txt
         fi
+        if [[ -f "NewTV.txt" ]]; then
+          git add NewTV.txt
+        fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update IPTV.m3u"
           git push
         fi
         if ! git diff --staged --quiet; then
           git commit -m "Auto-update IPTV.txt"
+          git push
+        fi
+        if ! git diff --staged --quiet; then
+          git commit -m "Auto-update NewTV.txt"
           git push
         fi
    
