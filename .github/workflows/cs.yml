@@ -1,4 +1,4 @@
-name: iHOT update
+name: NewTV update
 
 on:
   schedule:
@@ -31,8 +31,8 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run iHOT update
-      run: python iHOT.py
+    - name: Run NewTV update
+      run: python NewTV.py
 
     - name: Commit results
       run: |
