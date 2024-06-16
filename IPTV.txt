@@ -8059,15 +8059,15 @@ CCTV17,http://120.196.232.43:8088/rrs03.hw.gmcc.net/PLTV/651/224/3221226727/1.m3
 陕西卫视,http://iptv123.msns.cn:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://111.14.181.15:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://223.151.51.74:9901/tsfile/live/1003_1.m3u8?key=txiptv&playlive=1&authid=0
-陕西卫视,http://175.10.228.46:8081/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://124.228.160.126:9901/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
+陕西卫视,http://175.10.228.46:8081/tsfile/live/0136_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://223.159.10.136:8099/tsfile/live/0136_1.m3u8?key=txiptv&playlive=0&authid=0
-陕西卫视,http://222.241.154.37:9901/tsfile/live/23048_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226457/index.m3u8
 陕西卫视,http://116.162.6.192/4403-txt.otvstream.otvcloud.com/otv/skcc/live/channel55/1300.m3u8
 陕西卫视,http://[2409:8087:1a01:df::4077]/ottrrs.hl.chinamobile.com/PLTV/88888888/8/3221226457/index.m3u8
 陕西卫视,http://39.134.66.66/PLTV/88888888/224/3221225567/index.m3u8
 陕西卫视,http://stream.snrtv.com/sxbc-star-chsHUY.m3u8
+陕西卫视,http://222.241.154.37:9901/tsfile/live/23048_1.m3u8?key=txiptv&playlive=1&authid=0
 陕西卫视,http://iptvrr.sh.chinamobile.com:6060/cms001/ch00000090990000001067/index.m3u8
 陕西卫视,http://123.101.158.95:808/hls/70/index.m3u8
 陕西卫视,http://118.249.23.89:9999/udp/239.76.254.76:9000
@@ -8705,6 +8705,8 @@ IHOT爱幼教,http://49.235.110.121:9090/898/peda/zhhs.php?id=21
 IHOT爱娱乐,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000130630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000130630&livemode=1&stbId=3
 IHOT爱电竞,http://[2409:8087:7000:20:1000::22]:6060/000000001000/2000000004000000054/index.m3u8?channel-id=hnbblive&Contentid=2000000004000000054&livemode=1&stbId=3
 IHOT爱电竞,http://[2409:8087:7000:20:1000::22]:6060/000000001000/6000000006000230630/index.m3u8?channel-id=wasusyt&Contentid=6000000006000230630&livemode=1&stbId=3
+🦁NewTV频道🦁,#genre#
+🦁NewTV频道🦁,#genre#
 🇭🇰港澳台🇭🇰,#genre#
 凤凰中文,http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pcc72.m3u8
 凤凰中文,http://play-flive.ifeng.com/live/06OLEGEGM4G.m3u8
