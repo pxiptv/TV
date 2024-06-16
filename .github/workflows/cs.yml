@@ -35,12 +35,12 @@ jobs:
       run: |
         # IHOT
         rm -f IHOT.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/ihot.m3u -O IHOT.m3u
-        sed -i -n '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1p' IHOT.m3u
+        sed -i -n '/IHOT爱怀旧\|IHOT爱经典\|IHOT爱娱乐\|IHOT爱江湖\|IHOT爱探索\|IHOT爱世界\|IHOT爱极限\|IHOT爱解密\|IHOT爱猎奇\|IHOT爱美食\|IHOT爱时尚\|IHOT爱家庭\|IHOT爱都市/,+1p' IHOT.m3u
         sed -i '1i #EXTM3U' IHOT.m3u
         sed -i '/^\s*$/d' IHOT.m3u
         
         rm -f IHOT.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/ihot.txt -O IHOT.txt
-        sed -i -n '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1p' IHOT.txt
+        sed -i -n '/IHOT爱怀旧\|IHOT爱经典\|IHOT爱娱乐\|IHOT爱江湖\|IHOT爱探索\|IHOT爱世界\|IHOT爱极限\|IHOT爱解密\|IHOT爱猎奇\|IHOT爱美食\|IHOT爱时尚\|IHOT爱家庭\|IHOT爱都市/,+1p' IHOT.txt
         sed -i '1i 🐶IHOT频道🐶,#genre#' IHOT.txt
         sed -i '/^\s*$/d' IHOT.txt
 
