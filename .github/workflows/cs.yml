@@ -31,9 +31,8 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run CCTV update
-      run: python ${{ github.workspace }}/cctv.py
-
+    - name: Run DTV update
+      run: python ${{ github.workspace }}/DTV.py
 
     - name: Commit results
       run: |
@@ -49,32 +48,8 @@ jobs:
             
     - name: Update
       run: |
-        # 央视源
-        rm -f CCTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CCTV.m3u
-        sed -i -n '/CCTV1\|CCTV2\|CCTV3\|CCTV4\|CCTV5\|CCTV5\|CCTV6\|CCTV7\|CCTV8\|CCTV9\|CCTV10\|CCTV11\|CCTV12\|CCTV13\|CCTV14\|CCTV15\|CCTV16\|CCTV17\|CCTV4K\|CCTV8K\+/,+1p' CCTV.m3u
-        sed -i 's/央视频道/央视/' CCTV.m3u
-        sed -i '1i #EXTM3U' CCTV.m3u
-        sed -i '/^\s*$/d' CCTV.m3u
-        
-        rm -f CCTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.txt -O CCTV.txt
-        sed -i -n '/CCTV1\|CCTV2\|CCTV3\|CCTV4\|CCTV5\|CCTV5\|CCTV6\|CCTV7\|CCTV8\|CCTV9\|CCTV10\|CCTV11\|CCTV12\|CCTV13\|CCTV14\|CCTV15\|CCTV16\|CCTV17\|CCTV4K\|CCTV8K\+/,+1p' CCTV.txt
-        sed -i 's/央视频道/央视/' CCTV.txt
-        sed -i '1i 🇨🇳央视频道🇨🇳,#genre#' CCTV.txt
-        sed -i '/^\s*$/d' CCTV.txt
-        
-        # 卫视源
-        rm -f CNTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cntv.m3u -O CNTV.m3u
-        sed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|江苏卫视\|北京卫视\|广东卫视\|深圳卫视\|山东卫视\|河南卫视\|天津卫视\|湖北卫视\|安徽卫视\|重庆卫视\|东南卫视\|四川卫视\|云南卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|吉林卫视\|江西卫视\|辽宁卫视\|宁夏卫视\|陕西卫视\|内蒙古卫视\|黑龙江卫视\+/,+1p' CNTV.m3u
-        sed -i 's/卫视频道/卫视/' CNTV.m3u
-        sed -i '1i #EXTM3U' CNTV.m3u
-        sed -i '/^\s*$/d' CNTV.m3u
 
-        rm -f CNTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/cntv.txt -O CNTV.txt
-        sed -i -n '/湖南卫视\|浙江卫视\|东方卫视\|江苏卫视\|北京卫视\|广东卫视\|深圳卫视\|山东卫视\|河南卫视\|天津卫视\|湖北卫视\|安徽卫视\|重庆卫视\|东南卫视\|四川卫视\|云南卫视\|广西卫视\|贵州卫视\|海南卫视\|河北卫视\|吉林卫视\|江西卫视\|辽宁卫视\|宁夏卫视\|陕西卫视\|内蒙古卫视\|黑龙江卫视\+/,+1p' CNTV.txt
-        sed -i 's/卫视频道/卫视/' CNTV.txt
-        sed -i '1i 🛰️卫视频道🛰️,#genre#' CNTV.txt
-        sed -i '/^\s*$/d' CNTV.txt
-    
+        
         # 数字源
         rm -f DTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/dtv.m3u -O DTV.m3u
         sed -i -n '/CHC高清电影\|CHC家庭影院\|CHC动作电影\|兵器科技\|怀旧剧场\|世界地理\|文化精品\|央视台球\|央视高网\|风云剧场\|风云音乐\|第一剧场\|女性时尚\|风云足球\|黑莓电影\|黑莓动画\|数字\+/,+1p' DTV.m3u
@@ -87,50 +62,16 @@ jobs:
         sed -i 's/央视频道/数字/;s/卫视频道/数字/;s/地方/数字/' DTV.txt
         sed -i '1i 🥝数字频道🥝,#genre#' DTV.txt
         sed -i '/^\s*$/d' DTV.txt
-
-        # 港澳台
-        rm -f HTOTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/htotv.m3u -O HTOTV.m3u
-        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|无线新闻\|翡翠台\|翡翠台\|明珠台\|TVB Plus\|TVB财经体育\|TVB娱乐新闻\|HOY77\|HOY78\|星河台\|功夫台\|VIUTV\|J2\|耀才财经\|面包台\|香港C＋\|澳门Macau\|中天新闻\|中视新闻\|台视新闻\|民视新闻\|东森新闻\|TVBS新闻\|寰宇新闻\|镜新闻\|非凡新闻\|中天亚洲\|民视台湾\|台视财经\|东森财经新闻\|国际财经\|台视\|民视\|中视\|华视\|民视综艺\|民视第一\|民视旅游\|亚洲旅游\|中视菁采\|八大精彩\|八大综艺\|TVBS精采\|TVBS欢乐\|靖天欢乐\|靖天综合\|AMC电影\|影迷数位電影\|CATCHPLAY电影\|靖天电影\|龙华电影\|采昌影剧\|民视影剧\|龙华经典\|中视经典\|台湾戏剧\|靖洋戏剧\|靖天戏剧\|公视戏剧\|龙华戏剧\|时尚运动X\|靖天资讯\|靖天国际\|靖天映画\|龙华偶像\|好消息\|好消息2\+/,+1p' HTOTV.m3u
-        sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' HTOTV.m3u
-        sed -i '1i #EXTM3U' HTOTV.m3u
-        sed -i '/^\s*$/d' HTOTV.m3u
-
-        rm -f HTOTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/htotv.txt -O HTOTV.txt
-        sed -i -n '/凤凰中文\|凤凰资讯\|凤凰香港\|无线新闻\|翡翠台\|翡翠台\|明珠台\|TVB Plus\|TVB财经体育\|TVB娱乐新闻\|HOY77\|HOY78\|星河台\|功夫台\|VIUTV\|J2\|耀才财经\|面包台\|香港C＋\|澳门Macau\|中天新闻\|中视新闻\|台视新闻\|民视新闻\|东森新闻\|TVBS新闻\|寰宇新闻\|镜新闻\|非凡新闻\|中天亚洲\|民视台湾\|台视财经\|东森财经新闻\|国际财经\|台视\|民视\|中视\|华视\|民视综艺\|民视第一\|民视旅游\|亚洲旅游\|中视菁采\|八大精彩\|八大综艺\|TVBS精采\|TVBS欢乐\|靖天欢乐\|靖天综合\|AMC电影\|影迷数位電影\|CATCHPLAY电影\|靖天电影\|龙华电影\|采昌影剧\|民视影剧\|龙华经典\|中视经典\|台湾戏剧\|靖洋戏剧\|靖天戏剧\|公视戏剧\|龙华戏剧\|时尚运动X\|靖天资讯\|靖天国际\|靖天映画\|龙华偶像\|好消息\|好消息2\+/,+1p' HTOTV.txt
-        sed -i 's/国际频道/香港/;s/国际频道/澳门/;s/国际频道/台湾/' HTOTV.txt
-        sed -i '1i 🇭🇰港澳台🇭🇰,#genre#' HTOTV.txt
-        sed -i '/^\s*$/d' HTOTV.txt
-        
-        # IHOT
-        rm -f IHOT.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/ihot.m3u -O IHOT.m3u
-        sed -i -n '/IHOT爱\+/,+1p' IHOT.m3u
-        sed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.m3u
-        sed -i '1i #EXTM3U' IHOT.m3u
-        sed -i '/^\s*$/d' IHOT.m3u
-
-        rm -f IHOT.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/ihot.txt -O IHOT.txt
-        sed -i -n '/IHOT爱\+/,+1p' IHOT.txt
-        sed -i '/iHOT爱怀旧\|iHOT爱经典\|iHOT爱娱乐\|iHOT爱江湖\|iHOT爱探索\|iHOT爱世界\|iHOT爱极限\|iHOT爱解密\|iHOT爱猎奇\|iHOT爱美食\|iHOT爱时尚\|iHOT爱家庭\|iHOT爱都市/,+1d' IHOT.txt
-        sed -i '1i 🐶iHOT频道🐶,#genre#' IHOT.txt
-        sed -i '/^\s*$/d' IHOT.txt        
         
         # 整合源
         rm -f IPTV.m3u && touch IPTV.m3u
-        cat CCTV.m3u >> IPTV.m3u
-        cat CNTV.m3u >> IPTV.m3u
         cat DTV.m3u >> IPTV.m3u
-        cat IHOT.m3u >> IPTV.m3u
-        cat HTOTV.m3u >> IPTV.m3u
         sed -i '/#EXTM3U/d' IPTV.m3u
         sed -i '1i #EXTM3U' IPTV.m3u
         sed -i '/^\s*$/d' IPTV.m3u
 
         rm -f IPTV.txt && touch IPTV.txt
-        cat CCTV.txt >> IPTV.txt
-        cat CNTV.txt >> IPTV.txt
         cat DTV.txt >> IPTV.txt
-        cat IHOT.txt >> IPTV.txt
-        cat HTOTV.txt >> IPTV.txt
         sed -i '/^\s*$/d' IPTV.txt
                 
         # 节目源
@@ -147,6 +88,9 @@ jobs:
         fi
         if [[ -f "IPTV.txt" ]]; then
           git add IPTV.txt
+        fi
+        if [[ -f "DTV.txt" ]]; then
+          git add "DTV.txt
         fi
         if [[ -f "EPG.xml" ]]; then
           git add EPG.xml
