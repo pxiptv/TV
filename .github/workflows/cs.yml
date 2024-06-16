@@ -34,48 +34,7 @@ jobs:
     - name: Run CCTV update
       run: python ${{ github.workspace }}/CCT.py
       
-    - name: Update
-      run: |
-        # 央视源
-        rm -f CCTV.m3u && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.m3u -O CCTV.m3u
-        sed -i -n '/CCTV1\|CCTV2\|CCTV3\|CCTV4\|CCTV5\|CCTV5\|CCTV6\|CCTV7\|CCTV8\|CCTV9\|CCTV10\|CCTV11\|CCTV12\|CCTV13\|CCTV14\|CCTV15\|CCTV16\|CCTV17\|CCTV4K\|CCTV8K\+/,+1p' CCTV.m3u
-        sed -i '1i #EXTM3U' CCTV.m3u
-        sed -i '/^\s*$/d' CCTV.m3u
-        
-        rm -f CCTV.txt && wget https://raw.githubusercontent.com/pxiptv/TV/main/cctv.txt -O CCTV.txt
-        sed -i -n '/CCTV1\|CCTV2\|CCTV3\|CCTV4\|CCTV5\|CCTV5\|CCTV6\|CCTV7\|CCTV8\|CCTV9\|CCTV10\|CCTV11\|CCTV12\|CCTV13\|CCTV14\|CCTV15\|CCTV16\|CCTV17\|CCTV4K\|CCTV8K\+/,+1p' CCTV.txt
-        sed -i '1i 🇨🇳央视频道🇨🇳,#genre#' CCTV.txt
-        sed -i '/^\s*$/d' CCTV.txt
 
-        # 整合源
-        rm -f IPTV.m3u && touch IPTV.m3u
-        cat CCTV.m3u >> IPTV.m3u
-        sed -i '/#EXTM3U/d' IPTV.m3u
-        sed -i '1i #EXTM3U' IPTV.m3u
-        sed -i '/^\s*$/d' IPTV.m3u
-
-        rm -f IPTV.txt && touch IPTV.txt
-        cat CCTV.txt >> IPTV.txt
-        sed -i '/^\s*$/d' IPTV.txt
-        
-    - name: Commit and push if changed
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        if [[ -f "IPTV.m3u" ]]; then
-          git add IPTV.m3u
-        fi
-        if [[ -f "IPTV.txt" ]]; then
-          git add IPTV.txt
-        fi
-        if ! git diff --staged --quiet; then
-          git commit -m "Auto-update IPTV.m3u"
-          git push
-        fi
-        if ! git diff --staged --quiet; then
-          git commit -m "Auto-update IPTV.txt"
-          git push
-        fi
    
 env:
   TZ: Asia/Shanghai
