@@ -157,6 +157,7 @@ jobs:
         cat IHOT.txt >> IPTV.txt
         cat NewTV.txt >> IPTV.txt
         cat HTOTV.txt >> IPTV.txt
+        sed -i '/^\s*$/d' IPTV.txt
                 
         # 节目源
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
