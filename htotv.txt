@@ -1,5 +1,6 @@
 🇭🇰港澳台🇭🇰,#genre#
 凤凰中文,http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pcc72.m3u8
+凤凰中文,http://117.27.190.42:9998/tsfile/live/23280_1.m3u8?key=txiptv&playlive=1&authid=0
 凤凰中文,http://play-flive.ifeng.com/live/06OLEGEGM4G.m3u8
 凤凰中文,http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226547/index.m3u8
 凤凰中文,http://[2409:8087:7000:20::16]/wh7f454c46tw3934030395_900687363/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226547/index.m3u8
@@ -12,10 +13,6 @@
 凤凰中文,http://116.162.6.191/zycfcdn.gdwlcloud.com/PLTV/88888888/224/3221226317/index.m3u8
 凤凰中文,http://118.249.23.89:9999/udp/239.76.246.134:1234
 凤凰中文,http://118.249.23.89:9999/udp/239.76.253.135:9000
-凤凰中文,http://171.38.43.236:8181/tsfile/live/1014_1.m3u8
-凤凰中文,http://171.38.43.236:8181/tsfile/live/1001_1.m3u8
-凤凰中文,http://110.185.202.31:4022/udp/239.93.0.162:2192
-凤凰中文,http://110.185.202.31:4022/udp/239.93.1.9:2192
 凤凰中文,http://[2409:8087:2001:20:2800:0:df6e:eb24]/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8
 凤凰中文,http://[2409:8087:2001:20:2800:0:df6e:eb25]:80/wh7f454c46tw2443888236_158039228/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8?icpid=3&RTS=1674369674&from=40&popid=40&hms_devid=2292&prioritypopid=40&vqe=3
 凤凰中文,http://[2409:8087:2001:20:2800:0:df6e:eb24]:80/ott.mobaibox.com/PLTV/3/224/3221228527/index.m3u8
@@ -38,6 +35,7 @@
 凤凰中文,http://playtv-live.ifeng.com/live/06OLEGEGM4G.m3u8
 凤凰中文,https://tv.iill.top/jd/fhzw
 凤凰资讯,http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701pin72.m3u8
+凤凰资讯,http://117.27.190.42:9998/tsfile/live/23279_1.m3u8?key=txiptv&playlive=1&authid=0
 凤凰资讯,http://play-flive.ifeng.com/live/06OLEEWQKN4.m3u8
 凤凰资讯,http://[2409:8087:7000:20::4]:80/dbiptv.sn.chinamobile.com/PLTV/88888888/224/3221226546/index.m3u8
 凤凰资讯,http://[2409:8087:7000:20::17]/wh7f454c46tw3848616474_-2066516487/dbiptv.sn.chinamobile.com/PLTV/88888890/224/3221226546/index.m3u8
@@ -53,19 +51,6 @@
 凤凰资讯,http://118.249.23.89:9999/udp/239.76.246.135:1234
 凤凰资讯,http://118.249.23.89:9999/udp/239.76.253.134:9000
 凤凰资讯,http://ali.hlspull.yximgs.com/live/huanqiuhklivetvjjpcpdvuejljyjjyfjoxvchjwhjwojjjhdjjlsjhbjfhjx.flv
-凤凰资讯,http://116.11.156.226:1188/tsfile/live/1001_1.m3u8
-凤凰资讯,http://116.11.156.116:1188/tsfile/live/1001_1.m3u8
-凤凰资讯,http://121.24.99.96:8090/hls/70/index.m3u8
-凤凰资讯,http://116.11.157.30:1188/tsfile/live/1001_1.m3u8
-凤凰资讯,http://171.38.43.236:8181/tsfile/live/1015_1.m3u8
-凤凰资讯,http://171.38.43.236:8181/tsfile/live/1000_1.m3u8
-凤凰资讯,http://110.72.52.230:8181/tsfile/live/1064_1.m3u8
-凤凰资讯,http://110.72.70.34:8181/tsfile/live/1064_1.m3u8
-凤凰资讯,http://116.11.156.112:1188/tsfile/live/1001_1.m3u8
-凤凰资讯,http://121.24.98.30:8090/hls/70/index.m3u8
-凤凰资讯,http://116.11.156.105:1188/tsfile/live/1001_1.m3u8
-凤凰资讯,http://110.185.202.31:4022/udp/239.93.0.118:2191
-凤凰资讯,http://110.185.202.31:4022/udp/239.93.1.4:2191
 凤凰资讯,http://[2409:8087:2001:20:2800:0:df6e:eb27]/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8
 凤凰资讯,http://[2409:8087:2001:20:2800:0:df6e:eb27]:80/wh7f454c46tw1890984412_1778241929/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8?icpid=3&RTS=1674373416&from=40&popid=40&hms_devid=2293&prioritypopid=40&vqe=3
 凤凰资讯,http://[2409:8087:2001:20:2800:0:df6e:eb27]:80/ott.mobaibox.com/PLTV/3/224/3221228524/index.m3u8
@@ -107,14 +92,6 @@
 凤凰香港,http://116.162.6.192/1.v.smtcdns.net/qctv.fengshows.cn/live/0701phk72.m3u8
 凤凰香港,http://113.64.145.91:8081/hls/38/index.m3u8
 凤凰香港,http://1.62.64.252/1.v.smtcdns.net/qctv.fengshows.cn/live/0701phk72.flv
-凤凰香港,http://116.11.156.226:1188/tsfile/live/1005_1.m3u8
-凤凰香港,http://116.11.156.116:1188/tsfile/live/1005_1.m3u8
-凤凰香港,http://116.11.157.30:1188/tsfile/live/1005_1.m3u8
-凤凰香港,http://171.38.43.236:8181/tsfile/live/1002_1.m3u8
-凤凰香港,http://110.72.52.230:8181/tsfile/live/1065_1.m3u8
-凤凰香港,http://110.72.70.34:8181/tsfile/live/1065_1.m3u8
-凤凰香港,http://116.11.156.112:1188/tsfile/live/1005_1.m3u8
-凤凰香港,http://116.11.156.105:1188/tsfile/live/1005_1.m3u8
 凤凰香港,http://[2409:8087:2001:20:2800:0:df6e:eb1d]/ott.mobaibox.com/PLTV/3/224/3221228530/1.m3u8
 凤凰香港,http://[2409:8087:2001:20:2800:0:df6e:eb1d]:80/ott.mobaibox.com/PLTV/1/224/3221228530/1.m3u8
 凤凰香港,http://r.jdshipin.com/yDoTN
@@ -139,7 +116,6 @@
 无线新闻,http://198.16.100.90:8278/inews_twn/playlist.m3u8?tid=MD8D9734527497345274&ct=19249&tsum=88c5d57f9fdce89810d61e1001910a80
 无线新闻,http://radius.8866.org:800/hls/82/index.m3u8
 翡翠台,http://ali.hlspull.yximgs.com/live/huanqiuhklivefhwwjpthjyjtjjjxcxbfhjjfjvhdtjdvbtvjsjxjfsjjcvbctvbfc.flv
-翡翠台,http://171.38.43.236:8181/tsfile/live/1049_1.m3u8
 翡翠台,http://36.36.200.212:9901/tsfile/live/1008_1.m3u8?key=txiptv&url=tvzb.com
 翡翠台,http://107.167.12.58:27347/livehttpplay?channel_id=30025
 翡翠台,http://107.167.12.58:27347/livehttpplay?channel_id=20127
