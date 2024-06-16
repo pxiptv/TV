@@ -33,16 +33,7 @@ jobs:
 
     - name: Run CCTV update
       run: python ${{ github.workspace }}/cctv.py
-    - name: Run CNTV update
-      run: python ${{ github.workspace }}/cntv.py
-    - name: Run HTOTV update
-      run: python ${{ github.workspace }}/htotv.py
-    - name: Run DTV update
-      run: python ${{ github.workspace }}/DTV.py
-    - name: Run NewTV update
-      run: python ${{ github.workspace }}/NewTV.py
-    - name: Run iHOT update
-      run: python ${{ github.workspace }}/iHOT.py
+
 
     - name: Commit results
       run: |
