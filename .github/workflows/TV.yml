@@ -38,8 +38,6 @@ jobs:
     - name: Run HTOTV update
       run: python ${{ github.workspace }}/htotv.py
     - name: Run MGTV update
-      run: python ${{ github.workspace }}/mg.py
-    - name: Run DTV update
       run: python ${{ github.workspace }}/DTV.py
     - name: Run NewTV update
       run: python ${{ github.workspace }}/NewTV.py
