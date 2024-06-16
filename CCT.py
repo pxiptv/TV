@@ -4,30 +4,19 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
-    'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
-    'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
-    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
     'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
-    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
+    'https://raw.githubusercontent.com/Guovin/TV/gd/result.txt',
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
-    'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
     'https://m3u.ibert.me/txt/y_g.txt',
     'https://m3u.ibert.me/txt/j_home.txt',
-    'https://m3u.ibert.me/txt/j_iptv.txt',
-    'https://live.zhoujie218.top/dsyy/mylist.txt',
-    'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
+    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
     'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt',
-    'http://120.79.4.185/new/mdlive.txt',
-    'https://tv.youdu.fan:666/live/',
-    'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
 ]
 
 ys_lines = []
@@ -85,7 +74,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.请求.urlopen(url) as response:
+        with urllib.request.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
