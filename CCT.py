@@ -30,28 +30,27 @@ urls = [
     'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
 ]
 
-# 定义多个对象用于存储不同内容的行文本
-ys_lines = []   #央视频道
-ws_lines = []   #卫视频道
-ty_lines = []   #体育频道
-dy_lines = []   #电影
-dsj_lines = []  #电视剧
-gat_lines = []  #港澳台
-gj_lines = []   #国际台
-jlp_lines = []  #记录片
-dhp_lines = []  #动画片
-xq_lines = []   #戏曲
-js_lines = []   #解说
-cw_lines = []   #春晚
-mx_lines = []   #明星
-ztp_lines = []  #主题片
-zy_lines = []   #综艺频道
-yy_lines = []   #音乐频道
-game_lines = []   #游戏频道
-radio_lines = []  #收音机频道
-gd_lines = []     #地方台-广东频道
-hn_lines = []     #地方台-湖南频道
-other_lines = []  #其他频道
+ys_lines = []
+ws_lines = []
+ty_lines = []
+dy_lines = []
+dsj_lines = []
+gat_lines = []
+gj_lines = []
+jlp_lines = []
+dhp_lines = []
+xq_lines = []
+js_lines = []
+cw_lines = []
+mx_lines = []
+ztp_lines = []
+zy_lines = []
+yy_lines = []
+game_lines = []
+radio_lines = []
+gd_lines = []
+hn_lines = []
+other_lines = []
 
 def process_name_string(input_str):
     parts = input_str.split(',')
