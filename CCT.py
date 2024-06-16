@@ -5,19 +5,30 @@ from datetime import datetime
 
 # 定义要访问的多个URL
 urls = [
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.githubusercontent.com/Guovin/TV/gd/result.txt', #每天自动更新1次
     'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
+    'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
+    'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
+    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+    'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
     'https://m3u.ibert.me/txt/y_g.txt',
     'https://m3u.ibert.me/txt/j_home.txt',
-    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://m3u.ibert.me/txt/j_iptv.txt',
+    'https://live.zhoujie218.top/dsyy/mylist.txt',
+    'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
     'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt', #每天早晚各自动更新1次 2024-06-03 17:50
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次11:11 2024/05/13
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次11:11 2024/05/13
-    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt',
+    'http://120.79.4.185/new/mdlive.txt',
+    'https://tv.youdu.fan:666/live/',
+    'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
 ]
 
 # 定义多个对象用于存储不同内容的行文本
@@ -41,12 +52,8 @@ game_lines = [] #游戏频道
 radio_lines = [] #收音机频道
 gd_lines = [] #地方台-广东频道
 hn_lines = [] #地方台-湖南频道
-
-
-
-# favorite_lines = []
-
 other_lines = []
+# favorite_lines = []
 
 def process_name_string(input_str):
     parts = input_str.split(',')
@@ -92,8 +99,11 @@ def process_url(url):
             data = response.read()
             # 将二进制数据解码为字符串
             text = data.decode('utf-8')
-            channel_name=""
-            channel_address=""
+            lines = text.split('\n')
+            for line in lines:
+                if "#genre#" not in line and "," in line and "://" in line:
+                    channel_name = line.split(',')[0].strip()
+                    channel_address = line.split(',')[1].strip()
 
             # 逐行处理内容
             lines = text.split('\n')
@@ -205,7 +215,7 @@ def load_corrections_name(filename):
 corrections_name = load_corrections_name('corrections_name.txt')
 
 #纠错频道名称
-#correct_name_data(corrections_name,xxxx)
+#correct_name_data(corrections_name,data)
 def correct_name_data(corrections, data):
     corrected_data = []
     for line in data:
@@ -214,8 +224,6 @@ def correct_name_data(corrections, data):
             name = corrections[name]
         corrected_data.append(f"{name},{url}")
     return corrected_data
-
-
 
 def sort_data(order, data):
     # 创建一个字典来存储每行数据的索引
@@ -230,13 +238,19 @@ def sort_data(order, data):
     sorted_data = sorted(data, key=sort_key)
     return sorted_data
 
+current_date = datetime.now().strftime("%Y%m%d")
 
+def save_data(filename, data):
+    try:
+        with open(filename, 'w', encoding='utf-8') as file:
+            for item in data:
+                file.write("%s\n" % item)
+    except Exception as e:
+        print(f"An error occurred while saving the file '{filename}': {e}")
+        
 # 循环处理每个URL
 for url in urls:
-    print(f"处理URL: {url}")
     process_url(url)
-
-
 
 # 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
 def extract_number():
