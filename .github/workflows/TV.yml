@@ -173,6 +173,10 @@ jobs:
         fi
         if [[ -f "IPTV.txt" ]]; then
           git add IPTV.txt
+                fi
+        if [[ -f "DTV.txt" ]]; then
+          git add "DTV.txt
+        fi
         fi
         if [[ -f "EPG.xml" ]]; then
           git add EPG.xml
