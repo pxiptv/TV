@@ -4,18 +4,18 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.githubusercontent.com/Guovin/TV/gd/result.txt',
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.bgithub.xyz/Guovin/TV/gd/result.txt',
+    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
     'https://m3u.ibert.me/txt/y_g.txt',
     'https://m3u.ibert.me/txt/j_home.txt',
-    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://raw.bgithub.xyz/gaotianliuyun/gao/master/list.txt',
     'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
+    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt',
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/tvlive.txt',
     'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
 ]
 
@@ -74,7 +74,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.请求.urlopen(url) as response:
+        with urllib.request.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
