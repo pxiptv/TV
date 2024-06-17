@@ -4,19 +4,30 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.bgithub.xyz/Guovin/TV/gd/result.txt',
-    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
+    'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
+    'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
+    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+    'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
     'https://m3u.ibert.me/txt/y_g.txt',
     'https://m3u.ibert.me/txt/j_home.txt',
-    'https://raw.bgithub.xyz/gaotianliuyun/gao/master/list.txt',
+    'https://m3u.ibert.me/txt/j_iptv.txt',
+    'https://live.zhoujie218.top/dsyy/mylist.txt',
+    'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
     'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt',
-    'https://raw.bgithub.xyz/fenxp/iptv/main/live/tvlive.txt',
-    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt',
+    'http://120.79.4.185/new/mdlive.txt',
+    'https://tv.youdu.fan:666/live/',
+    'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
 ]
 
 ys_lines = []
@@ -28,11 +39,8 @@ gat_lines = []
 gj_lines = []
 jlp_lines = []
 dhp_lines = []
-xq_lines = []
 js_lines = []
-cw_lines = []
 mx_lines = []
-ztp_lines = []
 zy_lines = []
 yy_lines = []
 game_lines = []
@@ -74,7 +82,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.request.urlopen(url) as response:
+        with urllib.请求.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
@@ -102,16 +110,10 @@ def process_url(url):
                         jlp_lines.append(process_name_string(line.strip()))
                     elif channel_name in dhp_dictionary:
                         dhp_lines.append(process_name_string(line.strip()))
-                    elif channel_name in xq_dictionary:
-                        xq_lines.append(process_name_string(line.strip()))
                     elif channel_name in js_dictionary:
                         js_lines.append(process_name_string(line.strip()))
-                    elif channel_name in cw_dictionary:
-                        cw_lines.append(process_name_string(line.strip()))
                     elif channel_name in mx_dictionary:
                         mx_lines.append(process_name_string(line.strip()))
-                    elif channel_name in ztp_dictionary:
-                        ztp_lines.append(process_name_string(line.strip()))
                     elif channel_name in zy_dictionary:
                         zy_lines.append(process_name_string(line.strip()))
                     elif channel_name in yy_dictionary:
@@ -154,17 +156,14 @@ gat_dictionary = read_txt_to_array('港澳台.txt')
 gj_dictionary = read_txt_to_array('国际台.txt')
 jlp_dictionary = read_txt_to_array('纪录片.txt')
 dhp_dictionary = read_txt_to_array('动画片.txt')
-xq_dictionary = read_txt_to_array('戏曲频道.txt')
 js_dictionary = read_txt_to_array('解说频道.txt')
-cw_dictionary = read_txt_to_array('春晚.txt')
 mx_dictionary = read_txt_to_array('明星.txt')
-ztp_dictionary = read_txt_to_array('主题片.txt')
 zy_dictionary = read_txt_to_array('综艺频道.txt')
 yy_dictionary = read_txt_to_array('音乐频道.txt')
 game_dictionary = read_txt_to_array('游戏频道.txt')
 radio_dictionary = read_txt_to_array('收音机频道.txt')
-gd_dictionary = read_txt_to_array('地方台/广东频道.txt')
-hn_dictionary = read_txt_to_array('地方台/湖南频道.txt')
+gd_dictionary = read_txt_to_array('广东频道.txt')
+hn_dictionary = read_txt_to_array('湖南频道.txt')
 
 def load_corrections_name(filename):
     corrections = {}
@@ -242,23 +241,20 @@ version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
 all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
              ["央视频道,#genre#"] + sort_data(ys_dictionary,set(correct_name_data(corrections_name,ys_lines))) + ['\n'] + \
              ["卫视频道,#genre#"] + sort_data(ws_dictionary,set(correct_name_data(corrections_name,ws_lines))) + ['\n'] + \
+             ["港澳台,#genre#"] + sort_data(gat_dictionary,set(correct_name_data(corrections_name,gat_lines))) + ['\n'] + \
+             ["国际台,#genre#"] + sort_data(gj_dictionary,set(correct_name_data(corrections_name,gj_lines))) + ['\n'] + \
              ["体育频道,#genre#"] + sort_data(ty_dictionary,set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
              ["电影频道,#genre#"] + sort_data(dy_dictionary,set(correct_name_data(corrections_name,dy_lines))) + ['\n'] + \
              ["电视剧频道,#genre#"] + sort_data(dsj_dictionary,set(correct_name_data(corrections_name,dsj_lines))) + ['\n'] + \
              ["明星,#genre#"] + sort_data(mx_dictionary,set(correct_name_data(corrections_name,mx_lines))) + ['\n'] + \
-             ["主题片,#genre#"] + sort_data(ztp_dictionary,set(correct_name_data(corrections_name,ztp_lines))) + ['\n'] + \
-             ["港澳台,#genre#"] + sort_data(gat_dictionary,set(correct_name_data(corrections_name,gat_lines))) + ['\n'] + \
-             ["国际台,#genre#"] + sort_data(gj_dictionary,set(correct_name_data(corrections_name,gj_lines))) + ['\n'] + \
              ["纪录片,#genre#"] + sort_data(jlp_dictionary,set(correct_name_data(corrections_name,jlp_lines)))+ ['\n'] + \
              ["动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n'] + \
-             ["戏曲频道,#genre#"] + sort_data(xq_dictionary,set(correct_name_data(corrections_name,xq_lines))) + ['\n'] + \
              ["解说频道,#genre#"] + sorted(set(js_lines)) + ['\n'] + \
              ["综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zy_lines))) + ['\n'] + \
              ["音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n'] + \
              ["游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n'] + \
              ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
              ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
-             ["春晚,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
              ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
 
 # 将合并后的文本写入文件
