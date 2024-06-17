@@ -2,7 +2,7 @@ name: 电视节目地址分类更新
 
 on:
   schedule:
-    - cron: '0 22 1 * *'
+    - cron: '08 22 * * *'
   workflow_dispatch:
     分支:
       - main
