@@ -84,7 +84,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.request.urlopen(url) as response:
+        with urllib.请求.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
@@ -273,7 +273,7 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
 
 # 将合并后的文本写入文件
 output_file = "cctv.txt"
-others_file = "others_output.txt"
+others_file = "other.txt"
 try:
     with open(output_file, 'w', encoding='utf-8') as f:
         for line in all_lines:
