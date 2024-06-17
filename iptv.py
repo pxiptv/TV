@@ -74,7 +74,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.request.urlopen(url) as response:
+        with urllib.请求.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
@@ -215,8 +215,86 @@ def save_data(filename, data):
 for url in urls:
     process_url(url)
 
-def save_sorted_data(filename, data, order_list):
-    sorted_data = sort_data(order_list, data)
-    save_data(filename, sorted_data)
+# 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
+def extract_number():
+    num_str = s.split(',')[0].split('-')[1]  # 提取逗号前面的数字部分
+    numbers = re.findall(r'\d+', num_str)   #因为有+和K
+    return int(numbers[-1]) if numbers else 999
+# 定义一个自定义排序函数
+def custom_sort():
+    if "CCTV-4K" in s:
+        return 2  # 将包含 "4K" 的字符串排在后面
+    elif "CCTV-8K" in s:
+        return 3  # 将包含 "8K" 的字符串排在后面 
+    elif "(4K)" in s:
+        return 1  # 将包含 " (4K)" 的字符串排在后面
+    else:
+        return 0  # 其他字符串保持原顺序
 
-save_data(f'ys_{current_date}.txt', correct_name_data(corrections_name, ys_lines))
+# 合并所有对象中的行文本（去重，排序后拼接）
+#["上海频道,#genre#"] + sorted(set(sh_lines)) + ['\n'] + \
+#["央视频道,#genre#"] + sorted(sorted(set(ys_lines),key=lambda x: extract_number(x)), key=custom_sort) + ['\n'] + \
+#["卫视频道,#genre#"] + sorted(set(ws_lines)) + ['\n'] + \
+#["春晚,#genre#"] + sorted(set(cw_lines))
+#["主题片,#genre#"] + sorted(set(ztp_lines)) + ['\n'] + \
+#["电视剧频道,#genre#"] + sorted(set(dsj_lines)) + ['\n'] + \
+version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
+             ["央视频道,#genre#"] + sort_data(ys_dictionary,set(correct_name_data(corrections_name,ys_lines))) + ['\n'] + \
+             ["卫视频道,#genre#"] + sort_data(ws_dictionary,set(correct_name_data(corrections_name,ws_lines))) + ['\n'] + \
+             ["体育频道,#genre#"] + sort_data(ty_dictionary,set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
+             ["电影频道,#genre#"] + sort_data(dy_dictionary,set(correct_name_data(corrections_name,dy_lines))) + ['\n'] + \
+             ["电视剧频道,#genre#"] + sort_data(dsj_dictionary,set(correct_name_data(corrections_name,dsj_lines))) + ['\n'] + \
+             ["明星,#genre#"] + sort_data(mx_dictionary,set(correct_name_data(corrections_name,mx_lines))) + ['\n'] + \
+             ["主题片,#genre#"] + sort_data(ztp_dictionary,set(correct_name_data(corrections_name,ztp_lines))) + ['\n'] + \
+             ["港澳台,#genre#"] + sort_data(gat_dictionary,set(correct_name_data(corrections_name,gat_lines))) + ['\n'] + \
+             ["国际台,#genre#"] + sort_data(gj_dictionary,set(correct_name_data(corrections_name,gj_lines))) + ['\n'] + \
+             ["纪录片,#genre#"] + sort_data(jlp_dictionary,set(correct_name_data(corrections_name,jlp_lines)))+ ['\n'] + \
+             ["动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n'] + \
+             ["戏曲频道,#genre#"] + sort_data(xq_dictionary,set(correct_name_data(corrections_name,xq_lines))) + ['\n'] + \
+             ["解说频道,#genre#"] + sorted(set(js_lines)) + ['\n'] + \
+             ["综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zy_lines))) + ['\n'] + \
+             ["音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n'] + \
+             ["游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n'] + \
+             ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
+             ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
+             ["春晚,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
+             ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
+
+# 将合并后的文本写入文件
+output_file = "iptv.txt"
+others_file = "others.txt"
+try:
+    with open(output_file, 'w', encoding='utf-8') as f:
+        for line in all_lines:
+            f.write(line + '\n')
+    print(f"合并后的文本已保存到文件: {output_file}")
+
+    with open(others_file, 'w', encoding='utf-8') as f:
+        for line in other_lines:
+            f.write(line + '\n')
+    print(f"Others已保存到文件: {others_file}")
+
+except Exception as e:
+    print(f"保存文件时发生错误：{e}")
+
+################# 添加生成m3u文件
+output_text = "#EXTM3U\n"
+
+with open(output_file, "r", encoding='utf-8') as file:
+    input_text = file.read()
+
+lines = input_text.strip().split("\n")
+group_name = ""
+for line in lines:
+    parts = line.split(",")
+    if len(parts) == 2 and "#genre#" in line:
+        group_name = parts[0]
+    elif len(parts) == 2:
+        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+        output_text += f"{parts[1]}\n"
+
+with open("iptv.m3u", "w", encoding='utf-8') as file:
+    file.write(output_text)
+
+print("iptv.m3u文件已生成。")
