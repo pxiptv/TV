@@ -147,7 +147,7 @@ def read_txt_to_array(file_name):
         print(f"An error occurred: {e}")
         return []
 
-ys_dictionary = read_txt_to_array('CCTV.txt')
+ys_dictionary = read_txt_to_array('央视频道.txt')
 ws_dictionary = read_txt_to_array('卫视频道.txt')
 ty_dictionary = read_txt_to_array('体育频道.txt')
 dy_dictionary = read_txt_to_array('电影.txt')
