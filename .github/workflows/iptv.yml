@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '08 22 * * *'
   workflow_dispatch:
-    分支:
+    branches:
       - main
 
 permissions:
