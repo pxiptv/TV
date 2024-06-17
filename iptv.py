@@ -3,10 +3,10 @@ import re
 import os
 from datetime import datetime
 
-urls = [ 
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', 
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', 
+urls = [
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
     'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
     'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
     'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
@@ -84,7 +84,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.请求.urlopen(url) as response:
+        with urllib.request.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
@@ -93,7 +93,7 @@ def process_url(url):
                 if "#genre#" not in line and "," in line and "://" in line:
                     channel_name = line.split(',')[0].strip()
                     channel_address = line.split(',')[1].strip()
-                    
+
                     if "CCTV" in channel_name:
                         ys_lines.append(process_name_string(line.strip()))
                     elif channel_name in ws_dictionary:
@@ -173,7 +173,7 @@ zy_dictionary = read_txt_to_array('综艺频道.txt')
 yy_dictionary = read_txt_to_array('音乐频道.txt')
 game_dictionary = read_txt_to_array('游戏频道.txt')
 radio_dictionary = read_txt_to_array('收音机频道.txt')
-gd_dictionary = read_txt_to_array('地方台/广东频道.txt')
+gd_dictionary =read_txt_to_array('地方台/广东频道.txt')
 hn_dictionary = read_txt_to_array('地方台/湖南频道.txt')
 
 def load_corrections_name(filename):
@@ -204,11 +204,11 @@ def correct_name_data(corrections, data):
 
 def sort_data(order, data):
     order_dict = {name: i for i, name in enumerate(order)}
-    
+
     def sort_key(line):
         name = line.split(',')[0]
         return order_dict.get(name, len(order))
-    
+
     sorted_data = sorted(data, key=sort_key)
     return sorted_data
 
@@ -222,56 +222,49 @@ def save_data(filename, data):
     except Exception as e:
         print(f"An error occurred while saving the file '{filename}': {e}")
 
-for url in urls:
-    process_url(url)
-
-# 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
-def extract_number():
-    num_str = s.split(',')[0].split('-')[1]  # 提取逗号前面的数字部分
-    numbers = re.findall(r'\d+', num_str)   #因为有+和K
+# Define a function to extract the number part before comma of each line as the sorting criteria
+def extract_number(line):
+    num_str = line.split(',')[0].split('-')[1]  # Extract the number part before comma
+    numbers = re.findall(r'\d+', num_str)
     return int(numbers[-1]) if numbers else 999
-# 定义一个自定义排序函数
-def custom_sort():
-    if "CCTV-4K" in s:
-        return 2  # 将包含 "4K" 的字符串排在后面
-    elif "CCTV-8K" in s:
-        return 3  # 将包含 "8K" 的字符串排在后面 
-    elif "(4K)" in s:
-        return 1  # 将包含 " (4K)" 的字符串排在后面
+
+# Define a custom sorting function
+def custom_sort(line):
+    if "CCTV-4K" in line:
+        return 2  # Place lines containing "4K" at the end
+    elif "CCTV-8K" in line:
+        return 3  # Place lines containing "8K" at the end
+    elif "(4K)" in line:
+        return 1  # Place lines containing " (4K)" at the end
     else:
-        return 0  # 其他字符串保持原顺序
+        return 0  # Keep other lines in their original order
 
-# 合并所有对象中的行文本（去重，排序后拼接）
-#["央视频道,#genre#"] + sorted(sorted(set(ys_lines),key=lambda x: extract_number(x)), key=custom_sort) + ['\n'] + \
-#["卫视频道,#genre#"] + sorted(set(ws_lines)) + ['\n'] + \
-#["春晚,#genre#"] + sorted(set(cw_lines))
-#["主题片,#genre#"] + sorted(set(ztp_lines)) + ['\n'] + \
-#["电视剧频道,#genre#"] + sorted(set(dsj_lines)) + ['\n'] + \
-version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
-all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
-             ["央视频道,#genre#"] + sort_data(ys_dictionary,set(correct_name_data(corrections_name,ys_lines))) + ['\n'] + \
-             ["卫视频道,#genre#"] + sort_data(ws_dictionary,set(correct_name_data(corrections_name,ws_lines))) + ['\n'] + \
-             ["体育频道,#genre#"] + sort_data(ty_dictionary,set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
-             ["电影频道,#genre#"] + sort_data(dy_dictionary,set(correct_name_data(corrections_name,dy_lines))) + ['\n'] + \
-             ["电视剧频道,#genre#"] + sort_data(dsj_dictionary,set(correct_name_data(corrections_name,dsj_lines))) + ['\n'] + \
-             ["明星,#genre#"] + sort_data(mx_dictionary,set(correct_name_data(corrections_name,mx_lines))) + ['\n'] + \
-             ["主题片,#genre#"] + sort_data(ztp_dictionary,set(correct_name_data(corrections_name,ztp_lines))) + ['\n'] + \
-             ["港澳台,#genre#"] + sort_data(gat_dictionary,set(correct_name_data(corrections_name,gat_lines))) + ['\n'] + \
-             ["国际台,#genre#"] + sort_data(gj_dictionary,set(correct_name_data(corrections_name,gj_lines))) + ['\n'] + \
-             ["纪录片,#genre#"] + sort_data(jlp_dictionary,set(correct_name_data(corrections_name,jlp_lines)))+ ['\n'] + \
-             ["动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n'] + \
-             ["戏曲频道,#genre#"] + sort_data(xq_dictionary,set(correct_name_data(corrections_name,xq_lines))) + ['\n'] + \
-             ["解说频道,#genre#"] + sorted(set(js_lines)) + ['\n'] + \
-             ["综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name,zy_lines))) + ['\n'] + \
-             ["音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n'] + \
-             ["游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n'] + \
-             ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
-             ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
-             ["春晚,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
-             ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
+# Combine all lines from different categories (remove duplicates, sort, and concatenate)
+all_lines = [
+    "更新时间,#genre#",
+    datetime.now().strftime("%Y%m%d-%H-%M-%S") + ",url",
+    '\n',
+    "央视频道,#genre#"] + sort_data(ys_dictionary, set(correct_name_data(corrections_name, ys_lines))) + ['\n',
+    "卫视频道,#genre#"] + sort_data(ws_dictionary, set(correct_name_data(corrections_name, ws_lines))) + ['\n',
+    "体育频道,#genre#"] + sort_data(ty_dictionary, set(correct_name_data(corrections_name, ty_lines))) + ['\n',
+    "电影频道,#genre#"] + sort_data(dy_dictionary, set(correct_name_data(corrections_name, dy_lines))) + ['\n',
+    "电视剧频道,#genre#"] + sort_data(dsj_dictionary, set(correct_name_data(corrections_name, dsj_lines))) + ['\n',
+    "明星,#genre#"] + sort_data(mx_dictionary, set(correct_name_data(corrections_name, mx_lines))) + ['\n',
+    "主题片,#genre#"] + sort_data(ztp_dictionary, set(correct_name_data(corrections_name, ztp_lines))) + ['\n',
+    "港澳台,#genre#"] + sort_data(gat_dictionary, set(correct_name_data(corrections_name, gat_lines))) + ['\n',
+    "国际台,#genre#"] + sort_data(gj_dictionary, set(correct_name_data(corrections_name, gj_lines))) + ['\n',
+    "纪录片,#genre#"] + sort_data(jlp_dictionary, set(correct_name_data(corrections_name, jlp_lines))) + ['\n',
+    "动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n',
+    "戏曲频道,#genre#"] + sort_data(xq_dictionary, set(correct_name_data(corrections_name, xq_lines))) + ['\n',
+    "解说频道,#genre#"] + sorted(set(js_lines)) + ['\n',
+    "综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name, zy_lines))) + ['\n',
+    "音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n',
+    "游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n',
+    "湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name, hn_lines))) + ['\n',
+    "广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name, gd_lines))) + ['\n',
+    "春晚,#genre#"] + sort_data(cw_dictionary, set(cw_lines)) + ['\n',
+    "收音机频道,#genre#"] + sort_data(radio_dictionary, set(radio_lines)) + ['\n']
 
-
-# 将合并后的文本写入文件
 output_file = "iptv.txt"
 others_file = "others.txt"
 try:
@@ -288,7 +281,7 @@ try:
 except Exception as e:
     print(f"保存文件时发生错误：{e}")
 
-################# 添加生成m3u文件
+# Generate the M3U file
 output_text = "#EXTM3U\n"
 
 with open(output_file, "r", encoding='utf-8') as file:
