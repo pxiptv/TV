@@ -215,6 +215,12 @@ def save_data(filename, data):
 for url in urls:
     process_url(url)
 
+def save_sorted_data(filename, data, order_list):
+    sorted_data = sort_data(order_list, data)
+    save_data(filename, sorted_data)
+
+save_data(f'ws_{current_date}.txt', correct_name_data(corrections_name, ws_lines))
+
 # 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
 def extract_number():
     num_str = s.split(',')[0].split('-')[1]  # 提取逗号前面的数字部分
