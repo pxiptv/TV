@@ -31,8 +31,8 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run CCTV update
-      run: python ${{ github.workspace }}/CCT.py
+    - name: Run IPTV update
+      run: python ${{ github.workspace }}/iptv.py
       
     - name: Commit results
       run: |
