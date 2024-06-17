@@ -4,8 +4,19 @@ import os
 from datetime import datetime
 
 urls = [
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.githubusercontent.com/Guovin/TV/gd/result.txt',
     'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt'
+    'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+    'https://m3u.ibert.me/txt/ycl_iptv.txt',
+    'https://m3u.ibert.me/txt/y_g.txt',
+    'https://m3u.ibert.me/txt/j_home.txt',
+    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
+    'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
 ]
 
 ys_lines = []
@@ -72,7 +83,7 @@ def process_url(url):
                 if "#genre#" not in line and "," in line and "://" in line:
                     channel_name = line.split(',')[0].strip()
                     channel_address = line.split(',')[1].strip()
-
+                    
                     if "CCTV" in channel_name:
                         ys_lines.append(process_name_string(line.strip()))
                     elif channel_name in ws_dictionary:
@@ -152,7 +163,7 @@ zy_dictionary = read_txt_to_array('综艺频道.txt')
 yy_dictionary = read_txt_to_array('音乐频道.txt')
 game_dictionary = read_txt_to_array('游戏频道.txt')
 radio_dictionary = read_txt_to_array('收音机频道.txt')
-gd_dictionary =read_txt_to_array('地方台/广东频道.txt')
+gd_dictionary = read_txt_to_array('地方台/广东频道.txt')
 hn_dictionary = read_txt_to_array('地方台/湖南频道.txt')
 
 def load_corrections_name(filename):
@@ -183,11 +194,11 @@ def correct_name_data(corrections, data):
 
 def sort_data(order, data):
     order_dict = {name: i for i, name in enumerate(order)}
-
+    
     def sort_key(line):
         name = line.split(',')[0]
         return order_dict.get(name, len(order))
-
+    
     sorted_data = sorted(data, key=sort_key)
     return sorted_data
 
@@ -201,82 +212,11 @@ def save_data(filename, data):
     except Exception as e:
         print(f"An error occurred while saving the file '{filename}': {e}")
 
-# Define a function to extract the number part before comma of each line as the sorting criteria
-def extract_number(line):
-    num_str = line.split(',')[0].split('-')[1]  # Extract the number part before comma
-    numbers = re.findall(r'\d+', num_str)
-    return int(numbers[-1]) if numbers else 999
+for url in urls:
+    process_url(url)
 
-# Define a custom sorting function
-def custom_sort(line):
-    if "CCTV-4K" in line:
-        return 2  # Place lines containing "4K" at the end
-    elif "CCTV-8K" in line:
-        return 3  # Place lines containing "8K" at the end
-    elif "(4K)" in line:
-        return 1  # Place lines containing " (4K)" at the end
-    else:
-        return 0  # Keep other lines in their original order
+def save_sorted_data(filename, data, order_list):
+    sorted_data = sort_data(order_list, data)
+    save_data(filename, sorted_data)
 
-# Combine all lines from different categories (remove duplicates, sort, and concatenate)
-all_lines = [
-    "更新时间,#genre#",
-    datetime.now().strftime("%Y%m%d-%H-%M-%S") + ",url",
-    '\n',
-    "央视频道,#genre#"] + sort_data(ys_dictionary, set(correct_name_data(corrections_name, ys_lines))) + ['\n',
-    "卫视频道,#genre#"] + sort_data(ws_dictionary, set(correct_name_data(corrections_name, ws_lines))) + ['\n',
-    "体育频道,#genre#"] + sort_data(ty_dictionary, set(correct_name_data(corrections_name, ty_lines))) + ['\n',
-    "电影频道,#genre#"] + sort_data(dy_dictionary, set(correct_name_data(corrections_name, dy_lines))) + ['\n',
-    "电视剧频道,#genre#"] + sort_data(dsj_dictionary, set(correct_name_data(corrections_name, dsj_lines))) + ['\n',
-    "明星,#genre#"] + sort_data(mx_dictionary, set(correct_name_data(corrections_name, mx_lines))) + ['\n',
-    "主题片,#genre#"] + sort_data(ztp_dictionary, set(correct_name_data(corrections_name, ztp_lines))) + ['\n',
-    "港澳台,#genre#"] + sort_data(gat_dictionary, set(correct_name_data(corrections_name, gat_lines))) + ['\n',
-    "国际台,#genre#"] + sort_data(gj_dictionary, set(correct_name_data(corrections_name, gj_lines))) + ['\n',
-    "纪录片,#genre#"] + sort_data(jlp_dictionary, set(correct_name_data(corrections_name, jlp_lines))) + ['\n',
-    "动画片,#genre#"] + sorted(set(dhp_lines)) + ['\n',
-    "戏曲频道,#genre#"] + sort_data(xq_dictionary, set(correct_name_data(corrections_name, xq_lines))) + ['\n',
-    "解说频道,#genre#"] + sorted(set(js_lines)) + ['\n',
-    "综艺频道,#genre#"] + sorted(set(correct_name_data(corrections_name, zy_lines))) + ['\n',
-    "音乐频道,#genre#"] + sorted(set(yy_lines)) + ['\n',
-    "游戏频道,#genre#"] + sorted(set(game_lines)) + ['\n',
-    "湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name, hn_lines))) + ['\n',
-    "广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name, gd_lines))) + ['\n',
-    "春晚,#genre#"] + sort_data(cw_dictionary, set(cw_lines)) + ['\n',
-    "收音机频道,#genre#"] + sort_data(radio_dictionary, set(radio_lines)) + ['\n']
-
-output_file = "iptv.txt"
-others_file = "others.txt"
-try:
-    with open(output_file, 'w', encoding='utf-8') as f:
-        for line in all_lines:
-            f.write(line + '\n')
-    print(f"合并后的文本已保存到文件: {output_file}")
-
-    with open(others_file, 'w', encoding='utf-8') as f:
-        for line in other_lines:
-            f.write(line + '\n')
-    print(f"Others已保存到文件: {others_file}")
-
-except Exception as e:
-    print(f"保存文件时发生错误：{e}")
-
-# Generate the M3U file
-output_text = "#EXTM3U\n"
-
-with open(output_file, "r", encoding='utf-8') as file:
-    input_text = file.read()
-
-lines = input_text.strip().split("\n")
-group_name = ""
-for line in lines:
-    parts = line.split(",")
-    if len(parts) == 2 and "#genre#" in line:
-        group_name = parts[0]
-    elif len(parts) == 2:
-        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-        output_text += f"{parts[1]}\n"
-
-with open("iptv.m3u", "w", encoding='utf-8') as file:
-    file.write(output_text)
-
-print("iptv.m3u文件已生成。")
+save_data(f'ys_{current_date}.txt', correct_name_data(corrections_name, ys_lines))
