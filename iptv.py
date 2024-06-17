@@ -4,17 +4,17 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
-    'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
-    'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
-    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.githubusercontent.com/gaotianliuyun/gao/master/list.txt',
-    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
+    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/tvlive.txt',
+    'https://raw.bgithub.xyz/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
+    'https://raw.bgithub.xyz/PizazzGY/TVBox_warehouse/main/live.txt',
+    'https://raw.bgithub.xyz/yuanzl77/IPTV/main/live.txt',
+    'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
+    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.bgithub.xyz/gaotianliuyun/gao/master/list.txt',
+    'https://raw.bgithub.xyz/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.bgithub.xyz/kimwang1978/collect-tv-txt/main/merged_output.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
     'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
@@ -82,7 +82,7 @@ def process_part(part_str):
 
 def process_url(url):
     try:
-        with urllib.请求.urlopen(url) as response:
+        with urllib.request.urlopen(url) as response:
             data = response.read()
             text = data.decode('utf-8')
 
