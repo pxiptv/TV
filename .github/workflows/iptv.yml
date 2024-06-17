@@ -1,4 +1,4 @@
-name: 测试
+name: 电视节目地址分类更新
 
 on:
   schedule:
