@@ -278,7 +278,7 @@ try:
 except Exception as e:
     print(f"保存文件时发生错误：{e}")
 
-################# 添加生成m3u文件
+# 添加生成m3u文件
 output_text = "#EXTM3U\n"
 
 with open(output_file, "r", encoding='utf-8') as file:
