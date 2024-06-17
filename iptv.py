@@ -4,9 +4,9 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', #每天自动更新1次
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',  #1小时自动更新1次
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', #1小时自动更新1次
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt',
     'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
     'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/main/live.txt',
     'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
