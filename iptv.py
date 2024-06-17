@@ -3,7 +3,8 @@ import re
 import os
 from datetime import datetime
 
-urls = 'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', 
+urls = [ 
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt', 
     'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
     'https://raw.githubusercontent.com/fenxp/iptv/main/live/tvlive.txt', 
     'https://raw.githubusercontent.com/bauw2008/tv/5d0dc920fce1bf8daa725f483fe128c82ab8ee4d/05.txt',
@@ -26,6 +27,7 @@ urls = 'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
     'http://120.79.4.185/new/mdlive.txt',
     'https://tv.youdu.fan:666/live/',
     'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/1715581924111/live1.txt'
+]
 
 ys_lines = []
 ws_lines = []
