@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '08 22 * * *'
   workflow_dispatch:
-    branches:
+分支:
       - main
 
 permissions:
@@ -55,10 +55,10 @@ jobs:
         git add README.md
         
         current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp iptv.m3u history/"${current_datetime}_IPTV.m3u"
-        cp iptv.txt history/"${current_datetime}_IPTV.txt"
-        git add history/"${current_datetime}_IPTV.m3u"
-        git add history/"${current_datetime}_IPTV.txt"
+        cp iptv.m3u history/"${current_datetime}_LIVE.m3u"
+        cp iptv.txt history/"${current_datetime}_LIVE.txt"
+        git add history/"${current_datetime}_LIVE.m3u"
+        git add history/"${current_datetime}_LIVE.txt"
         git commit -m "Archive file with timestamp"
         git push
         
