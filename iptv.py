@@ -4,7 +4,8 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt'
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt'
 ]
 
 ys_lines = []
