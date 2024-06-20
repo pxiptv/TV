@@ -296,7 +296,5 @@ def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lin
 
 if __name__ == "__main__":
     blacklist_file = 'blacklist_auto.txt'
-    others_file = 'others.txt'
-
     remove_blacklisted_lines(output_file, blacklist_file, others_file)
     print(f"{output_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
