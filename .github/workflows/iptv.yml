@@ -1,5 +1,5 @@
 
-name: 文件去重
+name: 电视节目网址更新
 # 分支 应替换为  branches
 on:
   schedule:
@@ -46,17 +46,31 @@ jobs:
           iptv.txt
           others.txt
           
+    - name: 更新 EPG.xml 和 README.md
+      run: |
+        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
+        echo "iptv.m3u 的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md      
+    
     - name: Commit changes
       run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
+          git commit -am "${{ steps.date.outputs.date }}"
           git add iptv.txt
           git add iptv.m3u
           git add others.txt
           git add blacklist_auto.txt
           git add whitelist_auto.txt
           git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
-
+          git add README.md
+        
+          current_datetime=$(date +"%Y%m%d_%H%M%S")
+          cp iptv.m3u history/"${current_datetime}_IPTV.m3u"
+          cp iptv.txt history/"${current_datetime}_IPTV.txt"
+          git add history/"${current_datetime}_IPTV.m3u"
+          git add history/"${current_datetime}_IPTV.txt"
+          git commit -m "Archive file with timestamp"
+          git push
         
     - name: Push changes
       uses: ad-m/github-push-action@master
