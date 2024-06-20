@@ -76,40 +76,40 @@ if __name__ == "__main__":
     success_file = 'whitelist_auto.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist_auto.txt'  # 黑名单文件路径
 
-    # 读取输入文件内容
+# 读取输入文件内容
     lines1 = read_txt_file(input_file1)
     lines2 = read_txt_file(input_file2)
     lines = list(set(lines1 + lines2))
-    # 计算合并后合计个数
+# 计算合并后合计个数
     urls_hj = len(lines)
 
-    # 处理URL并生成成功清单和黑名单
+# 处理URL并生成成功清单和黑名单
     successlist, blacklist = process_urls_multithreaded(lines)
     
-    # 给successlist, blacklist排序
-    # 定义排序函数
-    def successlist_sort_key(item):
-        time_str = item.split(',')[0].replace('ms', '')
-        return float(time_str)
+# 给successlist, blacklist排序
+# 定义排序函数
+def successlist_sort_key(item):
+    time_str = item.split(',')[0].replace('ms', '')
+    return float(time_str)
     
     successlist = sorted(successlist, key=successlist_sort_key)
     blacklist = sorted(blacklist)
 
-    # 计算check后ok和ng个数
+# 计算check后ok和ng个数
     urls_ok = len(successlist)
     urls_ng = len(blacklist)
 
-    # 加时间戳等
+# 加时间戳等
     version = datetime.now().strftime("%Y%m%d-%H-%M-%S") + ",url"
     successlist = ["更新时间,#genre#"] + [version] + ['\n'] + \
                   ["RespoTime,whitelist,#genre#"] + successlist
     blacklist = ["更新时间,#genre#"] + [version] + ['\n'] + \
                 ["blacklist,#genre#"] + blacklist
 
-    # 写入成功清单文件
+# 写入成功清单文件
     write_list(success_file, successlist)
 
-    # 写入黑名单文件
+# 写入黑名单文件
     write_list(blacklist_file, blacklist)
 
     print(f"成功清单文件已生成: {success_file}")
@@ -135,24 +135,24 @@ if __name__ == "__main__":
 
     print("iptv.m3u文件已生成。")
 
-    # 执行的代码
-    timeend = datetime.now()
+# 执行的代码
+timeend = datetime.now()
 
-    # 计算时间差
-    elapsed_time = timeend - timestart
-    total_seconds = elapsed_time.total_seconds()
+# 计算时间差
+elapsed_time = timeend - timestart
+total_seconds = elapsed_time.total_seconds()
 
-    # 转换为分钟和秒
-    minutes = int(total_seconds // 60)
-    seconds = int(total_seconds % 60)
+# 转换为分钟和秒
+minutes = int(total_seconds // 60)
+seconds = int(total_seconds % 60)
 
-    # 格式化开始和结束时间
-    timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
-    timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
+# 格式化开始和结束时间
+timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
+timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
 
-    print(f"开始时间: {timestart_str}")
-    print(f"结束时间: {timeend_str}")
-    print(f"执行时间: {minutes} 分 {seconds} 秒")
-    print(f"urls_hj: {urls_hj} ")
-    print(f"  urls_ok: {urls_ok} ")
-    print(f"  urls_ng: {urls_ng} ")
+print(f"开始时间: {timestart_str}")
+print(f"结束时间: {timeend_str}")
+print(f"执行时间: {minutes} 分 {seconds} 秒")
+print(f"urls_hj: {urls_hj} ")
+print(f"  urls_ok: {urls_ok} ")
+print(f"  urls_ng: {urls_ng} ")
