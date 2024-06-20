@@ -277,7 +277,7 @@ def write_file(file_path, lines):
 
 def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lines_count=5):
 # 读取输入文件、黑名单文件和其他文件
-    input_lines = read_file(input_file)
+    input_lines = read_file(output_file)
     blacklist_lines = set(read_file(blacklist_file))
     others_lines = set(read_file(others_file))
 
@@ -292,12 +292,11 @@ def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lin
     result_lines = header_lines + filtered_lines
 
 # 写入输入文件
-    write_file(input_file, result_lines)
+    write_file(output_file, result_lines)
 
 if __name__ == "__main__":
-    input_file = 'iptv.txt'
     blacklist_file = 'blacklist_auto.txt'
     others_file = 'others.txt'
 
-    remove_blacklisted_lines(input_file, blacklist_file, others_file)
-    print(f"{input_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
+    remove_blacklisted_lines(output_file, blacklist_file, others_file)
+    print(f"{output_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
