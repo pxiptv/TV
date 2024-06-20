@@ -56,8 +56,13 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git commit -am "${{ steps.date.outputs.date }}"
-          git add .
+          if [ -n "$(git status --porcelain)" ]; then
+          git add *.m3u *.txt
           git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
+          git push
+          else
+            echo "No changes detected, skipping commit."
+          fi
           git add README.md
         
           current_datetime=$(date +"%Y%m%d_%H%M%S")
