@@ -33,8 +33,11 @@ jobs:
         pip install requests
 
     - name: Run IPTV update
-      run: python ${{ github.workspace }}/qc.py
+      run: python ${{ github.workspace }}/iptv.py
    
+    - name: Run blacklist update
+      run: python ${{ github.workspace }}/blacklist.py
+    
     - name: Commit results
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
