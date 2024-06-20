@@ -300,24 +300,3 @@ if __name__ == "__main__":
 
     remove_blacklisted_lines(input_file, blacklist_file, others_file)
     print(f"{input_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
-
-################# 添加生成m3u文件
-output_text = "#EXTM3U\n"
-
-with open(output_file, "r", encoding='utf-8') as file:
-    input_text = file.read()
-
-lines = input_text.strip().split("\n")
-group_name = ""
-for line in lines:
-    parts = line.split(",")
-    if len(parts) == 2 and "#genre#" in line:
-        group_name = parts[0]
-    elif len(parts) == 2:
-        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-        output_text += f"{parts[1]}\n"
-
-with open("iptv.m3u", "w", encoding='utf-8') as file:
-    file.write(output_text)
-
-print("iptv.m3u文件已生成。")
