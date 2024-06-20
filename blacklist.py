@@ -115,44 +115,27 @@ def successlist_sort_key(item):
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist}")
 
-    output_text = "#EXTM3U\n"
-
-    with open(output_file, "r", encoding='utf-8') as file:
-        input_text = file.read()
-
-    lines = input_text.strip().split("\n")
-    group_name = ""
-    for line in lines:
-        parts = line.split(",")
-        if len(parts) == 2 and "#genre#" in line:
-            group_name = parts[0]
-        elif len(parts) == 2:
-            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-            output_text += f"{parts[1]}\n"
-
-    with open("iptv.m3u", "w", encoding='utf-8') as file:
-        file.write(output_text)
-
-    print("iptv.m3u文件已生成。")
-
 # 执行的代码
-timeend = datetime.now()
+    timeend = datetime.now()
 
 # 计算时间差
-elapsed_time = timeend - timestart
-total_seconds = elapsed_time.total_seconds()
+    elapsed_time = timeend - timestart
+    total_seconds = elapsed_time.total_seconds()
 
 # 转换为分钟和秒
-minutes = int(total_seconds // 60)
-seconds = int(total_seconds % 60)
+    minutes = int(total_seconds // 60)
+    seconds = int(total_seconds % 60)
 
 # 格式化开始和结束时间
-timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
-timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
+    timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
+    timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
 
-print(f"开始时间: {timestart_str}")
-print(f"结束时间: {timeend_str}")
-print(f"执行时间: {minutes} 分 {seconds} 秒")
-print(f"urls_hj: {urls_hj} ")
-print(f"  urls_ok: {urls_ok} ")
-print(f"  urls_ng: {urls_ng} ")
+    print(f"开始时间: {timestart_str}")
+    print(f"结束时间: {timeend_str}")
+    print(f"执行时间: {minutes} 分 {seconds} 秒")
+    print(f"urls_hj: {urls_hj} ")
+    print(f"  urls_ok: {urls_ok} ")
+    print(f"  urls_ng: {urls_ng} ")
+            
+
+    
