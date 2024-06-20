@@ -317,7 +317,7 @@ for line in lines:
         output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
         output_text += f"{parts[1]}\n"
 
-    with open("iptv.m3u", "w", encoding='utf-8') as file:
-        file.write(output_text)
+with open("iptv.m3u", "w", encoding='utf-8') as file:
+    file.write(output_text)
 
-    print("iptv.m3u文件已生成。")
+print("iptv.m3u文件已生成。")
