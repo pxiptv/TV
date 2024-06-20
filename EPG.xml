@@ -7221,89 +7221,44 @@
 	<channel id="CHC动作电影">
 		<display-name lang="zh">CHC动作电影</display-name>
 	</channel>
-	<programme channel="CHC动作电影" start="20240621000000 +0800" stop="20240621012100 +0800">
-		<title lang="zh">银河护卫队</title>
+	<programme channel="CHC动作电影" start="20240621012500 +0800" stop="20240621034000 +0800">
+		<title lang="zh">哥斯拉：怪兽之王</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621012100 +0800" stop="20240621012500 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621012500 +0800" stop="20240621033500 +0800">
-		<title lang="zh">哥斯拉-怪兽之王</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621033500 +0800" stop="20240621034000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621034000 +0800" stop="20240621053400 +0800">
+	<programme channel="CHC动作电影" start="20240621034000 +0800" stop="20240621053500 +0800">
 		<title lang="zh">这里的黎明静悄悄</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621053400 +0800" stop="20240621053500 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621053500 +0800" stop="20240621070800 +0800">
+	<programme channel="CHC动作电影" start="20240621053500 +0800" stop="20240621071000 +0800">
 		<title lang="zh">夺命黄金</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621070800 +0800" stop="20240621071000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621071000 +0800" stop="20240621083300 +0800">
+	<programme channel="CHC动作电影" start="20240621071000 +0800" stop="20240621083500 +0800">
 		<title lang="zh">雷霆追击</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621083300 +0800" stop="20240621083500 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621083500 +0800" stop="20240621103100 +0800">
+	<programme channel="CHC动作电影" start="20240621083500 +0800" stop="20240621103500 +0800">
 		<title lang="zh">金刚川</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621103100 +0800" stop="20240621103500 +0800">
-		<title lang="zh">动作导视</title>
+	<programme channel="CHC动作电影" start="20240621103500 +0800" stop="20240621121000 +0800">
+		<title lang="zh">大话西游之二大圣娶亲</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621103500 +0800" stop="20240621120900 +0800">
-		<title lang="zh">大话西游之大圣娶亲</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621120900 +0800" stop="20240621121000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621121000 +0800" stop="20240621133800 +0800">
+	<programme channel="CHC动作电影" start="20240621121000 +0800" stop="20240621134000 +0800">
 		<title lang="zh">方世玉与胡惠乾</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621133800 +0800" stop="20240621134000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621134000 +0800" stop="20240621150200 +0800">
+	<programme channel="CHC动作电影" start="20240621134000 +0800" stop="20240621150500 +0800">
 		<title lang="zh">城市猎人</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621150200 +0800" stop="20240621150500 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621150500 +0800" stop="20240621170700 +0800">
+	<programme channel="CHC动作电影" start="20240621150500 +0800" stop="20240621171000 +0800">
 		<title lang="zh">天机-富春山居图</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621170700 +0800" stop="20240621171000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621171000 +0800" stop="20240621183900 +0800">
+	<programme channel="CHC动作电影" start="20240621171000 +0800" stop="20240621184000 +0800">
 		<title lang="zh">黄飞鸿</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621183900 +0800" stop="20240621184000 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621184000 +0800" stop="20240621202800 +0800">
+	<programme channel="CHC动作电影" start="20240621184000 +0800" stop="20240621203000 +0800">
 		<title lang="zh">师父</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621202800 +0800" stop="20240621203000 +0800">
-		<title lang="zh">动作导视</title>
+	<programme channel="CHC动作电影" start="20240621203000 +0800" stop="20240621220500 +0800">
+		<title lang="zh">使徒行者2谍影行动</title>
 	</programme>
-	<programme channel="CHC动作电影" start="20240621203000 +0800" stop="20240621220300 +0800">
-		<title lang="zh">使徒行者-谍影行动</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621220300 +0800" stop="20240621220500 +0800">
-		<title lang="zh">动作导视</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621220500 +0800" stop="20240621231800 +0800">
+	<programme channel="CHC动作电影" start="20240621220500 +0800" stop="20240621232000 +0800">
 		<title lang="zh">大罗剑侠</title>
-	</programme>
-	<programme channel="CHC动作电影" start="20240621231800 +0800" stop="20240621232000 +0800">
-		<title lang="zh">动作导视</title>
 	</programme>
 	<programme channel="CHC动作电影" start="20240621232000 +0800" stop="20240621235900 +0800">
 		<title lang="zh">游击飞行中队</title>
@@ -7356,23 +7311,8 @@
 	<channel id="CHC高清电影">
 		<display-name lang="zh">CHC高清电影</display-name>
 	</channel>
-	<programme channel="CHC高清电影" start="20240621000000 +0800" stop="20240621000800 +0800">
-		<title lang="zh">93国际列车大劫案-莫斯科行动</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621000800 +0800" stop="20240621000900 +0800">
-		<title lang="zh">2024影迷频道形象片</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621000900 +0800" stop="20240621014900 +0800">
-		<title lang="zh">疯狂的石头</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621014900 +0800" stop="20240621060000 +0800">
-		<title lang="zh">侏罗纪世界(3)</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621060000 +0800" stop="20240621072800 +0800">
+	<programme channel="CHC高清电影" start="20240621060000 +0800" stop="20240621072900 +0800">
 		<title lang="zh">双剑合璧</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621072800 +0800" stop="20240621072900 +0800">
-		<title lang="zh">2024影迷频道形象片</title>
 	</programme>
 	<programme channel="CHC高清电影" start="20240621072900 +0800" stop="20240621090600 +0800">
 		<title lang="zh">平凡英雄</title>
@@ -7383,11 +7323,8 @@
 	<programme channel="CHC高清电影" start="20240621103700 +0800" stop="20240621122000 +0800">
 		<title lang="zh">警探夏福特</title>
 	</programme>
-	<programme channel="CHC高清电影" start="20240621122000 +0800" stop="20240621135000 +0800">
+	<programme channel="CHC高清电影" start="20240621122000 +0800" stop="20240621135100 +0800">
 		<title lang="zh">守卫者</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621135000 +0800" stop="20240621135100 +0800">
-		<title lang="zh">2024影迷频道形象片</title>
 	</programme>
 	<programme channel="CHC高清电影" start="20240621135100 +0800" stop="20240621151800 +0800">
 		<title lang="zh">阿然</title>
@@ -7396,19 +7333,13 @@
 		<title lang="zh">流浪地球</title>
 	</programme>
 	<programme channel="CHC高清电影" start="20240621172300 +0800" stop="20240621201700 +0800">
-		<title lang="zh">流浪地球(2)</title>
+		<title lang="zh">流浪地球2</title>
 	</programme>
 	<programme channel="CHC高清电影" start="20240621201700 +0800" stop="20240621220000 +0800">
 		<title lang="zh">功夫联盟</title>
 	</programme>
-	<programme channel="CHC高清电影" start="20240621220000 +0800" stop="20240621234300 +0800">
-		<title lang="zh">毒液-致命守护者</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621234300 +0800" stop="20240621234400 +0800">
-		<title lang="zh">2024影迷频道形象片</title>
-	</programme>
-	<programme channel="CHC高清电影" start="20240621234400 +0800" stop="20240621235900 +0800">
-		<title lang="zh">在西伯利亚森林中</title>
+	<programme channel="CHC高清电影" start="20240621220000 +0800" stop="20240621234400 +0800">
+		<title lang="zh">毒液：致命守护者</title>
 	</programme>
 	<channel id="CI">
 		<display-name lang="zh">CI</display-name>
@@ -73644,6 +73575,9 @@
 	<programme channel="newtv超级电视剧" start="20240621060100 +0800" stop="20240621064200 +0800">
 		<title lang="zh">27_岁岁年年柿柿红</title>
 	</programme>
+	<programme channel="newtv超级电视剧" start="20240621064200 +0800" stop="20240621072800 +0800">
+		<title lang="zh">22_高兴的酸甜苦辣</title>
+	</programme>
 	<channel id="newtv精品大剧">
 		<display-name lang="zh">NEWTV精品大剧</display-name>
 	</channel>
@@ -74045,6 +73979,9 @@
 	</programme>
 	<programme channel="newtv金牌综艺" start="20240621045000 +0800" stop="20240621063900 +0800">
 		<title lang="zh">中国文艺（2023）</title>
+	</programme>
+	<programme channel="newtv金牌综艺" start="20240621063900 +0800" stop="20240621081200 +0800">
+		<title lang="zh">登录圆鱼洲</title>
 	</programme>
 	<channel id="newtv精品体育">
 		<display-name lang="zh">NEWTV精品体育</display-name>
