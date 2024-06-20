@@ -5,17 +5,29 @@ from datetime import datetime
 
 timestart = datetime.now()
 
-def extract_unique_lines(merged_output.txt, blacklist_auto.txt):
-    # 读取b.txt的内容到集合中
-    with open(file_b, 'r', encoding='utf-8') as f_b:
-        lines_b = set(line.strip() for line in f_b)  # 移除行尾的换行符，并将行作为集合元素
+def read_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return set(file.readlines())
 
-    # 遍历a.txt中的每一行，并检查该行是否不在b.txt的集合中
-    with open(file_a, 'r', encoding='utf-8') as f_a:
-        for line in f_a:
-            stripped_line = line.strip()  # 移除行尾的换行符
-            if stripped_line not in lines_b:
-                print(stripped_line)  # 打印出不重复的行
+def write_file(file_path, lines):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.writelines(lines)
 
-# 使用函数
-extract_unique_lines('merged_output.txt', 'blacklist_auto.txt')
+def remove_blacklisted_lines(input_file, blacklist_file, output_file):
+    # 读取输入文件和黑名单文件
+    input_lines = read_file(input_file)
+    blacklist_lines = read_file(blacklist_file)
+
+    # 计算差集
+    filtered_lines = input_lines - blacklist_lines
+
+    # 写入输出文件
+    write_file(output_file, filtered_lines)
+
+if __name__ == "__main__":
+    input_file = 'merged_output.txt'
+    blacklist_file = 'blacklist_auto.txt'
+    output_file = 'filtered_output.txt'  # 过滤后的输出文件
+
+    remove_blacklisted_lines(input_file, blacklist_file, output_file)
+    print(f"已生成过滤后的文件: {output_file}")
