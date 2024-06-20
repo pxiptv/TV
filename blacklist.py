@@ -115,25 +115,25 @@ if __name__ == "__main__":
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist}")
 
-output_text = "#EXTM3U\n"
+    output_text = "#EXTM3U\n"
 
-with open(output_file, "r", encoding='utf-8') as file:
-    input_text = file.read()
+    with open(output_file, "r", encoding='utf-8') as file:
+        input_text = file.read()
 
-lines = input_text.strip().split("\n")
-group_name = ""
-for line in lines:
-    parts = line.split(",")
-    if len(parts) == 2 and "#genre#" in line:
-        group_name = parts[0]
-    elif len(parts) == 2:
-        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-        output_text += f"{parts[1]}\n"
+    lines = input_text.strip().split("\n")
+    group_name = ""
+    for line in lines:
+        parts = line.split(",")
+        if len(parts) == 2 and "#genre#" in line:
+            group_name = parts[0]
+        elif len(parts) == 2:
+            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+            output_text += f"{parts[1]}\n"
 
-with open("iptv.m3u", "w", encoding='utf-8') as file:
-    file.write(output_text)
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
 
-print("iptv.m3u文件已生成。")
+    print("iptv.m3u文件已生成。")
 
     # 执行的代码
     timeend = datetime.now()
