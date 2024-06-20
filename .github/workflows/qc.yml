@@ -45,7 +45,7 @@ jobs:
         if [ -n "$(git status --porcelain)" ]; then
         git add .
         git commit -m "Automatic update"
-        git push
+        git pull origin <branch-main>
         else
           echo "No changes detected, skipping commit."
         fi
