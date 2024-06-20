@@ -275,22 +275,22 @@ def write_file(file_path, lines):
         file.writelines(lines)
 
 def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lines_count=5):
-    # 读取输入文件、黑名单文件和其他文件
+# 读取输入文件、黑名单文件和其他文件
     input_lines = read_file(input_file)
     blacklist_lines = set(read_file(blacklist_file))
     others_lines = set(read_file(others_file))
 
-    # 保留前header_lines_count行内容
+# 保留前header_lines_count行内容
     header_lines = input_lines[:header_lines_count]
 
-    # 去除黑名单和其他文件中的行
+# 去除黑名单和其他文件中的行
     filtered_lines = [line for line in input_lines[header_lines_count:] 
                       if line not in blacklist_lines and line not in others_lines]
 
-    # 合并保留的前header_lines_count行和过滤后的内容
+# 合并保留的前header_lines_count行和过滤后的内容
     result_lines = header_lines + filtered_lines
 
-    # 写入输入文件
+# 写入输入文件
     write_file(input_file, result_lines)
 
 if __name__ == "__main__":
@@ -317,7 +317,7 @@ for line in lines:
         output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
         output_text += f"{parts[1]}\n"
 
-with open("iptv.m3u", "w", encoding='utf-8') as file:
-    file.write(output_text)
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
 
-print("iptv.m3u文件已生成。")
+    print("iptv.m3u文件已生成。")
