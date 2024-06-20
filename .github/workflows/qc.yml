@@ -53,6 +53,8 @@ jobs:
           git add iptv.txt
           git add iptv.m3u
           git add others.txt
+          git add blacklist_auto.txt
+          git add whitelist_auto.txt
           git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
 
         
