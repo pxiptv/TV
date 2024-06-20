@@ -46,7 +46,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
         if [ -n "$(git status --porcelain)" ]; then
-        git add *.m3u *.txt
+        git add *.txt
         git commit -m "Automatic update"
         git push
         else
