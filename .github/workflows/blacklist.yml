@@ -32,7 +32,7 @@ jobs:
       run: |
         pip install requests
 
-    - name: Run IPTV update
+    - name: Run blacklist update
       run: python ${{ github.workspace }}/blacklist.py
    
     - name: Commit results
