@@ -5,21 +5,6 @@ from datetime import datetime
 
 timestart = datetime.now()
 
-def extract_unique_lines(merged_output.txt, blacklist_auto.txt):
-    # 读取b.txt的内容到集合中
-    with open(file_b, 'r', encoding='utf-8') as f_b:
-        lines_b = set(line.strip() for line in f_b)  # 移除行尾的换行符，并将行作为集合元素
-
-    # 遍历a.txt中的每一行，并检查该行是否不在b.txt的集合中
-    with open(file_a, 'r', encoding='utf-8') as f_a:
-        for line in f_a:
-            stripped_line = line.strip()  # 移除行尾的换行符
-            if stripped_line not in lines_b:
-                print(stripped_line)  # 打印出不重复的行
-
-# 使用函数
-extract_unique_lines('merged_output.txt', 'blacklist_auto.txt')
-
 # 读取文件内容
 def read_txt_file(file_path):
     skip_strings = ['#genre#']  # 定义需要跳过的字符串数组
@@ -86,7 +71,7 @@ def write_list(file_path, data_list):
             file.write(item + '\n')
 
 if __name__ == "__main__":
-    input_file1 = 'merged_output.txt'  # 输入文件路径
+    input_file1 = 'iptv.txt'  # 输入文件路径
     input_file2 = 'blacklist_auto.txt'  # 输入文件路径2 
     success_file = 'whitelist_auto.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist_auto.txt'  # 黑名单文件路径
@@ -130,7 +115,25 @@ if __name__ == "__main__":
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist}")
 
+output_text = "#EXTM3U\n"
 
+with open(output_file, "r", encoding='utf-8') as file:
+    input_text = file.read()
+
+lines = input_text.strip().split("\n")
+group_name = ""
+for line in lines:
+    parts = line.split(",")
+    if len(parts) == 2 and "#genre#" in line:
+        group_name = parts[0]
+    elif len(parts) == 2:
+        output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+        output_text += f"{parts[1]}\n"
+
+with open("iptv.m3u", "w", encoding='utf-8') as file:
+    file.write(output_text)
+
+print("iptv.m3u文件已生成。")
 
     # 执行的代码
     timeend = datetime.now()
