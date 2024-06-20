@@ -1,15 +1,14 @@
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
-
 from datetime import datetime
 
 timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
-    required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
+    skip_strings = ['#genre#']  # 定义需要跳过的字符串数组
+    required_strings = ['://']  # 定义需要包含的字符串数组
 
     with open(file_path, 'r', encoding='utf-8') as file:
         lines = [
@@ -24,7 +23,7 @@ headers = {
 }
 def check_url(url, timeout=8):
     try:
-    	if  "://" in url:
+        if "://" in url:
             start_time = time.time()
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as response:
@@ -37,7 +36,7 @@ def check_url(url, timeout=8):
 
 # 处理单行文本并检测URL
 def process_line(line):
-    if "#genre#" in line or "://" not in line :
+    if "#genre#" in line or "://" not in line:
         return None, None  # 跳过包含“#genre#”的行
     parts = line.split(',')
     if len(parts) == 2:
@@ -80,7 +79,7 @@ if __name__ == "__main__":
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
     lines2 = read_txt_file(input_file2)
-    lines=list(set(lines1 + lines2))
+    lines = list(set(lines1 + lines2))
     # 计算合并后合计个数
     urls_hj = len(lines)
 
@@ -93,19 +92,19 @@ if __name__ == "__main__":
         time_str = item.split(',')[0].replace('ms', '')
         return float(time_str)
     
-    successlist=sorted(successlist, key=successlist_sort_key)
-    blacklist=sorted(blacklist)
+    successlist = sorted(successlist, key=successlist_sort_key)
+    blacklist = sorted(blacklist)
 
     # 计算check后ok和ng个数
     urls_ok = len(successlist)
     urls_ng = len(blacklist)
 
     # 加时间戳等
-    version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
-    successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+    version = datetime.now().strftime("%Y%m%d-%H-%M-%S") + ",url"
+    successlist = ["更新时间,#genre#"] + [version] + ['\n'] + \
                   ["RespoTime,whitelist,#genre#"] + successlist
-    blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
-                ["blacklist,#genre#"]  + blacklist
+    blacklist = ["更新时间,#genre#"] + [version] + ['\n'] + \
+                ["blacklist,#genre#"] + blacklist
 
     # 写入成功清单文件
     write_list(success_file, successlist)
@@ -117,11 +116,11 @@ if __name__ == "__main__":
     print(f"黑名单文件已生成: {blacklist}")
 
     # 写入history
-    timenow=datetime.now().strftime("%Y%m%d_%H_%M_%S")
+    timenow = datetime.now().strftime("%Y%m%d_%H_%M_%S")
     history_success_file = f'history/blacklist/{timenow}_whitelist_auto.txt'
     history_blacklist_file = f'history/blacklist/{timenow}_blacklist_auto.txt'
     write_list(history_success_file, successlist)
-    write_list(history_blacklist_file, successlist)
+    write_list(history_blacklist_file, blacklist)
     print(f"history成功清单文件已生成: {history_success_file}")
     print(f"history黑名单文件已生成: {history_blacklist_file}")
 
@@ -146,6 +145,3 @@ if __name__ == "__main__":
     print(f"urls_hj: {urls_hj} ")
     print(f"  urls_ok: {urls_ok} ")
     print(f"  urls_ng: {urls_ng} ")
-            
-
-    
