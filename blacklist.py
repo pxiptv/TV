@@ -115,14 +115,7 @@ if __name__ == "__main__":
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist}")
 
-    # 写入history
-    timenow = datetime.now().strftime("%Y%m%d_%H_%M_%S")
-    history_success_file = f'history/blacklist/{timenow}_whitelist_auto.txt'
-    history_blacklist_file = f'history/blacklist/{timenow}_blacklist_auto.txt'
-    write_list(history_success_file, successlist)
-    write_list(history_blacklist_file, blacklist)
-    print(f"history成功清单文件已生成: {history_success_file}")
-    print(f"history黑名单文件已生成: {history_blacklist_file}")
+
 
     # 执行的代码
     timeend = datetime.now()
