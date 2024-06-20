@@ -56,21 +56,7 @@ jobs:
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git commit -am "${{ steps.date.outputs.date }}"
-          if [[ -f "iptv.m3u" ]]; then
-          git add iptv.m3u
-          fi
-          if [[ -f "iptv.txt" ]]; then
-          git add iptv.txt
-          fi
-          if [[ -f "other.txt" ]]; then
-          git add other.txt
-          fi
-          if [[ -f "blacklist_auto.txt" ]]; then
-          git add blacklist_auto.txt
-          fi
-          if [[ -f "whitelist_auto.txt" ]]; then
-          git add whitelist_auto.txt
-          fi
+          git add .
           git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
           git add README.md
         
