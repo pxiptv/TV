@@ -157,6 +157,3 @@ def successlist_sort_key(item):
     print(f"urls_hj: {urls_hj} ")
     print(f"  urls_ok: {urls_ok} ")
     print(f"  urls_ng: {urls_ng} ")
-            
-
-    
