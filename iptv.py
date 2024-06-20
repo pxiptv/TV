@@ -4,13 +4,12 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
-    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-    'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
-    'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
+    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.bgithub.xyz/yuanzl77/IPTV/main/live.txt',
+    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.bgithub.xyz/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.bgithub.xyz/zwc456baby/iptv_alive/master/live.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
     'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
@@ -266,6 +265,41 @@ try:
 
 except Exception as e:
     print(f"保存文件时发生错误：{e}")
+
+def read_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.readlines()
+
+def write_file(file_path, lines):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.writelines(lines)
+
+def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lines_count=5):
+    # 读取输入文件、黑名单文件和其他文件
+    input_lines = read_file(input_file)
+    blacklist_lines = set(read_file(blacklist_file))
+    others_lines = set(read_file(others_file))
+
+    # 保留前header_lines_count行内容
+    header_lines = input_lines[:header_lines_count]
+
+    # 去除黑名单和其他文件中的行
+    filtered_lines = [line for line in input_lines[header_lines_count:] 
+                      if line not in blacklist_lines and line not in others_lines]
+
+    # 合并保留的前header_lines_count行和过滤后的内容
+    result_lines = header_lines + filtered_lines
+
+    # 写入输入文件
+    write_file(input_file, result_lines)
+
+if __name__ == "__main__":
+    input_file = 'iptv.txt'
+    blacklist_file = 'blacklist_auto.txt'
+    others_file = 'others.txt'
+
+    remove_blacklisted_lines(input_file, blacklist_file, others_file)
+    print(f"{input_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
 
 ################# 添加生成m3u文件
 output_text = "#EXTM3U\n"
