@@ -38,17 +38,28 @@ jobs:
     - name: Run blacklist update
       run: python ${{ github.workspace }}/blacklist.py
     
-    - name: Commit results
+    - name: Upload generated files
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-files
+        path: |
+          iptv.txt
+          others.txt
+          
+    - name: Commit changes
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        if [ -n "$(git status --porcelain)" ]; then
-        git add .
-        git commit -m "Automatic update"
-        git pull origin <branch-main>
-        else
-          echo "No changes detected, skipping commit."
-        fi
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add iptv.txt
+          git add iptv.m3u
+          git add others.txt
+          git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
+
+        
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         
 env:
   TZ: Asia/Shanghai
