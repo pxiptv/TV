@@ -275,4 +275,49 @@ def write_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.writelines(lines)
 
+# 首先，读取 iptv.txt 和 blacklist_auto.txt 文件中的内容到集合中
+def read_to_set(filename):
+    with open(filename, 'r', encoding='utf-8') as file:
+        return set(line.strip() for line in file)
+
+# 检查 live.txt 文件中的每一行，如果行在 iptv 或 blacklist 中，则删除
+def filter_lines(live_file, iptv_set, blacklist_set):
+    with open(live_file, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+    # 保持前5行不变
+    filtered_lines = lines[:5]
+
+    # 遍历剩余的行，如果行不在 iptv_set 和 blacklist_set 中，则保留
+    for line in lines[5:]:
+        if line.strip() not in iptv_set and line.strip() not in blacklist_set:
+            filtered_lines.append(line)
+
+    return filtered_lines
+
+# 将过滤后的行写回 live.txt 文件
+def write_filtered_lines(live_file, filtered_lines):
+    with open(live_file, 'w', encoding='utf-8') as file:
+        file.writelines(filtered_lines)
+
+# 主程序
+def main():
+    live_file = 'live.txt'
+    iptv_file = 'iptv.txt'
+    blacklist_file = 'blacklist_auto.txt'
+
+    # 读取 iptv.txt 和 blacklist_auto.txt 到集合中
+    iptv_set = read_to_set(iptv_file)
+    blacklist_set = read_to_set(blacklist_file)
+
+    # 过滤 live.txt 文件
+    filtered_lines = filter_lines(live_file, iptv_set, blacklist_set)
+
+    # 写回过滤后的内容到 live.txt
+    write_filtered_lines(live_file, filtered_lines)
+
+    print("Filtered live.txt has been updated.")
+
+if __name__ == "__main__":
+    main()
 
