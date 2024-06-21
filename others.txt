@@ -2489,8 +2489,10 @@ CGTN纪录,https://news.cgtn.com/resource/live/document/cgtndoc.m3u8
 河北农民,https://tv.pull.hebtv.com/jishi/nongminpindao.m3u8?t=1963555153&k=322fe32502d1e3695b0bdef5e698635e
 山东教育卫视,http://[2409:8087:1a0a:df::402e]/wh7f454c46tw2754383805_-1220934996/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225655/index.m3u8?icpid=88888888&RTS=1713110589&from=4&hms_devid=1103&online=1713110589&vqe=3
 山西卫视,http://liveflash.sxrtv.com/live/sxwshd.m3u8?sub_m3u8=true&edge_slice=true
-大湾区卫视,http://116.162.6.192/4403-txt.otvstream.otvcloud.com/otv/skcc/live/channel58/index.m3u8
-广东珠江,http://116.162.6.192/4403-txt.otvstream.otvcloud.com/otv/skcc/live/channel65/index.m3u8
+大湾区卫视,http://sslsz.oceaniwork.com:4022/udp/239.77.0.215:5146
+江门综合,http://sslsz.oceaniwork.com:4022/udp/239.77.0.201:5146
+江门侨乡生活,http://sslsz.oceaniwork.com:4022/udp/239.77.0.202:5146
+广东珠江,http://sslsz.oceaniwork.com:4022/udp/239.77.0.1:5146
 三沙卫视,http://[2409:8087:5e00:24::1f]:6060/ZTE_CMS/08984400000000060000000000000319/1.m3u8
 福建东南卫视,http://[2409:8087:1a01:df::7005]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226341/index.m3u8
 厦门卫视,http://61.54.14.232:9801/tsfile/live/1046_1.m3u8
