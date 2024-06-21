@@ -4,13 +4,13 @@ import os
 from datetime import datetime
 
 urls = [
-    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
-    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
-    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-    'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
-    'https://raw.githubusercontent.com/netdoc1978/zhibo.txt/main/zhibo.txt',
+    'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
+    'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.bgithub.xyz/yuanzl77/IPTV/main/live.txt',
+    'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.bgithub.xyz/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.bgithub.xyz/zwc456baby/iptv_alive/master/live.txt',
+    'https://raw.bgithub.xyz/netdoc1978/zhibo.txt/main/zhibo.txt',
     'https://m3u.ibert.me/txt/fmml_ipv6.txt',
     'https://m3u.ibert.me/txt/fmml_dv6.txt',
     'https://m3u.ibert.me/txt/ycl_iptv.txt',
@@ -251,7 +251,7 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
              ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
 
 # 将合并后的文本写入文件
-output_file = "iptv.txt"
+output_file = "live.txt"
 others_file = "others.txt"
 try:
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -279,14 +279,14 @@ def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lin
 # 读取输入文件、黑名单文件和其他文件
     input_lines = read_file(output_file)
     blacklist_lines = set(read_file(blacklist_file))
-    others_lines = set(read_file(others_file))
+    iptv_lines = set(read_file(iptv_file))
 
 # 保留前header_lines_count行内容
     header_lines = input_lines[:header_lines_count]
 
 # 去除黑名单和其他文件中的行
     filtered_lines = [line for line in input_lines[header_lines_count:] 
-                      if line not in blacklist_lines and line not in others_lines]
+                      if line not in blacklist_lines and line not in iptv_lines]
 
 # 合并保留的前header_lines_count行和过滤后的内容
     result_lines = header_lines + filtered_lines
@@ -296,5 +296,6 @@ def remove_blacklisted_lines(input_file, blacklist_file, others_file, header_lin
 
 if __name__ == "__main__":
     blacklist_file = 'blacklist_auto.txt'
-    remove_blacklisted_lines(output_file, blacklist_file, others_file)
+    iptv_file='iptv.txt'
+    remove_blacklisted_lines(output_file, blacklist_file, iptv_file)
     print(f"{output_file} 文件中的黑名单和其他文件中的相同内容已被删除。")
