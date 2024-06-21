@@ -221,27 +221,6 @@ if __name__ == "__main__":
     print(f"开始时间: {timestart_str}")
     print(f"结束时间: {timeend_str}")
     print(f"执行时间: {minutes} 分 {seconds} 秒")
-    print(f"urls_hj: {urls_hj} ")
+    print(f"  urls_hj: {urls_hj} ")
     print(f"  urls_ok: {urls_ok} ")
     print(f"  urls_ng: {urls_ng} ")
-    
-################# 添加生成m3u文件
-    output_text = "#EXTM3U\n"
-
-    with open(output_file, "r", encoding='utf-8') as file:
-        input_text = file.read()
-
-    lines = input_text.strip().split("\n")
-    group_name = ""
-    for line in lines:
-        parts = line.split(",")
-        if len(parts) == 2 and "#genre#" in line:
-            group_name = parts[0]
-        elif len(parts) == 2:
-            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
-            output_text += f"{parts[1]}\n"
-
-    with open("iptv.m3u", "w", encoding='utf-8') as file:
-        file.write(output_text)
-
-    print("iptv.m3u文件已生成。")
