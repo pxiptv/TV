@@ -136,8 +136,14 @@ def process_url(url):
 if __name__ == "__main__":
     # 定义要访问的多个URL
     urls = [
-        'https://raw.bgithub.xyz/YanG-1989/m3u/main/Gather.m3u',
-        'https://raw.bgithub.xyz/iptv-org/iptv/master/streams/cn.m3u',
+        'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
+        'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
+        'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+        'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
+        'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
+        'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+        'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
+        'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
     ]
     for url in urls:
