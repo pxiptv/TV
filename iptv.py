@@ -275,7 +275,7 @@ def write_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.writelines(lines)
 
-def remove_blacklisted_lines(blacklist_file,iptv_file, header_lines_count=5):
+def remove_blacklisted_lines(output_file, blacklist_file, iptv_file, header_lines_count=5):
 # 读取输入文件、黑名单文件和其他文件
     input_lines = read_file(output_file)
     blacklist_lines = set(read_file(blacklist_file))
