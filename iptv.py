@@ -251,7 +251,7 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
              ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
 
 # 将合并后的文本写入文件
-output_file = "live.txt"
+output_file = "tv.txt"
 others_file = "others.txt"
 try:
     with open(output_file, 'w', encoding='utf-8') as f:
