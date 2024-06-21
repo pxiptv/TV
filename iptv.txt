@@ -3,10 +3,6 @@
 
 
 央视频道,#genre#
-CCTV1,http://125.78.13.118:4022/rtp/239.61.3.61:9884
-CCTV1,https://live.goodiptv.club/api/bestv.php?id=cctv1hd8m/8000000
-CCTV1,http://113.57.103.216:9000/tsfile/live/0001_1.m3u8
-CCTV1,http://171.116.192.232:8082/rtp/226.0.2.16:8040
 CCTV1,http://113.117.104.22:8800/udp/239.77.0.129:5146#http://113.71.149.151:5555/udp/239.77.1.144:5146#http://175.10.228.235:8081/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0#http://113.71.149.151:5555/udp/239.77.0.129:5146#http://116.162.6.192/4403-txt.otvstream.otvcloud.com/otv/skcc/live/channel91/index.m3u8#http://119.125.135.202:11/udp/239.77.0.129:5146#http://113.101.245.175:9988/udp/239.77.0.86:5146#http://59.173.243.210:9901/tsfile/live/0001_1.m3u8#http://113.100.72.40:8899/udp/239.77.0.129:5146#http://61.184.128.243:1111/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0#http://113.71.149.151:5555/udp/239.77.0.86:5146#https://event.pull.hebtv.com/jishi/cp3.m3u8
 CCTV1,http://113.101.119.76:808/hls/114/index.m3u8
 CCTV1,http://171.110.42.110:8181/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0
