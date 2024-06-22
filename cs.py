@@ -1,6 +1,3 @@
-import urllib.request
-import os
-
 def read_txt_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return [line.strip() for line in file]
@@ -27,7 +24,8 @@ def process_files(channel_file, tv_file, iptv_file):
         if "#genre#" in channel_line:
             append_to_file(iptv_file, [channel_line])
         else:
-            matching_lines = [tv_line for tv_line in tv_lines if channel_line in tv_line]
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file(iptv_file, matching_lines)
 
 if __name__ == "__main__":
@@ -37,4 +35,3 @@ if __name__ == "__main__":
 
     process_files(channel_file, tv_file, iptv_file)
     print("文件处理完成。")
-
