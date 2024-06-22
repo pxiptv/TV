@@ -1,21 +1,6 @@
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import time
-from datetime import datetime
-import os
 from urllib.parse import urlparse
-
-# 读取文件内容
-def read_txt_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        lines = [line.strip() for line in file]
-    return lines
-
-# 写入文件内容
-def write_txt_file(file_path, lines):
-    with open(file_path, 'w', encoding='utf-8') as file:
-        for line in lines:
-            file.write(line + '\n')
+import os
 
 # 从URL获取文件内容
 def fetch_content_from_url(url):
@@ -34,50 +19,22 @@ def process_content(content):
     filtered_lines = [line for line in lines if not any(skip in line for skip in skip_strings) and required_string in line]
     return filtered_lines
 
-# 检查URL是否可访问
-def check_url(url, timeout=8):
-    try:
-        start_time = time.time()
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=timeout) as response:
-            elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
-            if response.status == 200:
-                return elapsed_time, True
-    except Exception as e:
-        print(f"Error checking {url}: {e}")
-    return None, False
+# 读取文件内容
+def read_txt_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = [line.strip() for line in file]
+    return lines
 
-# 处理每一行并检测URL
-def process_line(line):
-    parts = line.split(',')
-    if len(parts) == 2:
-        name, url = parts
-        elapsed_time, is_valid = check_url(url.strip())
-        if is_valid and elapsed_time <= 10000:
-            return elapsed_time, line.strip()
-    return None, None
-
-# 多线程处理文本并检测URL
-def process_urls_multithreaded(lines, max_workers=18):
-    success_list = []
-    blacklist = []
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(process_line, line): line for line in lines}
-        for future in as_completed(futures):
-            elapsed_time, result = future.result()
-            if result:
-                if elapsed_time is not None:
-                    success_list.append(f"{elapsed_time:.2f}ms,{result}")
-                else:
-                    blacklist.append(result)
-    return success_list, blacklist
+# 写入文件内容
+def write_txt_file(file_path, lines):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for line in lines:
+            file.write(line + '\n')
 
 # 主函数
 if __name__ == "__main__":
     # 定义要访问的多个URL
     urls = [
-        'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
-        'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
         'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
         'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
         'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
@@ -90,6 +47,7 @@ if __name__ == "__main__":
     # 合并所有URL内容
     combined_lines = []
     for url in urls:
+        print(f"Fetching content from URL: {url}")
         content = fetch_content_from_url(url)
         filtered_lines = process_content(content)
         combined_lines.extend(filtered_lines)
@@ -100,26 +58,13 @@ if __name__ == "__main__":
     others_lines = read_txt_file('others.txt')
     
     # 删除与 iptv.txt、blacklist_auto.txt 和 others.txt 中相同的行
-    unique_lines = set(combined_lines) - set(iptv_lines) - set(blacklist_lines) - set(others_lines)
+    unique_lines = list(set(combined_lines) - set(iptv_lines) - set(blacklist_lines) - set(others_lines))
     
-    # 根据 channel.txt 文件排序
+    # 根据 channel.txt 文件排序并保留特定内容的行
     channel_lines = read_txt_file('channel.txt')
     sorted_lines = [line for line in channel_lines if line in unique_lines]
     
     # 写入 live.txt 文件
     write_txt_file('live.txt', sorted_lines)
-    
-    # 读取 live.txt 文件内容进行检测
-    live_lines = read_txt_file('live.txt')
-    success_list, blacklist = process_urls_multithreaded(live_lines)
-    
-    # 写入 live.txt 和 blacklist_auto.txt 文件
-    write_txt_file('live.txt', [line for elapsed_time, line in success_list])
-    write_txt_file('blacklist_auto.txt', blacklist)
 
-    # 输出统计信息
-    print(f"成功清单文件已生成: live.txt")
-    print(f"黑名单文件已生成: blacklist_auto.txt")
-    print(f"总共检测到URL数: {len(live_lines)}")
-    print(f"成功的URL数: {len(success_list)}")
-    print(f"失败的URL数: {len(blacklist)}")
+    print(f"Successfully created live.txt with {len(sorted_lines)} lines")
