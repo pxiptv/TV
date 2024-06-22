@@ -1,8 +1,12 @@
-import requests
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 from datetime import datetime
 import os
 import re
+from urllib.parse import urlparse
+
+timestart = datetime.now()
 
 # 获取URL的直播源数据
 def process_url(url):
@@ -273,3 +277,116 @@ except Exception as e:
 
 print("生成的文件:")
 print(f"{output_file} 包含分类后的频道列表")
+
+# 读取文件内容
+def read_txt_file(file_path):
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']  # 定义需要跳过的字符串数组
+    required_strings = ['://']  # 定义需要包含的字符串数组
+
+    with open(file_path, 'r', encoding='utf-8') as file:
+        lines = [
+            line for line in file
+            if not any(skip_str in line for skip_str in skip_strings) and all(req_str in line for req_str in required_strings)
+        ]
+    return lines
+
+# 检测URL是否可访问并记录响应时间
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+}
+def check_url(url, timeout=8):
+    try:
+        start_time = time.time()
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+            if response.status == 200:
+                return elapsed_time, True
+    except Exception as e:
+        print(f"Error checking {url}: {e}")
+    return None, False
+
+# 处理单行文本并检测URL
+def process_line(line):
+    if "#genre#" in line or "://" not in line:
+        return None, None  # 跳过包含“#genre#”的行
+    parts = line.split(',')
+    if len(parts) == 2:
+        name, url = parts
+        elapsed_time, is_valid = check_url(url.strip())
+        if is_valid and elapsed_time <= 10000:
+            return elapsed_time, line.strip()
+    return None, None
+
+# 多线程处理文本并检测URL
+def process_urls_multithreaded(lines, max_workers=18):
+    successlist = []
+    blacklist = []
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(process_line, line): line for line in lines}
+        for future in as_completed(futures):
+            elapsed_time, result = future.result()
+            if result:
+                if elapsed_time is not None:
+                    successlist.append(f"{elapsed_time:.2f}ms,{result}")
+                else:
+                    blacklist.append(result)
+    return successlist, blacklist
+
+# 写入文件
+def write_list(file_path, data_list):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for item in data_list:
+            file.write(item + '\n')
+
+if __name__ == "__main__":
+    input_file = 'iptv.txt'  # 输入文件路径
+    success_file = 'whitelist_auto.txt'  # 成功清单文件路径
+    blacklist_file = 'blacklist_auto.txt'  # 黑名单文件路径
+
+    # 读取输入文件内容
+    lines = read_txt_file(input_file)
+
+    # 处理URL并生成成功清单和黑名单
+    successlist, blacklist = process_urls_multithreaded(lines)
+
+    # 将成功清单按照响应时间排序
+    successlist.sort()
+
+    # 写入成功清单文件
+    write_list(success_file, successlist)
+
+    # 写入黑名单文件
+    write_list(blacklist_file, blacklist)
+
+    # 输出统计信息
+    urls_total = len(lines)
+    urls_ok = len(successlist)
+    urls_ng = len(blacklist)
+
+    print(f"成功清单文件已生成: {success_file}")
+    print(f"黑名单文件已生成: {blacklist_file}")
+    print(f"总共检测到URL数: {urls_total}")
+    print(f"成功的URL数: {urls_ok}")
+    print(f"失败的URL数: {urls_ng}")
+
+    # 执行的代码
+    timeend = datetime.now()
+
+    # 计算时间差
+    elapsed_time = timeend - timestart
+    total_seconds = elapsed_time.total_seconds()
+
+    # 转换为分钟和秒
+    minutes = int(total_seconds // 60)
+    seconds = int(total_seconds % 60)
+
+    # 格式化开始和结束时间
+    timestart_str = timestart.strftime("%Y%m%d_%H%M%S")
+    timeend_str = timeend.strftime("%Y%m%d_%H%M%S")
+
+    print(f"开始时间: {timestart_str}")
+    print(f"结束时间: {timeend_str}")
+    print(f"执行时间: {minutes} 分 {seconds} 秒")
+
