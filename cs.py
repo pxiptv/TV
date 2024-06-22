@@ -1,9 +1,8 @@
 import urllib.request
 import os
-from urllib.parse import urlparse
 import time
+from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
 
 # 从URL获取文件内容
 def fetch_content_from_url(url):
@@ -94,11 +93,12 @@ if __name__ == "__main__":
 
     # 读取本地文件
     iptv_lines = read_txt_file('iptv.txt')
-    blacklist_lines = read_txt_file('blacklist_auto.txt')
+    blacklist_lines = read_txt_file('blacklist.txt')
     others_lines = read_txt_file('others.txt')
     channel_lines = read_txt_file('channel.txt')
+    whitelist_lines = read_txt_file('whitelist.txt')
 
-    # 删除与 iptv.txt, blacklist_auto.txt 和 others.txt 中相同内容的行
+    # 删除与 iptv.txt, blacklist.txt 和 others.txt 中相同内容的行
     combined_set = set(all_lines) - set(iptv_lines) - set(blacklist_lines) - set(others_lines)
 
     # 根据 channel.txt 的排序找出包含 channel.txt 文件内容的行
@@ -113,8 +113,29 @@ if __name__ == "__main__":
     success_list, blacklist = process_urls_multithreaded(tv_lines)
 
     # 写入结果文件
-    write_txt_file('iptv.txt', success_list)
-    write_txt_file('blacklist_auto.txt', blacklist)
+    write_txt_file('iptv.txt', success_list + whitelist_lines)
+    write_txt_file('blacklist.txt', blacklist)
 
     print(f"成功生成: iptv.txt")
-    print(f"黑名单已更新: blacklist_auto.txt")
+    print(f"黑名单已更新: blacklist.txt")
+
+    ################# 添加生成m3u文件 #################
+    output_text = "#EXTM3U\n"
+
+    with open("iptv.txt", "r", encoding='utf-8') as file:
+        input_text = file.read()
+
+    lines = input_text.strip().split("\n")
+    group_name = ""
+    for line in lines:
+        parts = line.split(",")
+        if len(parts) == 2 and "#genre#" in line:
+            group_name = parts[0]
+        elif len(parts) == 2:
+            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+            output_text += f"{parts[1]}\n"
+
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
+
+    print("iptv.m3u文件已生成。")
