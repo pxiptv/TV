@@ -1,7 +1,6 @@
 import urllib.request
 import os
 import time
-from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # 从URL获取文件内容
@@ -23,9 +22,11 @@ def process_content(content):
 
 # 读取文件内容
 def read_txt_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        lines = file.readlines()
-    return [line.strip() for line in lines]
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        return [line.strip() for line in lines]
+    return []
 
 # 写入文件内容
 def write_txt_file(file_path, lines):
@@ -59,7 +60,7 @@ def process_line(line):
 
 # 多线程处理文本并检测URL
 def process_urls_multithreaded(lines, max_workers=18):
-    successlist = []
+    success_list = []
     blacklist = []
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(process_line, line): line for line in lines}
@@ -67,10 +68,10 @@ def process_urls_multithreaded(lines, max_workers=18):
             elapsed_time, result = future.result()
             if result:
                 if elapsed_time is not None and elapsed_time <= 10000:
-                    successlist.append(result)
+                    success_list.append(result)
                 else:
                     blacklist.append(result)
-    return successlist, blacklist
+    return success_list, blacklist
 
 # 主函数
 if __name__ == "__main__":
@@ -81,7 +82,6 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
         'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
         'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
-        'https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.m3u',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
     ]
 
@@ -110,20 +110,33 @@ if __name__ == "__main__":
     tv_lines = [line for line in live_lines if any(channel in line for channel in channel_lines)]
     write_txt_file('tv.txt', tv_lines)
 
-    # 在线检测 tv.txt 文件的每行网址
-    success_list, blacklist = process_urls_multithreaded(tv_lines)
+    # 将 tv.txt 与 whitelist.txt 合并只保留包含 "://" 的行，生成 iptv.txt 文件
+    tv_lines = read_txt_file('tv.txt')
+    combined_lines = tv_lines + whitelist_lines
+    iptv_lines = [line for line in combined_lines if '://' in line]
+    write_txt_file('iptv.txt', iptv_lines)
 
-    # 写入结果文件
-    write_txt_file('iptv.txt', success_list + whitelist_lines)
+    # 在线检测 iptv.txt 文件的每行网址
+    success_list, blacklist = process_urls_multithreaded(iptv_lines)
+
+    # 写入 blacklist.txt 文件
     write_txt_file('blacklist.txt', blacklist)
 
-    print(f"成功生成: iptv.txt")
-    print(f"黑名单已更新: blacklist.txt")
+    # 清空 tv.txt 文件
+    write_txt_file('tv.txt', [])
 
-    ################# 添加生成m3u文件 #################
+    # 将可访问且响应时间低于10000毫秒的行，按 channel.txt 文件的排序找出包含 channel.txt 文件内容的行，生成 tv.txt 文件
+    sorted_success_list = sorted(success_list, key=lambda x: channel_lines.index(x.split(',')[0]) if x.split(',')[0] in channel_lines else float('inf'))
+
+    # 将 channel.txt 文件中包含 "#genre#" 的行也加入 tv.txt 文件
+    genre_lines = [line for line in channel_lines if "#genre#" in line]
+    tv_lines = genre_lines + [line for line in sorted_success_list if any(channel in line for channel in channel_lines)]
+    write_txt_file('tv.txt', tv_lines)
+
+    # 生成 iptv.m3u 文件
     output_text = "#EXTM3U\n"
 
-    with open("iptv.txt", "r", encoding='utf-8') as file:
+    with open("tv.txt", "r", encoding='utf-8') as file:
         input_text = file.read()
 
     lines = input_text.strip().split("\n")
@@ -140,3 +153,11 @@ if __name__ == "__main__":
         file.write(output_text)
 
     print("iptv.m3u文件已生成。")
+
+    # 删除 iptv.txt 文件
+    os.remove("iptv.txt")
+
+    # 将 tv.txt 重命名为 iptv.txt
+    os.rename("tv.txt", "iptv.txt")
+
+    print("文件处理完成。")
