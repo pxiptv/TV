@@ -1,19 +1,6 @@
 import requests
 import re
 
-# 获取URL的直播源数据
-def process_url(url):
-    try:
-        response = requests.get(url)
-        if response.status_code == 200:
-            return response.text.splitlines()
-        else:
-            print(f"无法获取 URL: {url}")
-            return []
-    except requests.exceptions.RequestException as e:
-        print(f"请求 URL 时发生错误: {e}")
-        return []
-
 # 读取文件内容
 def read_txt_file(file_path):
     try:
