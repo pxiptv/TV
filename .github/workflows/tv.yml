@@ -32,7 +32,7 @@ jobs:
         pip install requests
 
     - name: Run IPTV update
-      run: python ${{ github.workspace }}/iptv.py
+      run: python ${{ github.workspace }}/cs.py
       
     - name: Commit results
       run: |
