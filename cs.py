@@ -81,6 +81,7 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
         'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
         'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
+        'https://raw.githubusercontent.com/vbskycn/iptv/master/tv/iptv4.m3u',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
     ]
 
