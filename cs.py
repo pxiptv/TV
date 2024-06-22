@@ -36,22 +36,12 @@ def append_to_file(file_path, lines):
         for line in lines:
             file.write(line + '\n')
 
-def process_files(channel_file, tv_file, iptv_file):
-    # 清空 iptv.txt 文件
-    open(iptv_file, 'w').close()
-
-    # 读取 channel.txt 和 tv.txt 文件
-    channel_lines = read_txt_file(channel_file)
-    tv_lines = read_txt_file(tv_file)
-
-    # 处理 channel.txt 文件中的每一行
-    for channel_line in channel_lines:
-        if "#genre#" in channel_line:
-            append_to_file(iptv_file, [channel_line])
-        else:
-            channel_name = channel_line.split(",")[0]
-            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
-            append_to_file(iptv_file, matching_lines)
+# 删除重复行
+def remove_duplicates(lines, file_paths):
+    for file_path in file_paths:
+        file_lines = read_txt_file(file_path)
+        lines = [line for line in lines if line not in file_lines]
+    return lines
 
 # 从URL列表下载和处理文件内容
 def download_and_process_files(urls):
@@ -62,14 +52,7 @@ def download_and_process_files(urls):
             all_lines.update(process_content(content))
     return list(all_lines)
 
-# 删除与本地文件重复的行
-def remove_duplicates(lines, file_paths):
-    for file_path in file_paths:
-        file_lines = read_txt_file(file_path)
-        lines = [line for line in lines if line not in file_lines]
-    return lines
-
-# 检测URL是否可访问
+# 在线检测URL是否可访问
 def check_url_availability(url):
     try:
         response = requests.get(url, timeout=10)
@@ -79,14 +62,16 @@ def check_url_availability(url):
         pass
     return False, 0
 
-# 将tv.txt转换为iptv.m3u文件
-def convert_to_m3u(tv_file, m3u_file):
-    lines = read_txt_file(tv_file)
+# 将iptv.txt转换为iptv.m3u文件
+def convert_to_m3u(iptv_file, m3u_file):
+    lines = read_txt_file(iptv_file)
     with open(m3u_file, 'w', encoding='utf-8') as file:
         file.write("#EXTM3U\n")
         for line in lines:
-            file.write(f"#EXTINF:-1,{line.split(',')[0]}\n")
-            file.write(f"{line.split(',')[1]}\n")
+            parts = line.split(',', 1)
+            if len(parts) == 2:
+                file.write(f"#EXTINF:-1,{parts[0]}\n")
+                file.write(f"{parts[1]}\n")
 
 # 主函数
 if __name__ == "__main__":
@@ -120,7 +105,17 @@ if __name__ == "__main__":
     write_txt_file('tv.txt', tv_lines)
 
     # 2. 清空 iptv.txt 文件后读取 channel.txt 文件
-    process_files('channel.txt', 'tv.txt', 'iptv.txt')
+    open('iptv.txt', 'w').close()
+    channel_lines = read_txt_file('channel.txt')
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('iptv.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
+            append_to_file('iptv.txt', matching_lines)
 
     # 3. 在线检测 iptv.txt 文件的每行网址
     iptv_lines = read_txt_file('iptv.txt')
@@ -137,15 +132,20 @@ if __name__ == "__main__":
     # 将无效的行添加到 blacklist.txt 文件
     append_to_file('blacklist.txt', invalid_lines)
 
-    # 清空 tv.txt 文件，将有效的行按 channel.txt 的排序依次找出包含 channel.txt 文件内容的行
-    open('tv.txt', 'w').close()
-    process_files('channel.txt', 'tv.txt', 'tv.txt')
+    # 清空 tv.txt 文件，将有效的行写入 tv.txt 文件
+    write_txt_file('tv.txt', valid_lines)
 
-    # 将 tv.txt 转换为 iptv.m3u 并保存
-    convert_to_m3u('tv.txt', 'iptv.m3u')
+    # 4. 再次清空 iptv.txt 文件并处理
+    open('iptv.txt', 'w').close()
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('iptv.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in valid_lines if tv_line.split(",http")[0] == channel_name]
+            append_to_file('iptv.txt', matching_lines)
 
-    # 删除 iptv.txt 文件，将 tv.txt 改名为 iptv.txt
-    os.remove('iptv.txt')
-    os.rename('tv.txt', 'iptv.txt')
+    # 5. 将 iptv.txt 转换为 iptv.m3u 并保存
+    convert_to_m3u('iptv.txt', 'iptv.m3u')
 
     print("文件处理完成。")
