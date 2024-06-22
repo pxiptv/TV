@@ -1,6 +1,19 @@
 import requests
 import re
 
+# 获取URL的直播源数据
+def process_url(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.text.splitlines()
+        else:
+            print(f"无法获取 URL: {url}")
+            return []
+    except requests.exceptions.RequestException as e:
+        print(f"请求 URL 时发生错误: {e}")
+        return []
+
 # 读取文件内容
 def read_txt_file(file_path):
     try:
@@ -36,9 +49,9 @@ if __name__ == "__main__":
         lines = process_url(url)
         urls_all_lines.extend(lines)
     
-    # 过滤包含特定字符串的行，并去重
+    # 过滤包含特定字符串的行，并保留包含 "://" 的行
     filter_strings = ['#genre#', '192', '198', 'ChiSheng9']
-    urls_all_lines = [line for line in urls_all_lines if not any(fs in line for fs in filter_strings)]
+    urls_all_lines = [line for line in urls_all_lines if not any(fs in line for fs in filter_strings) and '://' in line]
     urls_all_lines = list(set(urls_all_lines))  # 去重
     
     # 读取 iptv.txt、blacklist_auto.txt 和 others.txt 的内容
