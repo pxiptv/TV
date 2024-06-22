@@ -30,6 +30,27 @@ def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
 
+# 从URL列表下载和处理文件内容
+def download_and_process_files(urls):
+    all_lines = set()
+    for url in urls:
+        content = fetch_content_from_url(url)
+        if content:
+            all_lines.update(process_content(content))
+    return list(all_lines)
+
+# 删除与本地文件重复的行
+def remove_duplicates(lines, file_paths):
+    for file_path in file_paths:
+        file_lines = read_txt_file(file_path)
+        lines = [line for line in lines if line not in file_lines]
+    return lines
+
+# 按channel.txt的顺序过滤行
+def filter_by_channel(lines, channel_lines):
+    filtered_lines = [line for line in lines if "#genre#" in line or any(channel in line for channel in channel_lines)]
+    return filtered_lines
+
 # 主函数
 if __name__ == "__main__":
     urls = [
@@ -43,34 +64,28 @@ if __name__ == "__main__":
     ]
 
     # 下载并处理所有URL的内容
-    all_lines = []
-    for url in urls:
-        content = fetch_content_from_url(url)
-        if content:
-            all_lines.extend(process_content(content))
-
-    # 读取本地文件
-    iptv_lines = read_txt_file('iptv.txt')
-    blacklist_lines = read_txt_file('blacklist.txt')
-    others_lines = read_txt_file('others.txt')
-    whitelist_lines = read_txt_file('whitelist.txt')
-    channel_lines = read_txt_file('channel.txt')
-
-    # 删除与 iptv.txt, blacklist.txt 和 others.txt 中相同内容的行
-    combined_set = set(all_lines) - set(iptv_lines) - set(blacklist_lines) - set(others_lines)
+    all_lines = download_and_process_files(urls)
 
     # 写入 live.txt 文件
-    write_txt_file('live.txt', list(combined_set))
+    write_txt_file('live.txt', all_lines)
 
-    # 将 live.txt 与 whitelist.txt 合并并删除不包含 "://" 的行，生成 tv.txt 文件
+    # 读取 live.txt 文件并删除与 iptv.txt, blacklist.txt 和 others.txt 中相同内容的行
     live_lines = read_txt_file('live.txt')
-    combined_lines = live_lines + whitelist_lines
+    live_lines = remove_duplicates(live_lines, ['iptv.txt', 'blacklist.txt', 'others.txt'])
+
+    # 写入过滤后的 live.txt 文件
+    write_txt_file('live.txt', live_lines)
+
+    # 读取 live.txt 和 whitelist.txt，合并去重，删除不包含 "://" 的行，生成 tv.txt 文件
+    whitelist_lines = read_txt_file('whitelist.txt')
+    combined_lines = set(live_lines + whitelist_lines)
     tv_lines = [line for line in combined_lines if '://' in line]
     write_txt_file('tv.txt', tv_lines)
 
-    # 按 channel.txt 文件的排序找出 tv.txt 文件中包含 channel.txt 文件内容的行，生成全新的 iptv.txt 文件
-    sorted_tv_lines = sorted(tv_lines, key=lambda x: channel_lines.index(x.split(',')[0]) if x.split(',')[0] in channel_lines else float('inf'))
-    filtered_iptv_lines = [line for line in sorted_tv_lines if any(channel in line for channel in channel_lines)]
+    # 读取 tv.txt 和 channel.txt 文件，按 channel.txt 的排序过滤行生成 iptv.txt 文件
+    channel_lines = read_txt_file('channel.txt')
+    tv_lines = read_txt_file('tv.txt')
+    filtered_iptv_lines = filter_by_channel(tv_lines, channel_lines)
     write_txt_file('iptv.txt', filtered_iptv_lines)
 
     print("文件处理完成。")
