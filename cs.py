@@ -1,5 +1,6 @@
 import urllib.request
 import os
+import requests
 
 # 从URL获取文件内容
 def fetch_content_from_url(url):
@@ -19,8 +20,11 @@ def process_content(content):
 
 # 读取文件内容
 def read_txt_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return [line.strip() for line in file]
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        return [line.strip() for line in lines]
+    return []
 
 # 写入文件内容
 def write_txt_file(file_path, lines):
@@ -65,6 +69,25 @@ def remove_duplicates(lines, file_paths):
         lines = [line for line in lines if line not in file_lines]
     return lines
 
+# 检测URL是否可访问
+def check_url_availability(url):
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return True, response.elapsed.total_seconds() * 1000
+    except requests.RequestException:
+        pass
+    return False, 0
+
+# 将tv.txt转换为iptv.m3u文件
+def convert_to_m3u(tv_file, m3u_file):
+    lines = read_txt_file(tv_file)
+    with open(m3u_file, 'w', encoding='utf-8') as file:
+        file.write("#EXTM3U\n")
+        for line in lines:
+            file.write(f"#EXTINF:-1,{line.split(',')[0]}\n")
+            file.write(f"{line.split(',')[1]}\n")
+
 # 主函数
 if __name__ == "__main__":
     urls = [
@@ -77,7 +100,7 @@ if __name__ == "__main__":
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
     ]
 
-    # 下载并处理所有URL的内容
+    # 1. 下载并处理所有URL的内容
     all_lines = download_and_process_files(urls)
 
     # 写入 live.txt 文件
@@ -96,7 +119,33 @@ if __name__ == "__main__":
     tv_lines = [line for line in combined_lines if '://' in line]
     write_txt_file('tv.txt', tv_lines)
 
-    # 清空 iptv.txt 文件后读取 channel.txt 文件，如行中包含“#genre#“的直接写入 iptv.txt 后换行，以每行的内容为条件，在 tv.txt 中查找与 “,http” 前字符相同的行，逐行添加到 iptv.txt
+    # 2. 清空 iptv.txt 文件后读取 channel.txt 文件
     process_files('channel.txt', 'tv.txt', 'iptv.txt')
+
+    # 3. 在线检测 iptv.txt 文件的每行网址
+    iptv_lines = read_txt_file('iptv.txt')
+    valid_lines = []
+    invalid_lines = []
+    for line in iptv_lines:
+        url = line.split(",")[1]
+        is_valid, response_time = check_url_availability(url)
+        if is_valid and response_time < 10000:
+            valid_lines.append(line)
+        else:
+            invalid_lines.append(line)
+
+    # 将无效的行添加到 blacklist.txt 文件
+    append_to_file('blacklist.txt', invalid_lines)
+
+    # 清空 tv.txt 文件，将有效的行按 channel.txt 的排序依次找出包含 channel.txt 文件内容的行
+    open('tv.txt', 'w').close()
+    process_files('channel.txt', 'tv.txt', 'tv.txt')
+
+    # 将 tv.txt 转换为 iptv.m3u 并保存
+    convert_to_m3u('tv.txt', 'iptv.m3u')
+
+    # 删除 iptv.txt 文件，将 tv.txt 改名为 iptv.txt
+    os.remove('iptv.txt')
+    os.rename('tv.txt', 'iptv.txt')
 
     print("文件处理完成。")
