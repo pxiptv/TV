@@ -40,6 +40,11 @@ def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
 
+def append_to_file(file_path, lines):
+    with open(file_path, 'a', encoding='utf-8') as file:
+        for line in lines:
+            file.write(line + '\n')
+
 # 去重
 def remove_duplicates(lines):
     return list(set(lines))
