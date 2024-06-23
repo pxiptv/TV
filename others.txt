@@ -1,5 +1,4 @@
 🇨🇳央视频道🇨🇳,#genre#
-CCTV1,http://113.86.205.29:8090/hls/114/index.m3u8
 CCTV1,http://118.249.23.89:9999/udp/239.76.253.151:9000
 CCTV1,https://www.tfiplaytv.vip:3344/PLTV/d576c9ff9034305c70e14eaa7df61759e479faa57cd84db508ae6193688f567b6607f10da3f098d8e8b1d596330ef66b/ys.php?id=cctv1b&token=29OdfaO3c77ad5fO9777d6c85264655c85O1ccc56238c51d6746a5bb4caebc84
 CCTV1,http://122.232.188.43:60010/udp/233.50.201.118:5140
