@@ -67,13 +67,11 @@ def process_urls_multithreaded(lines, max_workers=18):
                     blacklist.append(result)
     return successlist, blacklist
 
-# 写入文件
-def write_txt_file(file_path, data_list):
+# 写入文件内容
+def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
-        for item in data_list:
-            file.write(item + '\n')
+        file.write('\n'.join(lines) + '\n')
 
-# 追加写入文件内容
 def append_to_file(file_path, lines):
     with open(file_path, 'a', encoding='utf-8') as file:
         for line in lines:
@@ -163,7 +161,6 @@ def process_url(url):
     
     except Exception as e:
         print(f"处理URL时发生错误：{e}")
-
 
 if __name__ == "__main__":
     # 定义要访问的多个URL
