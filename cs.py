@@ -5,13 +5,12 @@ from datetime import datetime
 import os
 from urllib.parse import urlparse
 
-
 timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
-    required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']  # 定义需要跳过的字符串数组
+    required_strings = ['://']  # 定义需要包含的字符串数组
 
     with open(file_path, 'r', encoding='utf-8') as file:
         lines = [
@@ -26,7 +25,7 @@ headers = {
 }
 def check_url(url, timeout=8):
     try:
-    	if  "://" in url:
+        if "://" in url:
             start_time = time.time()
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as response:
@@ -39,7 +38,7 @@ def check_url(url, timeout=8):
 
 # 处理单行文本并检测URL
 def process_line(line):
-    if "#genre#" in line or "://" not in line :
+    if "#genre#" in line or "://" not in line:
         return None, None  # 跳过包含“#genre#”的行
     parts = line.split(',')
     if len(parts) == 2:
@@ -53,7 +52,7 @@ def process_line(line):
 
 # 多线程处理文本并检测URL
 def process_urls_multithreaded(lines, max_workers=18):
-    blacklist =  [] 
+    blacklist = [] 
     successlist = []
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -85,7 +84,7 @@ def merge_files(file1, file2, output_file):
     # 合并并去重
     merged_lines = list(set(lines1 + lines2))
     write_txt_file(output_file, merged_lines)
-    
+
 # 去重
 def remove_duplicates(lines):
     return list(set(lines))
@@ -155,8 +154,6 @@ def process_url(url):
                 lines = text.split('\n')
                 for line in lines:
                     if  "#genre#" not in line and "," in line and "://" in line:
-                        #channel_name=line.split(',')[0].strip()
-                        #channel_address=line.split(',')[1].strip()
                         urls_all_lines.append(line.strip())
     
     except Exception as e:
@@ -191,7 +188,7 @@ def main():
     # 过滤后写入 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
 
-# 将 live.txt 与 whitelist.txt 合并
+    # 将 live.txt 与 whitelist.txt 合并
     input_file1 = 'live.txt'  # 输入文件路径
     input_file2 = 'whitelist.txt'  # 输入文件路径2 
     success_file = 'whitelist.txt'  # 成功清单文件路径
@@ -200,26 +197,30 @@ def main():
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
     lines2 = read_txt_file(input_file2)
-    lines=list(set(lines1 + lines2))
+    lines = list(set(lines1 + lines2))
     lines = [line.strip() for line in lines if line.strip()]
-    write_txt_file('live.txt',lines)
-  
-    # 读取 channel.txt 和 live.txt 文件
-    channel_lines = read_txt_file('channel.txt')
-    live_lines = read_txt_file('tv.txt')
+    write_txt_file('live.txt', lines)
+
+    # 新增功能：处理 channel.txt 并写入 tv.txt
+    open('tv.txt', 'w').close()  # 清空 tv.txt 文件
+
+    with open('channel.txt', 'r', encoding='utf-8') as file:
+        channel_lines = file.readlines()
 
     tv_lines = []
+
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            tv_lines.append(channel_line)
+            tv_lines.append(channel_line.strip())
         else:
-            channel_name = channel_line.strip()
-            matching_lines = [line for line in live_lines if live_lines.split(",http")[0].strip() == channel_name]
-            tv_lines.extend(matching_lines)
+            channel_name = channel_line.split(',')[0]
+            with open('live.txt', 'r', encoding='utf-8') as live_file:
+                live_lines = live_file.readlines()
+                for live_line in live_lines:
+                    if live_line.startswith(channel_name + ',http'):
+                        tv_lines.append(live_line.strip())
 
-    # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
-    open('tv.txt', 'w').close()
-    write_txt_file('tv.txt', tv_lines)
-        
+    append_to_file('tv.txt', tv_lines)
+
 if __name__ == "__main__":
     main()
