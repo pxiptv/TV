@@ -206,18 +206,15 @@ def main():
   
     # 读取 channel.txt 和 live.txt 文件
     channel_lines = read_txt_file('channel.txt')
-    live_lines = read_txt_file('live.txt')
+    live_lines = read_txt_file('tv.txt')
 
-    # 用于存储结果的列表
     tv_lines = []
-    
-    # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
             tv_lines.append(channel_line)
         else:
-            channel_name = channel_line
-            matching_lines = [line for line in live_lines if line.split(",http")[0].strip() == channel_name]
+            channel_name = channel_line.strip()
+            matching_lines = [line for line in live_lines if live_lines.split(",http")[0].strip() == channel_name]
             tv_lines.extend(matching_lines)
 
     # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
