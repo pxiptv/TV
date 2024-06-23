@@ -87,15 +87,15 @@ def remove_duplicates(lines):
     return list(set(lines))
 
 # 过滤掉在 comparison_files 中出现的行
-def filter_linesonline_lines comparison_files):
+def filter_lines(input_file, comparison_files):
     # 读取对比文件中的所有行
     comparison_lines = set()
     for file in comparison_files:
         comparison_lines.update(read_txt_file(file))
 
     # 读取输入文件并过滤行
-    online_lines = read_txt_fileonline_lines 
-    filtered_lines = [line for line in online_lines if line not in comparison_lines]
+    input_lines = read_txt_file(input_file)
+    filtered_lines = [line for line in input_lines if line not in comparison_lines]
     
     return filtered_lines
 
