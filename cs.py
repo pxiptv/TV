@@ -10,7 +10,7 @@ timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
 
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -206,27 +206,26 @@ def main():
     lines=list(set(lines1 + lines2))
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('live.txt',lines)
-    
-    # 清空 tv.txt 文件
-    open('tv.txt', 'w').close()
-    
+  
     # 读取 channel.txt 和 live.txt 文件
     channel_lines = read_txt_file('channel.txt')
     live_lines = read_txt_file('live.txt')
 
+    # 用于存储结果的列表
+    tv_lines = []
+    
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            append_to_file('tv.txt', [channel_line])
+            tv_lines.append(channel_line)
         else:
-            # 提取 channel_line 中的前半部分作为匹配条件
-            channel_name = channel_line.split(",")[0]
-            # 在 live.txt 中查找匹配行
-            matching_lines = [live_line for live_line in live_line if live_line.startswith(channel_name)]
-            # 追加匹配行到 tv.txt
-            append_to_file('tv.txt', matching_lines)
-    # 写入 tv.txt 文件
-    write_txt_file('tv.txt', matching_lines)
+            channel_name = channel_line
+            matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name]
+            tv_lines.extend(matching_lines)
+
+    # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
+    open('tv.txt', 'w').close()
+    write_txt_file('tv.txt', tv_lines)
         
 if __name__ == "__main__":
     main()
