@@ -73,6 +73,12 @@ def write_txt_file(file_path, data_list):
         for item in data_list:
             file.write(item + '\n')
 
+# 追加写入文件内容
+def append_to_file(file_path, lines):
+    with open(file_path, 'a', encoding='utf-8') as file:
+        for line in lines:
+            file.write(line + '\n')
+
 # 合并两个文件的内容并写入输出文件
 def merge_files(file1, file2, output_file):
     lines1 = read_txt_file(file1)
