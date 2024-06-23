@@ -43,6 +43,19 @@ def write_txt_file(file_path, lines):
 # 去重
 def remove_duplicates(lines):
     return list(set(lines))
+
+# 过滤掉在 comparison_files 中出现的行
+def filter_lines(input_file, comparison_files):
+    # 读取对比文件中的所有行
+    comparison_lines = set()
+    for file in comparison_files:
+        comparison_lines.update(read_txt_file(file))
+
+    # 读取输入文件并过滤行
+    input_lines = read_txt_file(input_file)
+    filtered_lines = [line for line in input_lines if line not in comparison_lines]
+    
+    return filtered_lines
     
 # 主函数
 if __name__ == "__main__":
@@ -63,7 +76,8 @@ def main():
     # 写入 online.txt 文件
     write_txt_file('online.txt', all_lines)
     
-    # 读取 iptv.txt, blacklist.txt 和 others.txt 文件
+    # 读取 online.txt，iptv.txt, blacklist.txt 和 others.txt 文件
+    input_file = 'online.txt'
     iptv_lines = read_txt_file('iptv.txt')
     blacklist_lines = read_txt_file('blacklist.txt')
     others_lines = read_txt_file('others.txt')
@@ -72,13 +86,13 @@ def main():
     combined_lines = set(iptv_lines + blacklist_lines + others_lines)
 
     # 过滤 live.txt 中的重复行
-    filtered_live_lines = [line for line in all_lines if line and line not in combined_lines]
+    filtered_live_lines = filter_lines(input_file, comparison_files)
 
-    # 写入去重后的 live.txt 文件
+    # 清空 live.txt 文件
+    open('live.txt', 'w').close()
+
+    # 过滤后写入 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
-    
-    # 清空 iptv.txt 文件
-    open('tv.txt', 'w').close()
     
     # 读取 channel.txt 和 tv.txt 文件
     channel_lines = read_txt_file('channel.txt')
@@ -95,8 +109,9 @@ def main():
             channel_name = channel_line
             matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name]
             tv_lines.extend(matching_lines)
-    
-    # 将重新排序后的内容写入 tv.txt
+
+    # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
+    open('tv.txt', 'w').close()
     write_txt_file('tv.txt', tv_lines)
 
 if __name__ == "__main__":
