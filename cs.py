@@ -19,7 +19,7 @@ def fetch_content_from_url(url):
 
 # 处理并过滤URL内容
 def process_content(content):
-    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9', 'epg.pw']
     lines = content.split('\n')
     filtered_lines = [line for line in lines if not any(skip in line for skip in skip_strings)]
     return filtered_lines
