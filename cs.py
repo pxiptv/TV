@@ -75,26 +75,24 @@ def main():
     write_txt_file('live.txt', filtered_live_lines)
     
     # 清空 iptv.txt 文件
-    open('iptv.txt', 'w').close()
+    open('tv.txt', 'w').close()
     
     # 读取 channel.txt 和 tv.txt 文件
     channel_lines = read_txt_file('channel.txt')
     live_lines = read_txt_file('live.txt')
 
     # 用于存储结果的列表
-    iptv_lines = []
+    tv_lines = []
     
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            iptv_lines.append(channel_line)
+            tv_lines.append(channel_line)
         else:
             channel_name = channel_line
             matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name]
-            iptv_lines.extend(matching_lines)
+            tv_lines.extend(matching_lines)
     
-    # 将去重后的内容写入 iptv.txt
-    write_txt_file('iptv.txt', iptv_lines)
+    # 将重新排序后的内容写入 tv.txt
+    write_txt_file('tv.txt', tv_lines)
 
-if __name__ == "__main__":
-    main()
