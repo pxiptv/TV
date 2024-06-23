@@ -221,6 +221,9 @@ def main():
                         tv_lines.append(live_line.strip())
 
     append_to_file('tv.txt', tv_lines)
+    
+    print(f"Filtered live lines: {filtered_live_lines}")
+    print(f"TV lines: {tv_lines}")
 
 if __name__ == "__main__":
     main()
