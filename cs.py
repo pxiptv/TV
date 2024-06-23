@@ -75,15 +75,10 @@ if __name__ == "__main__":
 def main():
     # 写入 online.txt 文件
     write_txt_file('online.txt', all_lines)
-    
-    # 读取 online.txt，iptv.txt, blacklist.txt 和 others.txt 文件
     input_file = 'online.txt'
-    iptv_lines = read_txt_file('iptv.txt')
-    blacklist_lines = read_txt_file('blacklist.txt')
-    others_lines = read_txt_file('others.txt')
     
     # 合并 iptv.txt, blacklist.txt 和 others.txt 的所有行
-    combined_lines = set(iptv_lines + blacklist_lines + others_lines)
+    comparison_files = ['iptv.txt', 'blacklist.txt', 'others.txt']
 
     # 过滤 live.txt 中的重复行
     filtered_live_lines = filter_lines(input_file, comparison_files)
