@@ -96,3 +96,5 @@ def main():
     # 将重新排序后的内容写入 tv.txt
     write_txt_file('tv.txt', tv_lines)
 
+if __name__ == "__main__":
+    main()
