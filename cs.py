@@ -150,44 +150,7 @@ def main():
     open('tv.txt', 'w').close()
     write_txt_file('tv.txt', tv_lines)
     
-    # 在线检测 tv.txt 文件的每行网址
-    tv_lines = read_txt_file('tv.txt')
-    valid_lines = []
-    invalid_lines = []
-    for line in tv_lines:
-        url = line.split(",")[1]
-        is_valid, response_time = check_url_availability(url)
-        if is_valid and response_time < 10000:
-            valid_lines.append(line)
-        else:
-            invalid_lines.append(line)
 
-    # 将无效的行添加到 blacklist.txt 文件
-    append_to_file('blacklist.txt', invalid_lines)
-
-    # 将有效的行写入 whitelist.txt 文件
-    write_txt_file('whitelist.txt', valid_lines)
-
-    # 读取 channel.txt 文件
-    channel_lines = read_txt_file('channel.txt')
-
-    # 用于存储结果的列表
-    tv_lines = []
-    
-    # 再次清空 iptv.txt 文件并处理
-    open('iptv.txt', 'w').close()
-    for channel_line in channel_lines:
-        if "#genre#" in channel_line:
-            append_to_file('iptv.txt', [channel_line])
-        else:
-            channel_name = channel_line.split(",")[0]
-            matching_lines = [valid_lines for valid_lines in valid_lines if valid_lines.split(",http")[0] == channel_name]
-            append_to_file('iptv.txt', matching_lines)
-
-    # 将 iptv.txt 转换为 iptv.m3u 并保存
-    convert_to_m3u('iptv.txt', 'iptv.m3u')
-
-    print("文件处理完成。")
 
 if __name__ == "__main__":
     main()
