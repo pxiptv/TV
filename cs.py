@@ -123,8 +123,14 @@ def main():
 
     # 过滤后写入 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
+
+    # 将 live.txt 与 whitelist.txt 合并
+    tv_file = 'live.txt'
+    whitelist_file = 'whitelist.txt'
+    output_file = 'live.txt'
+    merge_files(tv_file, whitelist_file, output_file)
     
-    # 读取 channel.txt 和 tv.txt 文件
+    # 读取 channel.txt 和 live.txt 文件
     channel_lines = read_txt_file('channel.txt')
     live_lines = read_txt_file('live.txt')
 
@@ -143,12 +149,6 @@ def main():
     # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
     open('tv.txt', 'w').close()
     write_txt_file('tv.txt', tv_lines)
-
-    tv_file = 'tv.txt'
-    whitelist_file = 'whitelist.txt'
-    output_file = 'tv.txt'
-
-    merge_files(tv_file, whitelist_file, output_file)
     
 if __name__ == "__main__":
     main()
