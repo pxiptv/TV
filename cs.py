@@ -60,6 +60,9 @@ if __name__ == "__main__":
     all_lines = remove_duplicates(download_and_process_files(urls))
     
 def main():
+    # 写入 online.txt 文件
+    write_txt_file('online.txt', all_lines)
+    
     # 读取 iptv.txt, blacklist.txt 和 others.txt 文件
     iptv_lines = read_txt_file('iptv.txt')
     blacklist_lines = read_txt_file('blacklist.txt')
