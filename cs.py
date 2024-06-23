@@ -94,7 +94,7 @@ def main():
             iptv_lines.extend(matching_lines)
     
     # 将去重后的内容写入 iptv.txt
-    write_txt_file('iptv.txt', remove_duplicates(iptv_lines))
+    write_txt_file('iptv.txt', iptv_lines)
 
 if __name__ == "__main__":
     main()
