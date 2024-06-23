@@ -29,7 +29,7 @@ def main():
     open('iptv.txt', 'w').close()
     
     # 读取 channel.txt 和 tv.txt 文件
-    channel_lines = read_txt_file(channel_file)
+    channel_lines = read_txt_file(channel.txt)
     whitelist_lines = read_txt_file('whitelist.txt')
 
     # 处理 channel.txt 文件中的每一行
