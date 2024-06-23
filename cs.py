@@ -28,34 +28,22 @@ def main():
     # 清空 iptv.txt 文件
     open('iptv.txt', 'w').close()
     
-    # 读取 channel.txt 文件
-    channel_lines = read_txt_file('channel.txt')
-    
-    # 读取 whitelist.txt 文件
+    # 读取 channel.txt 和 tv.txt 文件
+    channel_lines = read_txt_file(channel_file)
     whitelist_lines = read_txt_file('whitelist.txt')
-
-    # 用于存储结果的列表
-    iptv_lines = []
 
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            # 直接写入 iptv.txt
-            iptv_lines.append(channel_line)
+            append_to_file(iptv_file, [channel_line])
         else:
-            # 提取 channel_line 中的前半部分作为匹配条件
-            channel_name = channel_line.split(",")[0]
-            # 在 whitelist.txt 中查找匹配行
-            matching_lines = [whitelist_line for whitelist_line in whitelist_lines if whitelist_line.startswith(channel_name)]
-            # 追加匹配行到结果列表
-            iptv_lines.extend(matching_lines)
+            channel_name = channel_line
+            matching_lines = [whitelist_lines for whitelist_lines in whitelist_lines if whitelist_lines.split(",http")[0] == channel_name]
+            append_to_file(iptv_file, matching_lines)
 
     # 去重
     iptv_lines = remove_duplicates(iptv_lines)
     
-    # 将去重后的内容写入 iptv.txt
-    write_txt_file('iptv.txt', iptv_lines)
-
     # 将去重后的内容写入 whitelist.txt
     write_txt_file('whitelist.txt', iptv_lines)
 
