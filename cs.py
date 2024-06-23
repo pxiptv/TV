@@ -220,7 +220,7 @@ def main():
             tv_lines.append(channel_line)
         else:
             channel_name = channel_line
-            matching_lines = [live_line for live_line in live_lines if live_line.split(",http")[0] == channel_name
+            matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name
             tv_lines.extend(matching_lines)
     
     # 将结果写入 tv.txt 文件
