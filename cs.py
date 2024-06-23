@@ -45,6 +45,15 @@ def append_to_file(file_path, lines):
         for line in lines:
             file.write(line + '\n')
 
+# 合并两个文件的内容并写入输出文件
+def merge_files(file1, file2, output_file):
+    lines1 = read_txt_file(file1)
+    lines2 = read_txt_file(file2)
+
+    # 合并并去重
+    merged_lines = list(set(lines1 + lines2))
+    write_txt_file(output_file, merged_lines)
+    
 # 去重
 def remove_duplicates(lines):
     return list(set(lines))
@@ -134,8 +143,12 @@ def main():
     # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
     open('tv.txt', 'w').close()
     write_txt_file('tv.txt', tv_lines)
-    comparison_files = ['tv.txt', 'whitelist.txt']
-    write_txt_file('tv.txt', comparison_files)
+
+    tv_file = 'tv.txt'
+    whitelist_file = 'whitelist.txt'
+    output_file = 'tv.txt'
+
+    merge_files(tv_file, whitelist_file, output_file)
     
 if __name__ == "__main__":
     main()
