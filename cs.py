@@ -186,7 +186,7 @@ def main():
     open('live.txt', 'w').close()
 
     # 过滤后写入 live.txt 文件
-    filtered_live_lines = [line.strip() for line in filtered_live_lines if line.strip()]
+    filtered_live_lines = [line.rstrip() for line in filtered_live_lines if line.rstrip()]
     write_txt_file('live.txt', filtered_live_lines)
 
     # 将 live.txt 与 whitelist.txt 合并
