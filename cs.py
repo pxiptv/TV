@@ -57,8 +57,6 @@ def filter_lines(input_file, comparison_files):
     return filtered_lines
 
 
-if __name__ == "__main__":
-
 def main():
 
  # 读取 channel.txt 和 live.txt 文件
