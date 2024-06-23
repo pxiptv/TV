@@ -40,6 +40,10 @@ def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
 
+# 去重
+def remove_duplicates(lines):
+    return list(set(lines))
+    
 # 主函数
 if __name__ == "__main__":
     urls = [
@@ -52,8 +56,8 @@ if __name__ == "__main__":
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
     ]
 
-    # 下载并处理所有URL的内容
-    all_lines = download_and_process_files(urls)
+    # 下载并处理所有URL的内容并去重
+    all_lines = remove_duplicates(download_and_process_files(urls))
     
 def main():
     # 读取 iptv.txt, blacklist.txt 和 others.txt 文件
@@ -69,6 +73,28 @@ def main():
 
     # 写入去重后的 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
+    
+    # 清空 iptv.txt 文件
+    open('iptv.txt', 'w').close()
+    
+    # 读取 channel.txt 和 tv.txt 文件
+    channel_lines = read_txt_file('channel.txt')
+    live_lines = read_txt_file('live.txt')
+
+    # 用于存储结果的列表
+    iptv_lines = []
+    
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            iptv_lines.append(channel_line)
+        else:
+            channel_name = channel_line
+            matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name]
+            iptv_lines.extend(matching_lines)
+    
+    # 将去重后的内容写入 iptv.txt
+    write_txt_file('iptv.txt', remove_duplicates(iptv_lines))
 
 if __name__ == "__main__":
     main()
