@@ -13,43 +13,22 @@ def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
 
-# 追加写入文件内容
-def append_to_file(file_path, lines):
-    with open(file_path, 'a', encoding='utf-8') as file:
-        for line in lines:
-            file.write(line + '\n')
-
-# 去重
-def remove_duplicates(lines):
-    return list(set(lines))
-
 # 主函数
 def main():
-    # 清空 iptv.txt 文件
-    open('iptv.txt', 'w').close()
-    
-    # 读取 channel.txt 和 tv.txt 文件
+    # 读取 live.txt, iptv.txt, blacklist.txt 和 others.txt 文件
+    live_lines = read_txt_file('live.txt')
     iptv_lines = read_txt_file('iptv.txt')
-    channel_lines = read_txt_file('channel.txt')
-    whitelist_lines = read_txt_file('whitelist.txt')
+    blacklist_lines = read_txt_file('blacklist.txt')
+    others_lines = read_txt_file('others.txt')
+    
+    # 合并 iptv.txt, blacklist.txt 和 others.txt 的所有行
+    combined_lines = set(iptv_lines + blacklist_lines + others_lines)
 
-    # 用于存储结果的列表
-    iptv_lines = []
-    
-    # 处理 channel.txt 文件中的每一行
-    for channel_line in channel_lines:
-        if "#genre#" in channel_line:
-            iptv_lines.append(channel_line)
-        else:
-            channel_name = channel_line
-            matching_lines = [whitelist_lines for whitelist_lines in whitelist_lines if whitelist_lines.split(",http")[0] == channel_name]
-            iptv_lines.extend(matching_lines)
-            
-    # 去重
-    iptv_lines = remove_duplicates(iptv_lines)
-    
-    # 将去重后的内容写入 whitelist.txt
-    write_txt_file('whitelist.txt', iptv_lines)
+    # 过滤 live.txt 中的重复行
+    filtered_live_lines = [line for line in live_lines if line and line not in combined_lines]
+
+    # 写入去重后的 live.txt 文件
+    write_txt_file('live.txt', filtered_live_lines)
 
 if __name__ == "__main__":
     main()
