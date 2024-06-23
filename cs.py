@@ -188,3 +188,5 @@ def main():
     # 过滤后写入 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
 
+if __name__ == "__main__":
+    main()
