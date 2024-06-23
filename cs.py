@@ -225,6 +225,8 @@ def main():
             matching_lines = [live_line for live_line in live_line if live_line.startswith(channel_name)]
             # 追加匹配行到 tv.txt
             append_to_file('tv.txt', matching_lines)
+    # 写入 tv.txt 文件
+    write_txt_file('tv.txt', matching_lines)
         
 if __name__ == "__main__":
     main()
