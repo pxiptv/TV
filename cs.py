@@ -133,8 +133,8 @@ def main():
 
     # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
     open('tv.txt', 'w').close()
-    write_txt_file('tv.txt', tv_lines)
-    append_to_file('tv.txt', 'whitelist.txt')
-
+    comparison_files = [tv_lines, 'whitelist.txt']
+    write_txt_file('tv.txt', comparison_files)
+    
 if __name__ == "__main__":
     main()
