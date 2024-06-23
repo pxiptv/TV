@@ -92,16 +92,19 @@ headers = {
 }
 def check_url(url, timeout=8):
     try:
-    	if  "://" in url:
+        if "://" in url:
             start_time = time.time()
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as response:
                 elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
                 if response.status == 200:
-                    return elapsed_time, True
+                    content = response.read().decode('utf-8')
+                    return elapsed_time, content
+        else:
+            print(f"URL格式不正确: {url}")
     except Exception as e:
-        print(f"Error checking {url}: {e}")
-    return None, False
+        print(f"检查URL时发生错误：{e}")
+    return None, None
 
 # 处理单行文本并检测URL
 def process_line(line):
@@ -119,7 +122,7 @@ def process_line(line):
 
 # 多线程处理文本并检测URL
 def process_urls_multithreaded(lines, max_workers=18):
-    blacklist =  [] 
+    blacklist = []
     successlist = []
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -190,16 +193,24 @@ def process_url(url):
             data = response.read()
             # 将二进制数据解码为字符串
             text = data.decode('utf-8')
-            if get_url_file_extension(url)==".m3u" or get_url_file_extension(url)==".m3u8":
+            
+            # 解析URL
+            parsed_url = urlparse(url)
+            # 获取路径部分
+            path = parsed_url.path
+            # 提取文件扩展名
+            extension = os.path.splitext(path)[1]
+            
+            if extension in ['.m3u', '.m3u8']:
                 urls_all_lines.append(convert_m3u_to_txt(text))
-            elif get_url_file_extension(url)==".txt":
+            elif extension == '.txt':
                 lines = text.split('\n')
                 for line in lines:
-                    if  "#genre#" not in line and "," in line and "://" in line:
-                        #channel_name=line.split(',')[0].strip()
-                        #channel_address=line.split(',')[1].strip()
+                    if "#genre#" not in line and "," in line and "://" in line:
                         urls_all_lines.append(line.strip())
     
+    except urllib.error.URLError as e:
+        print(f"处理URL时发生URL错误：{e}")
     except Exception as e:
         print(f"处理URL时发生错误：{e}")
 
@@ -281,7 +292,7 @@ if __name__ == "__main__":
     # 生成检测结果
     version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
     successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
-                  ["RespoTime,whitelist,#genre#"] + successlist
+                  ["whitelist,#genre#"] + successlist
     blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
                 ["blacklist,#genre#"]  + blacklist
 
@@ -290,7 +301,6 @@ if __name__ == "__main__":
     write_list(blacklist_file, blacklist)
 
     print(f"成功清单文件已生成: {success_file}")
-    print(f"成功清单文件已生成(tv): {success_file_tv}")
     print(f"黑名单文件已生成: {blacklist_file}")
 
     # 执行的代码
