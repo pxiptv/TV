@@ -186,10 +186,40 @@ def main():
     open('live.txt', 'w').close()
 
     # 过滤后写入 live.txt 文件
-    filtered_live_lines = [line.rstrip() for line in filtered_live_lines if line.rstrip()]
     write_txt_file('live.txt', filtered_live_lines)
 
-    
+# 将 live.txt 与 whitelist.txt 合并
+    input_file1 = 'live.txt'  # 输入文件路径
+    input_file2 = 'whitelist.txt'  # 输入文件路径2 
+    success_file = 'whitelist.txt'  # 成功清单文件路径
+    blacklist_file = 'blacklist.txt'  # 黑名单文件路径
 
+    # 读取输入文件内容
+    lines1 = read_txt_file(input_file1)
+    lines2 = read_txt_file(input_file2)
+    lines=list(set(lines1 + lines2))
+    lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('live.txt',lines)
+    
+    # 读取 channel.txt 和 live.txt 文件
+    channel_lines = read_txt_file('channel.txt')
+    live_lines = read_txt_file('live.txt')
+
+    # 用于存储结果的列表
+    tv_lines = []
+    
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            tv_lines.append(channel_line)
+        else:
+            channel_name = channel_line
+            matching_lines = [live_lines for live_lines in live_lines if live_lines.split(",http")[0] == channel_name]
+            tv_lines.extend(matching_lines)
+
+    # 清空 tv.txt 文件,将重新排序后的内容写入 tv.txt
+    open('tv.txt', 'w').close()
+    write_txt_file('tv.txt', tv_lines)
+        
 if __name__ == "__main__":
     main()
