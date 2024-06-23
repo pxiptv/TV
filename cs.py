@@ -68,7 +68,7 @@ def process_urls_multithreaded(lines, max_workers=18):
     return successlist, blacklist
 
 # 写入文件
-def write_list(file_path, data_list):
+def write_list_file(file_path, data_list):
     with open(file_path, 'w', encoding='utf-8') as file:
         for item in data_list:
             file.write(item + '\n')
