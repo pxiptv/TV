@@ -208,7 +208,7 @@ if __name__ == "__main__":
         print(f"处理URL: {url}")
         process_url(url)   #读取上面url清单中直播源存入urls_all_lines
 
-        # 写入 online.txt 文件
+    # 写入 online.txt 文件
     write_txt_file('online.txt',urls_all_lines)
     online_file = 'online.txt'
     
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     # 过滤后写入 live.txt 文件
     write_txt_file('live.txt', filtered_live_lines)
 
-# 将 live.txt 与 whitelist.txt 合并
+    # 将 live.txt 与 whitelist.txt 合并
     input_file1 = 'live.txt'  # 输入文件路径
     input_file2 = 'whitelist.txt'  # 输入文件路径2 
     success_file = 'whitelist.txt'  # 成功清单文件路径
@@ -237,7 +237,7 @@ if __name__ == "__main__":
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('live.txt',lines)
 
-    # 2. 清空 iptv.txt 文件后读取 channel.txt 文件
+    # 清空 iptv.txt 文件后读取 channel.txt 文件
     open('iptv.txt', 'w').close()
     channel_lines = read_txt_file('channel.txt')
     tv_lines = read_txt_file('live.txt')
@@ -251,4 +251,59 @@ if __name__ == "__main__":
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file('iptv.txt', matching_lines)
 
-    print("文件处理完成。")
+    print("待检测文件已生成。")
+
+    iptv_lines = read_txt_file('iptv.txt')
+
+    # 处理URL并生成成功清单和黑名单
+    successlist, blacklist = process_urls_multithreaded(iptv_lines)
+
+# 给successlist, blacklist排序
+    # 定义排序函数
+    def successlist_sort_key(item):
+        time_str = item.split(',')[0].replace('ms', '')
+        return float(time_str)
+    
+    successlist=sorted(successlist, key=successlist_sort_key)
+    blacklist=sorted(blacklist)
+
+    # 计算check后ok和ng个数
+    urls_ok = len(successlist)
+    urls_ng = len(blacklist)
+
+    # 生成检测结果
+    version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+    successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["RespoTime,whitelist,#genre#"] + successlist
+    blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                ["blacklist,#genre#"]  + blacklist
+
+    # 分别写入检测结果文件
+    write_list(success_file, successlist)
+    write_list(blacklist_file, blacklist)
+
+    print(f"成功清单文件已生成: {success_file}")
+    print(f"成功清单文件已生成(tv): {success_file_tv}")
+    print(f"黑名单文件已生成: {blacklist_file}")
+
+    # 执行的代码
+    timeend = datetime.now()
+
+    # 计算时间差
+    elapsed_time = timeend - timestart
+    total_seconds = elapsed_time.total_seconds()
+
+    # 转换为分钟和秒
+    minutes = int(total_seconds // 60)
+    seconds = int(total_seconds % 60)
+
+    # 格式化开始和结束时间
+    timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
+    timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
+
+    print(f"开始时间: {timestart_str}")
+    print(f"结束时间: {timeend_str}")
+    print(f"执行时间: {minutes} 分 {seconds} 秒")
+    print(f"urls_hj: {urls_hj} ")
+    print(f"urls_ok: {urls_ok} ")
+    print(f"urls_ng: {urls_ng} ")
