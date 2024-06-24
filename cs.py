@@ -2,7 +2,6 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 from datetime import datetime
-import os
 
 # 设置起始时间
 timestart = datetime.now()
@@ -31,8 +30,6 @@ def check_url(url, timeout=10):
 
 # 处理单行文本并检测URL
 def process_line(line):
-    if "#genre#" in line or "://" not in line:
-        return None, None  # 跳过包含“#genre#”的行
     elapsed_time, is_valid = check_url(line.strip())
     if is_valid:
         return elapsed_time, line.strip()
