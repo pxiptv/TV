@@ -1,90 +1,57 @@
-import urllib.request
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import requests
 import time
-from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 设置起始时间
-timestart = datetime.now()
+# 定义超时时间
+TIMEOUT = 10000  # 响应时间限制，单位毫秒
+CHECK_TIMEOUT = 20000  # 检查超时时间，单位毫秒
 
-# 从文件中读取内容，过滤掉不需要的行
-def read_txt_file(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        lines = [line.strip() for line in file if '://' in line]
-    return lines
+# 定义一个自定义异常，用于超过CHECK_TIMEOUT时抛出
+class TimeoutError(Exception):
+    pass
 
-# 检查URL是否可访问并返回响应时间
-def check_url(url, timeout=10):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    }
+# 定义一个函数来检测单个网址
+def check_url(channel_name, url):
+    start_time = time.time()
     try:
-        start_time = time.time()
-        req = urllib.request.Request(url, headers=headers)
-        with urllib.request.urlopen(req, timeout=timeout) as response:
-            elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
-            if response.status == 200:
-                return elapsed_time, True
-    except Exception as e:
-        print(f"Error checking {url}: {e}")
-    return None, False
+        # 设置一个超时时间，如果请求时间超过CHECK_TIMEOUT，则抛出TimeoutError
+        response = requests.get(url, timeout=(CHECK_TIMEOUT / 1000))  # 将毫秒转换为秒
+        if (time.time() - start_time) * 1000 > CHECK_TIMEOUT:
+            raise TimeoutError("请求超时")
+        response.raise_for_status()  # 检查请求是否成功
+        elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+        return channel_name, url, elapsed_time
+    except requests.exceptions.RequestException as e:
+        # 捕获请求异常，记录无响应或响应错误
+        return channel_name, url, f"{e}"
+    except TimeoutError as e:
+        # 捕获自定义的TimeoutError异常，记录超时信息
+        return channel_name, url, str(e)
 
-# 处理单行文本并检测URL
-def process_line(line):
-    elapsed_time, is_valid = check_url(line.strip())
-    if is_valid:
-        return elapsed_time, line.strip()
+# 定义一个函数来处理检测结果并写入文件
+def process_result(channel_name, url, result, file_a, file_b):
+    if isinstance(result, str) and "ms" in result:
+        # 如果结果包含"ms"，说明是正常响应时间
+        file_a.write(f'{channel_name}：{url} - {result}\n')
+    elif isinstance(result, str) and "RequestException" in result:
+        # 如果结果包含"RequestException"，说明请求异常
+        file_b.write(f'{channel_name}：{url} - 错误：{result}\n')
     else:
-        return None, line.strip()
+        # 如果结果为TimeoutError，写入超时信息
+        file_b.write(f'{channel_name}：{url} - 超时：{result}\n')
 
-# 多线程处理文本并检测URL
-def process_urls_multithreaded(lines, max_workers=18):
-    whitelist = []
-    blacklist = []
+# 读取iptv.txt文件
+with open('iptv.txt', 'r') as file:
+    lines = file.readlines()
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(process_line, line): line for line in lines}
-        for future in as_completed(futures):
-            elapsed_time, result = future.result()
-            if result:
-                if elapsed_time is not None and elapsed_time < 10000:  # 响应时间小于10000毫秒
-                    whitelist.append(result)
-                else:
-                    blacklist.append(result)
-    return whitelist, blacklist
+# 打开whitelist.txt和blacklist.txt文件，准备写入结果
+with open('whitelist.txt', 'w') as file_a, open('blacklist.txt', 'w') as file_b:
+    # 使用线程池
+    with ThreadPoolExecutor(max_workers=THREADS) as executor:
+        future_to_url = {executor.submit(check_url, line.split('，')[0].strip(), line.split('，')[1].strip()): line for line in lines}
+        for future in as_completed(future_to_url):
+            line = future_to_url[future]
+            channel_name, url, result = future.result()
+            process_result(channel_name, url, result, file_a, file_b)
 
-# 写入文件
-def write_list(file_path, data_list):
-    with open(file_path, 'w', encoding='utf-8') as file:
-        for item in data_list:
-            file.write(item + '\n')
-
-if __name__ == "__main__":
-    input_file = 'iptv.txt'  # 输入文件路径
-    whitelist_file = 'whitelist.txt'  # 白名单文件路径
-    blacklist_file = 'blacklist.txt'  # 黑名单文件路径
-
-    # 读取输入文件内容
-    lines = read_txt_file(input_file)
-
-    # 处理URL并生成白名单和黑名单
-    whitelist, blacklist = process_urls_multithreaded(lines)
-
-    # 写入白名单文件
-    write_list(whitelist_file, whitelist)
-
-    # 写入黑名单文件
-    write_list(blacklist_file, blacklist)
-
-    # 打印执行时间
-    timeend = datetime.now()
-    elapsed_time = timeend - timestart
-    total_seconds = elapsed_time.total_seconds()
-    minutes = int(total_seconds // 60)
-    seconds = int(total_seconds % 60)
-
-    print(f"开始时间: {timestart.strftime('%Y%m%d_%H_%M_%S')}")
-    print(f"结束时间: {timeend.strftime('%Y%m%d_%H_%M_%S')}")
-    print(f"执行时间: {minutes} 分 {seconds} 秒")
-    print(f"总处理URL数: {len(lines)}")
-    print(f"有效URL数: {len(whitelist)}")
-    print(f"无效URL数: {len(blacklist)}")
+print("检测完成，结果已分别存入whitelist.txt和blacklist.txt。")
