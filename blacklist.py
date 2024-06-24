@@ -291,6 +291,22 @@ if __name__ == "__main__":
     print(f"黑名单文件已生成: {blacklist_file}")
     print(f"iptv.txt 文件已生成: {input_file1}")
 
+    # 清空 iptv.txt 文件后读取 channel.txt 文件
+    channel_lines = read_txt_file('channel.txt')
+    tv_lines = read_txt_file('iptv.txt')
+    open('iptv.txt', 'w').close()
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('iptv.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
+            append_to_file('iptv.txt', matching_lines)
+
+    print("最终的 iptv.txt 文件已生成。")
+
     # 执行的代码
     timeend = datetime.now()
 
