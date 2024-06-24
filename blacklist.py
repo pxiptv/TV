@@ -67,12 +67,70 @@ def process_urls_multithreaded(lines, max_workers=18):
                     blacklist.append(result)
     return successlist, blacklist
 
+# 读取文件内容
+def read_txt_file(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        return [line.strip() for line in lines]
+    return []
+
+# 写入文件内容
+def write_txt_file(file_path, lines):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write('\n'.join(lines) + '\n')
+
+def append_to_file(file_path, lines):
+    with open(file_path, 'a', encoding='utf-8') as file:
+        for line in lines:
+            file.write(line + '\n')
+
+# 合并两个文件的内容并写入输出文件
+def merge_files(file1, file2, output_file):
+    lines1 = read_txt_file(file1)
+    lines2 = read_txt_file(file2)
+
+# 合并并去重
+    merged_lines = list(set(lines1 + lines2))
+    write_txt_file(output_file, merged_lines)
+
+# 删除重复行
+def remove_duplicates(lines, file_paths):
+    for file_path in file_paths:
+        file_lines = read_txt_file(file_path)
+        lines = [line for line in lines if line not in file_lines]
+    return lines
+    
+# 过滤掉在 comparison_files 中出现的行
+def filter_lines(input_file, comparison_files):
+    # 读取对比文件中的所有行
+    comparison_lines = set()
+    for file in comparison_files:
+        comparison_lines.update(read_txt_file(file))
+
+    # 读取输入文件并过滤行
+    input_lines = read_txt_file(input_file)
+    filtered_lines = [line for line in input_lines if line not in comparison_lines]
+    
+    return filtered_lines
+    
 # 写入文件
 def write_list(file_path, data_list):
     with open(file_path, 'w', encoding='utf-8') as file:
         for item in data_list:
             file.write(item + '\n')
 
+# 将iptv.txt转换为iptv.m3u文件
+def convert_to_m3u(iptv_file, m3u_file):
+    lines = read_txt_file(iptv_file)
+    with open(m3u_file, 'w', encoding='utf-8') as file:
+        file.write("#EXTM3U\n")
+        for line in lines:
+            parts = line.split(',', 1)
+            if len(parts) == 2:
+                file.write(f"#EXTINF:-1,{parts[0]}\n")
+                file.write(f"{parts[1]}\n")
+                
 # 增加外部url到检测清单，同时支持检测m3u格式url
 # urls里所有的源都读到这里。
 urls_all_lines = []
@@ -167,10 +225,17 @@ if __name__ == "__main__":
     success_file = 'whitelist.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist.txt'  # 黑名单文件路径
 
+    # 合并 iptv.txt, blacklist.txt 和 others.txt 的所有行
+    comparison_files = ['iptv.txt', 'blacklist.txt', 'others.txt']
+
+    # 过滤 新获取的网址中历史文件的重复行
+    filtered_live_lines = filter_lines(urls_all_lines, comparison_files)
+    
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
-    lines2 = read_txt_file(input_file2)
-    lines=list(set(urls_all_lines + lines1 + lines2))
+    #lines2 = read_txt_file(input_file2)
+    lines=list(set(filtered_live_lines + lines1))
+    
     # 计算合并后合计个数
     urls_hj = len(lines)
 
@@ -199,7 +264,6 @@ if __name__ == "__main__":
                 result.append(",".join(parts[1:]))
         return result
 
-
     # 加时间戳等
     version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
     successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
@@ -209,12 +273,14 @@ if __name__ == "__main__":
 
     # 写入成功清单文件
     write_list(success_file, successlist)
+    write_list(input_file1, successlist)
 
     # 写入黑名单文件
     write_list(blacklist_file, blacklist)
 
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist_file}")
+    print(f"iptv.txt 文件已生成: {input_file1}")
 
     # 执行的代码
     timeend = datetime.now()
