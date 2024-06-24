@@ -6,13 +6,13 @@ import time
 def read_iptv_file(filename):
     with open(filename, 'r', encoding='utf-8') as file:
         lines = file.readlines()
-    return [line.strip().split(',') for line in lines]
+    return [line.strip().split(',') for line in lines if "://" in line]
 
 # 写入whitelist.txt文件
 def write_to_whitelist(filename, data):
     with open(filename, 'a', encoding='utf-8') as file:
         for name, url, response_time in data:
-            file.write(f"{name},{url},{response_time}\n")
+            file.write(f"{name},{url},{response_time:.2f}\n")
 
 # 写入blacklist.txt文件
 def write_to_blacklist(filename, data):
@@ -21,12 +21,12 @@ def write_to_blacklist(filename, data):
             file.write(f"{name},{url},{response_time}\n")
 
 # 检测URL响应时间
-def check_url(name, url, timeout=20):
+def check_url(name, url, timeout=8):
     try:
         start_time = time.time()
         response = requests.get(url, timeout=timeout)
         response_time = (time.time() - start_time) * 1000  # 转换为毫秒
-        if response.status_code == 200 and response_time < 10000:
+        if response.status_code == 200 and response_time < 1000:
             return (name, url, response_time, True)
         else:
             return (name, url, response_time, False)
