@@ -215,7 +215,7 @@ if __name__ == "__main__":
         if "#genre#" in channel_line:
             append_to_file('live.txt', [channel_line])
         else:
-            channel_name = channel_line.split(",")[0]
+            channel_name = channel_line
             matching_lines = [line for line in lines if lines.split(",http")[0] == channel_name]
             append_to_file('live.txt', matching_lines)
 
