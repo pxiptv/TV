@@ -1,6 +1,11 @@
-import requests
-import concurrent.futures
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+from datetime import datetime
+import os
+from urllib.parse import urlparse
+
+timestart = datetime.now()
 
 # 读取iptv.txt文件
 def read_iptv_file(filename):
