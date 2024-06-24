@@ -160,7 +160,6 @@ def process_channel_line(line):
             else:
                 other_lines.append(line.strip())
 
-
 def process_url(url):
     try:
         # 打开URL并读取内容
@@ -183,7 +182,6 @@ def process_url(url):
 
     except Exception as e:
         print(f"处理URL时发生错误：{e}")
-
 
 current_directory = os.getcwd()  #准备读取txt
 
@@ -239,8 +237,6 @@ def correct_name_data(corrections, data):
         corrected_data.append(f"{name},{url}")
     return corrected_data
 
-
-
 def sort_data(order, data):
     # 创建一个字典来存储每行数据的索引
     order_dict = {name: i for i, name in enumerate(order)}
@@ -254,13 +250,10 @@ def sort_data(order, data):
     sorted_data = sorted(data, key=sort_key)
     return sorted_data
 
-
 # 循环处理每个URL
 for url in urls:
     print(f"处理URL: {url}")
     process_url(url)
-
-
 
 # 定义一个函数，提取每行中逗号前面的数字部分作为排序的依据
 def extract_number(s):
@@ -278,10 +271,8 @@ def custom_sort(s):
     else:
         return 0  # 其他字符串保持原顺序
 
-
-
 #读取whitelist,把高响应源从白名单中抽出加入iptv。
-whitelist_lines=read_txt_to_array('whitelist.txt') #
+whitelist_lines=read_txt_to_array('whitelist.txt') 
 for whitelist_line in whitelist_lines:
     if  "#genre#" not in whitelist_line and "," in whitelist_line and "://" in whitelist_line:
         whitelist_parts = whitelist_line.split(",")
@@ -292,7 +283,6 @@ for whitelist_line in whitelist_lines:
             response_time = 60000  # 单位毫秒，转换失败给个60秒
         if response_time < 2000:  #2s以内的高响应源
             process_channel_line(",".join(whitelist_parts[1:]))
-
 
 # 合并所有对象中的行文本（去重，排序后拼接）
 version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
@@ -309,7 +299,6 @@ all_lines =  ["更新时间,#genre#"] +[version] + ['\n'] +\
              ["湖南频道,#genre#"] + sorted(set(correct_name_data(corrections_name,hn_lines))) + ['\n'] + \
              ["广东频道,#genre#"] + sorted(set(correct_name_data(corrections_name,gd_lines))) + ['\n'] + \
              ["收音机频道,#genre#"] + sort_data(radio_dictionary,set(radio_lines)) 
-
 
 # 将合并后的文本写入文件
 output_file = "iptv.txt"
@@ -348,8 +337,6 @@ with open("iptv.m3u", "w", encoding='utf-8') as file:
     file.write(output_text)
 
 print("iptv.m3u文件已生成。")
-
-
 
 #备用1：http://tonkiang.us
 #备用2：
