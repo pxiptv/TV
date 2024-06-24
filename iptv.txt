@@ -1,13 +1,3 @@
-更新时间,#genre#
-20240625-03-17-38,url
-
-
-whitelist,#genre#
-CCTV5,https://node1.olelive.com:6443/live/CCTV5HD/hls.m3u8
-CCTV5+,https://node1.olelive.com:6443/live/CCTV5PHD/hls.m3u8
-CCTV5,https://node1.olelive.com:6443/live/CCTV5HD/hls.m3u8?token=93742ae45d857eb76d5fde4280c09546
-CCTV13,https://node1.olelive.com:6443/live/CCTV13HD/hls.m3u8
-CCTV7,http://223.112.219.174:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
 北京卫视,http://eeae33.netsite.cc/proxy/105545939/105545939.m3u8
 北京卫视,http://223.112.219.174:9901/tsfile/live/0122_1.m3u8?key=txiptv&playlive=1&authid=0
 安徽卫视,http://eeae33.netsite.cc/proxy/1817490980/1817490980.m3u8
