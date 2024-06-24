@@ -1,5 +1,4 @@
 🇨🇳央视频道🇨🇳,#genre#
-CCTV1
-CCTV2
-CCTV3
-CCTV4
+CCTV1,http://dp.sxtv.top:88/2b/migu.php?id=cctv8
+CCTV2,http://[2409:8087:1a01:df::4077]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226019/index.m3u8
+CCTV3,http://[2409:8087:1a01:df::4077]/ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226008/index.m3u8
