@@ -251,6 +251,8 @@ if __name__ == "__main__":
 
     # 加时间戳等
     version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+    successlist_tv = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["whitelist,#genre#"] + remove_prefix_from_lines(successlist)
     successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
                   ["RespoTime,whitelist,#genre#"] + successlist
     blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
@@ -258,7 +260,7 @@ if __name__ == "__main__":
 
     # 写入成功清单文件
     write_list(success_file, successlist)
-    write_list(input_file1, result)
+    write_list(input_file1, successlist_tv)
 
     # 写入黑名单文件
     write_list(blacklist_file, blacklist)
