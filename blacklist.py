@@ -10,7 +10,7 @@ timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#', '192', '198', 'ChiSheng9']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
+    skip_strings = ['#genre#']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
 
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -138,23 +138,34 @@ if __name__ == "__main__":
     urls = [
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
+        'https://raw.githubusercontent.com/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
+        'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
+        'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
         'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-        'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
+        'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
         'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
         'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
         'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
         'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
-        'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt'
+        'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+        'https://m3u.ibert.me/txt/fmml_dv6.txt',
+        'https://m3u.ibert.me/txt/ycl_iptv.txt',
+        'https://m3u.ibert.me/txt/y_g.txt',
+        'https://m3u.ibert.me/txt/j_iptv.txt',
+        'https://live.zhoujie218.top/dsyy/mylist.txt',
+        'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
+        'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
+        'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt',
+        'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
     ]
     for url in urls:
         print(f"处理URL: {url}")
         process_url(url)   #读取上面url清单中直播源存入urls_all_lines
 
     input_file1 = 'iptv.txt'  # 输入文件路径
-    input_file2 = 'blacklist_auto.txt'  # 输入文件路径2 
-    success_file = 'whitelist_auto.txt'  # 成功清单文件路径
-    success_file_tv = 'whitelist_auto_tv.txt'  # 成功清单文件路径（另存一份直接引用源）
-    blacklist_file = 'blacklist_auto.txt'  # 黑名单文件路径
+    input_file2 = 'blacklist.txt'  # 输入文件路径2 
+    success_file = 'whitelist.txt'  # 成功清单文件路径
+    blacklist_file = 'blacklist.txt'  # 黑名单文件路径
 
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
@@ -191,8 +202,6 @@ if __name__ == "__main__":
 
     # 加时间戳等
     version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
-    successlist_tv = ["更新时间,#genre#"] +[version] + ['\n'] +\
-                  ["whitelist,#genre#"] + remove_prefix_from_lines(successlist)
     successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
                   ["RespoTime,whitelist,#genre#"] + successlist
     blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
@@ -200,13 +209,11 @@ if __name__ == "__main__":
 
     # 写入成功清单文件
     write_list(success_file, successlist)
-    write_list(success_file_tv, successlist_tv)
 
     # 写入黑名单文件
     write_list(blacklist_file, blacklist)
 
     print(f"成功清单文件已生成: {success_file}")
-    print(f"成功清单文件已生成(tv): {success_file_tv}")
     print(f"黑名单文件已生成: {blacklist_file}")
 
     # 执行的代码
@@ -227,6 +234,6 @@ if __name__ == "__main__":
     print(f"开始时间: {timestart_str}")
     print(f"结束时间: {timeend_str}")
     print(f"执行时间: {minutes} 分 {seconds} 秒")
-    print(f"  urls_hj: {urls_hj} ")
-    print(f"  urls_ok: {urls_ok} ")
-    print(f"  urls_ng: {urls_ng} ")
+    print(f"urls_hj: {urls_hj} ")
+    print(f"urls_ok: {urls_ok} ")
+    print(f"urls_ng: {urls_ng} ")
