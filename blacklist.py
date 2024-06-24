@@ -71,7 +71,12 @@ def process_urls_multithreaded(lines, max_workers=18):
 def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
-        
+
+def append_to_file(file_path, lines):
+    with open(file_path, 'a', encoding='utf-8') as file:
+        for line in lines:
+            file.write(line + '\n')
+            
 # 写入文件
 def write_list(file_path, data_list):
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -198,6 +203,23 @@ if __name__ == "__main__":
     lines1 = read_txt_file(input_file1)
     #lines2 = read_txt_file(input_file2)
     lines=list(set(filtered_live_lines + lines1))
+
+    # 清空 live.txt 文件后读取 channel.txt 文件
+    open('live.txt', 'w').close()
+    channel_lines = read_txt_file('channel.txt')
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('live.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [line for line in lines if line.split(",http")[0] == channel_name]
+            append_to_file('live.txt', matching_lines)
+
+    print("待检测文件已生成。")
+
+    lines = read_txt_file('live.txt')
     
     # 计算合并后合计个数
     urls_hj = len(lines)
@@ -236,7 +258,7 @@ if __name__ == "__main__":
 
     # 写入成功清单文件
     write_list(success_file, successlist)
-    write_list(input_file1, successlist)
+    write_list(input_file1, result)
 
     # 写入黑名单文件
     write_list(blacklist_file, blacklist)
