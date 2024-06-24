@@ -209,6 +209,7 @@ if __name__ == "__main__":
     # 清空 live.txt 文件后读取 channel.txt 文件
     open('live.txt', 'w').close()
     channel_lines = read_txt_file('channel.txt')
+    tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
@@ -216,7 +217,7 @@ if __name__ == "__main__":
             append_to_file('live.txt', [channel_line])
         else:
             channel_name = channel_line
-            matching_lines = [line for line in lines if lines.split(",http")[0] == channel_name]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
