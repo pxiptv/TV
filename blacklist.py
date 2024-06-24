@@ -10,7 +10,7 @@ timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9', 'epg.pw', '(576p)','(540p)','(360p)','(480p),'(180p),'(404p)','generationnexxxt']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
 
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -203,6 +203,7 @@ if __name__ == "__main__":
     lines1 = read_txt_file(input_file1)
     #lines2 = read_txt_file(input_file2)
     lines=list(set(filtered_live_lines + lines1))
+    lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('tv.txt',lines)
 
     # 清空 live.txt 文件后读取 channel.txt 文件
@@ -215,7 +216,7 @@ if __name__ == "__main__":
             append_to_file('live.txt', [channel_line])
         else:
             channel_name = channel_line.split(",")[0]
-            matching_lines = [line for line in lines if line.split(",http")[0] == channel_name]
+            matching_lines = [line for line in lines if lines.split(",http")[0] == channel_name]
             append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
