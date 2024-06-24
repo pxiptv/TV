@@ -8,7 +8,22 @@ from datetime import datetime
 urls = [
     'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
     'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt'
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt'，
+    'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
+    'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
+    'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
+    'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
+    'https://m3u.ibert.me/txt/fmml_ipv6.txt',
+    'https://m3u.ibert.me/txt/fmml_dv6.txt',
+    'https://m3u.ibert.me/txt/ycl_iptv.txt',
+    'https://m3u.ibert.me/txt/y_g.txt',
+    'https://m3u.ibert.me/txt/j_iptv.txt',
+    'https://live.zhoujie218.top/dsyy/mylist.txt',
+    'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
+    'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
+    'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
 ]
 
 #read BlackList 2024-06-17 15:02
@@ -34,8 +49,8 @@ jlp_lines = [] #记录片
 dhp_lines = [] #动画片
 mx_lines = [] #明星
 radio_lines = [] #收音机频道
-gd_lines = [] #地方台-广东频道
-hn_lines = [] #地方台-湖南频道
+gd_lines = [] #广东频道
+hn_lines = [] #湖南频道
 other_lines = []
 
 def process_name_string(input_str):
@@ -53,6 +68,7 @@ def process_part(part_str):
         part_str=part_str.replace("IPV6", "")  #先剔除IPV6字样
         part_str=part_str.replace("PLUS", "+")  #替换PLUS
         part_str=part_str.replace("1080", "")  #替换1080
+        part_str=part_str.replace("CCTV-", "CCTV")  #替换 -
         filtered_str = ''.join(char for char in part_str if char.isdigit() or char == 'K' or char == '+')
         if not filtered_str.strip(): #处理特殊情况，如果发现没有找到频道数字返回原名称
             filtered_str=part_str.replace("CCTV", "")
@@ -137,9 +153,9 @@ def process_channel_line(line):
                 mx_lines.append(process_name_string(line.strip()))
             elif channel_name in radio_dictionary:  #收音机频道
                 radio_lines.append(process_name_string(line.strip()))
-            elif channel_name in gd_dictionary:  #地方台-广东频道
+            elif channel_name in gd_dictionary:  #广东频道
                 gd_lines.append(process_name_string(line.strip()))
-            elif channel_name in hn_dictionary:  #地方台-湖南频道
+            elif channel_name in hn_dictionary:  #湖南频道
                 hn_lines.append(process_name_string(line.strip()))
             else:
                 other_lines.append(line.strip())
