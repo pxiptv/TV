@@ -67,6 +67,11 @@ def process_urls_multithreaded(lines, max_workers=18):
                     blacklist.append(result)
     return successlist, blacklist
 
+# 写入文件内容
+def write_txt_file(file_path, lines):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write('\n'.join(lines) + '\n')
+        
 # 写入文件
 def write_list(file_path, data_list):
     with open(file_path, 'w', encoding='utf-8') as file:
@@ -174,6 +179,10 @@ if __name__ == "__main__":
         print(f"处理URL: {url}")
         process_url(url)   #读取上面url清单中直播源存入urls_all_lines
 
+    # 写入 online.txt 文件
+    write_txt_file('online.txt',urls_all_lines)
+    online_file = 'online.txt'
+    
     input_file1 = 'iptv.txt'  # 输入文件路径
     input_file2 = 'blacklist.txt'  # 输入文件路径2 
     success_file = 'whitelist.txt'  # 成功清单文件路径
@@ -183,7 +192,7 @@ if __name__ == "__main__":
     comparison_files = ['iptv.txt', 'blacklist.txt', 'others.txt']
 
     # 过滤 新获取的网址中历史文件的重复行
-    filtered_live_lines = filter_lines(urls_all_lines, comparison_files)
+    filtered_live_lines = filter_lines(online_file, comparison_files)
     
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
