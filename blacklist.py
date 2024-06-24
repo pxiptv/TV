@@ -69,19 +69,19 @@ def filter_lines(input_file, comparison_files):
 
 if __name__ == "__main__":
     
-    # 清空 live.txt 文件后读取 channel.txt 文件
-    open('live.txt', 'w').close()
+    # 清空 iptv.txt 文件后读取 channel.txt 文件
+    open('iptv.txt', 'w').close()
     channel_lines = read_txt_file('channel.txt')
     tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            append_to_file('live.txt', [channel_line])
+            append_to_file('iptv.txt', [channel_line])
         else:
             channel_name = channel_line.split(",")[0]
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
-            append_to_file('live.txt', matching_lines)
+            append_to_file('iptv.txt', matching_lines)
 
     print("待检测文件已生成。")
 
