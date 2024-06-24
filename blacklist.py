@@ -223,6 +223,8 @@ if __name__ == "__main__":
     print("待检测文件已生成。")
 
     lines = read_txt_file('live.txt')
+    lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('live.txt',lines)
     
     # 计算合并后合计个数
     urls_hj = len(lines)
