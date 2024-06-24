@@ -168,23 +168,6 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
         'https://raw.githubusercontent.com/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
-        'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
-        'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-        'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-        'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
-        'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
-        'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-        'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-        'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
-        'https://m3u.ibert.me/txt/fmml_ipv6.txt',
-        'https://m3u.ibert.me/txt/fmml_dv6.txt',
-        'https://m3u.ibert.me/txt/ycl_iptv.txt',
-        'https://m3u.ibert.me/txt/y_g.txt',
-        'https://m3u.ibert.me/txt/j_iptv.txt',
-        'https://live.zhoujie218.top/dsyy/mylist.txt',
-        'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
-        'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-        'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
     ]
     for url in urls:
