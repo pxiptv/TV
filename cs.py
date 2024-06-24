@@ -185,18 +185,18 @@ def read_txt_to_array(file_name):
         print(f"An error occurred: {e}")
         return []
 #读取文本
-ys_dictionary=read_txt_to_array('CCTV.txt') #仅排序用
+ys_dictionary=read_txt_to_array('央视频道.txt') #仅排序用
 ws_dictionary=read_txt_to_array('卫视频道.txt') #过滤+排序
 ty_dictionary=read_txt_to_array('体育频道.txt') #过滤
-dy_dictionary=read_txt_to_array('主频道/电影.txt') #过滤
-gat_dictionary=read_txt_to_array('主频道/港澳台.txt') #过滤
-gj_dictionary=read_txt_to_array('主频道/国际台.txt') #过滤
-jlp_dictionary=read_txt_to_array('主频道/纪录片.txt') #过滤
-dhp_dictionary=read_txt_to_array('主频道/动画片.txt') #过滤
-mx_dictionary=read_txt_to_array('主频道/明星.txt') #过滤
-radio_dictionary=read_txt_to_array('主频道/收音机频道.txt') #过滤
-gd_dictionary=read_txt_to_array('地方台/广东频道.txt') #过滤
-hn_dictionary=read_txt_to_array('地方台/湖南频道.txt') #过滤
+dy_dictionary=read_txt_to_array('电影.txt') #过滤
+gat_dictionary=read_txt_to_array('港澳台.txt') #过滤
+gj_dictionary=read_txt_to_array('国际台.txt') #过滤
+jlp_dictionary=read_txt_to_array('纪录片.txt') #过滤
+dhp_dictionary=read_txt_to_array('动画片.txt') #过滤
+mx_dictionary=read_txt_to_array('明星.txt') #过滤
+radio_dictionary=read_txt_to_array('收音机频道.txt') #过滤
+gd_dictionary=read_txt_to_array('广东频道.txt') #过滤
+hn_dictionary=read_txt_to_array('湖南频道.txt') #过滤
 
 #读取纠错频道名称方法
 def load_corrections_name(filename):
