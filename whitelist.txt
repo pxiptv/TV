@@ -1,5 +1,25 @@
 更新时间,#genre#
-20240625-02-16-23,url
+20240625-02-57-37,url
 
 
 RespoTime,whitelist,#genre#
+468.49ms,CCTV1,http://112.123.206.32:808/hls/1/index.m3u8
+480.53ms,CCTV1,http://171.8.65.42:808/hls/1/index.m3u8
+483.30ms,CCTV3,http://171.8.65.42:808/hls/3/index.m3u8
+486.32ms,CCTV4,http://112.123.206.32:808/hls/4/index.m3u8
+487.35ms,CCTV4,http://123.112.208.22:4022/rtp/239.3.1.105:8092
+492.02ms,CCTV2,http://112.123.206.32:808/hls/2/index.m3u8
+492.22ms,CCTV4,http://171.8.65.42:808/hls/4/index.m3u8
+497.41ms,CCTV2,http://123.112.208.22:4022/rtp/239.3.1.60:8084
+505.17ms,CCTV2,http://171.8.65.42:808/hls/2/index.m3u8
+509.36ms,CCTV1,http://123.112.208.22:4022/rtp/239.3.1.129:8008
+527.15ms,CCTV4,http://60.164.203.47:808/hls/4/index.m3u8
+532.16ms,CCTV3,http://112.123.206.32:808/hls/3/index.m3u8
+532.41ms,CCTV1,http://60.164.203.47:808/hls/1/index.m3u8
+543.32ms,CCTV3,http://123.112.208.22:4022/rtp/239.3.1.172:8001
+545.08ms,CCTV2,http://60.164.203.47:808/hls/2/index.m3u8
+548.75ms,CCTV3,http://60.164.203.47:808/hls/3/index.m3u8
+864.80ms,CCTV3,http://hikvision.city:880/cctv3.m3u8
+935.42ms,CCTV2,http://hikvision.city:880/CCTV-2.m3u8
+954.13ms,CCTV1,http://hikvision.city:880/CCTV-1.m3u8
+1149.17ms,CCTV4,http://hikvision.city:880/CCTV-4.m3u8
