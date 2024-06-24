@@ -73,6 +73,35 @@ def write_list(file_path, data_list):
         for item in data_list:
             file.write(item + '\n')
 
+# 合并两个文件的内容并写入输出文件
+def merge_files(file1, file2, output_file):
+    lines1 = read_txt_file(file1)
+    lines2 = read_txt_file(file2)
+
+# 合并并去重
+    merged_lines = list(set(lines1 + lines2))
+    write_txt_file(output_file, merged_lines)
+    
+# 删除重复行
+def remove_duplicates(lines, file_paths):
+    for file_path in file_paths:
+        file_lines = read_txt_file(file_path)
+        lines = [line for line in lines if line not in file_lines]
+    return lines
+    
+# 过滤掉在 comparison_files 中出现的行
+def filter_lines(input_file, comparison_files):
+    # 读取对比文件中的所有行
+    comparison_lines = set()
+    for file in comparison_files:
+        comparison_lines.update(read_txt_file(file))
+
+    # 读取输入文件并过滤行
+    input_lines = read_txt_file(input_file)
+    filtered_lines = [line for line in input_lines if line not in comparison_lines]
+    
+    return filtered_lines
+    
 # 增加外部url到检测清单，同时支持检测m3u格式url
 # urls里所有的源都读到这里。
 urls_all_lines = []
