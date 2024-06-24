@@ -8,9 +8,9 @@ from datetime import datetime
 urls = [
     'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
     'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
-    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt'，
+    'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
     'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt', 
+    'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
     'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
     'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
     'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
