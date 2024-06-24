@@ -48,7 +48,7 @@ with open('iptv.txt', 'r') as file:
 with open('whitelist.txt', 'w') as file_a, open('blacklist.txt', 'w') as file_b:
     # 使用线程池
     with ThreadPoolExecutor(max_workers=THREADS) as executor:
-        future_to_url = {executor.submit(check_url, line.split('，')[0].strip(), line.split('，')[1].strip()): line for line in lines}
+        future_to_url = {executor.submit(check_url, line.split(',')[0].strip(), line.split(',')[1].strip()): line for line in lines}
         for future in as_completed(future_to_url):
             line = future_to_url[future]
             channel_name, url, result = future.result()
