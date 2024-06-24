@@ -304,7 +304,11 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0]
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file('iptv.txt', matching_lines)
-
+            
+    lines = read_txt_file('iptv.txt')
+    lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('iptv.txt',lines)
+    
     print("最终的 iptv.txt 文件已生成。")
 
     # 执行的代码
