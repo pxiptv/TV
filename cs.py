@@ -60,4 +60,4 @@ if __name__ == "__main__":
     write_to_whitelist('whitelist.txt', whitelist)
     write_to_blacklist('blacklist.txt', blacklist)
 
-    print("检测完成，结果已写入whitelist.txt和blacklist.txt")
+    print("检测完成，结果已写入whitelist.txt和blacklist.txt") 
