@@ -229,13 +229,16 @@ if __name__ == "__main__":
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('tv.txt',lines)
 
-    # 清空 live.txt 文件后读取 channel.txt 文件
+# 打开channel.txt文件进行读取
     with open('channel.txt', 'r', encoding='utf-8') as channel_file:
         channels = channel_file.readlines()
     
     # 打开tv.txt文件进行读取，并存储内容到列表中
     with open('tv.txt', 'r', encoding='utf-8') as tv_file:
-        tv_lines = tv_file.readlines()
+        tv_lines = [line.strip() for line in tv_file.readlines()]  # 去除每行末尾的换行符
+    
+    # 准备一个字典用于快速查找tv.txt中的关键字
+    tv_dict = {line.split(',')[0]: line for line in tv_lines}
     
     # 打开live.txt文件准备写入
     with open('live.txt', 'w', encoding='utf-8') as live_file:
@@ -248,13 +251,11 @@ if __name__ == "__main__":
                 # 如果包含，则直接写入live.txt
                 live_file.write(channel_line + '\n')
             else:
-                # 如果不包含，则在tv.txt中搜索匹配的行
-                for tv_line in tv_lines:
-                    # 假设',http'前的字符是我们要匹配的部分
-                    tv_key = tv_line.split(',')[0].strip()
-                    if channel_line == tv_key:
-                        # 如果找到匹配，则将tv.txt中的整行写入live.txt
-                        live_file.write(tv_line)
+                # 如果不包含，则在tv_dict中搜索匹配的关键字
+                tv_line = tv_dict.get(channel_line)
+                if tv_line:
+                    # 如果找到匹配，则将tv_line写入live.txt
+                    live_file.write(tv_line + '\n')
 
     print("待检测文件已生成。")
 
