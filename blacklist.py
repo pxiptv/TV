@@ -230,18 +230,31 @@ if __name__ == "__main__":
     write_txt_file('tv.txt',lines)
 
     # 清空 live.txt 文件后读取 channel.txt 文件
-    open('live.txt', 'w').close()
-    channel_lines = read_txt('channel.txt')
-    tv_lines = read_txt_file('tv.txt')
-
-    # 处理 channel.txt 文件中的每一行
-    for channel_line in channel_lines:
-        if "#genre#" in channel_line:
-            append_to_file('live.txt', [channel_line])
-        else:
-            channel_name = channel_line.strip()
-            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
-            append_to_file('live.txt', matching_lines)
+    with open('channel.txt', 'r', encoding='utf-8') as channel_file:
+        channels = channel_file.readlines()
+    
+    # 打开tv.txt文件进行读取，并存储内容到列表中
+    with open('tv.txt', 'r', encoding='utf-8') as tv_file:
+        tv_lines = tv_file.readlines()
+    
+    # 打开live.txt文件准备写入
+    with open('live.txt', 'w', encoding='utf-8') as live_file:
+        # 遍历channel.txt中的每一行
+        for channel_line in channels:
+            channel_line = channel_line.strip()  # 去除行首行尾的空白字符
+    
+            # 检查当前行是否包含'#genre#'
+            if '#genre#' in channel_line:
+                # 如果包含，则直接写入live.txt
+                live_file.write(channel_line + '\n')
+            else:
+                # 如果不包含，则在tv.txt中搜索匹配的行
+                for tv_line in tv_lines:
+                    # 假设',http'前的字符是我们要匹配的部分
+                    tv_key = tv_line.split(',')[0].strip()
+                    if channel_line == tv_key:
+                        # 如果找到匹配，则将tv.txt中的整行写入live.txt
+                        live_file.write(tv_line)
 
     print("待检测文件已生成。")
 
