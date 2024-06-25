@@ -137,7 +137,18 @@ def remove_duplicates_from_file(file_path):
         print(f"已成功去重并写入文件: {file_path}")
     except Exception as e:
         print(f"处理文件时发生错误：{e}")
-        
+
+# 将iptv.txt转换为iptv.m3u文件
+def convert_to_m3u(iptv_file, m3u_file):
+    lines = read_txt(iptv_file)
+    with open(m3u_file, 'w', encoding='utf-8') as file:
+        file.write("#EXTM3U\n")
+        for line in lines:
+            parts = line.split(',', 1)
+            if len(parts) == 2:
+                file.write(f"#EXTINF:-1,{parts[0]}\n")
+                file.write(f"{parts[1]}\n")
+                
 # 增加外部url到检测清单，同时支持检测m3u格式url
 # urls里所有的源都读到这里。
 urls_all_lines = []
@@ -212,6 +223,7 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
         'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
         'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
+        'https://raw.githubusercontent.com/zjykfy/ykfy/main/all.m3u',
         'https://m3u.ibert.me/txt/fmml_ipv6.txt',
         'https://m3u.ibert.me/txt/fmml_dv6.txt',
         'https://m3u.ibert.me/txt/ycl_iptv.txt',
@@ -334,7 +346,26 @@ if __name__ == "__main__":
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
             append_to_file('iptv.txt', matching_lines)
             
-    print("最终的 iptv.txt 文件已生成。")
+    # 生成 iptv.m3u 文件
+    output_text = "#EXTM3U\n"
+
+    with open("iptv.txt", "r", encoding='utf-8') as file:
+        input_text = file.read()
+
+    lines = input_text.strip().split("\n")
+    group_name = ""
+    for line in lines:
+        parts = line.split(",")
+        if len(parts) == 2 and "#genre#" in line:
+            group_name = parts[0]
+        elif len(parts) == 2:
+            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+            output_text += f"{parts[1]}\n"
+
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
+
+    print("iptv.m3u文件已生成。")
 
     # 执行的代码
     timeend = datetime.now()
