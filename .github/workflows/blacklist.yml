@@ -3,7 +3,7 @@ name: 电视节目地址校验
 # 分支 应替换为  branches
 on:
   schedule:
-    - cron: '08 22 1 * *'
+    - cron: '18 22 * * *'
   workflow_dispatch:
     branches:
       - main
