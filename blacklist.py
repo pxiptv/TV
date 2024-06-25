@@ -240,11 +240,7 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0].strip()
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
-        
-        if not matching_lines:
-            print(f"No matching lines found for channel: {channel_name}")  # 调试信息
-
-        append_to_file('live.txt', matching_lines)
+            append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
     
@@ -309,13 +305,8 @@ if __name__ == "__main__":
             append_to_file('iptv.txt', [channel_line])
         else:
             channel_name = channel_line.split(",")[0].strip()
-            print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
-        
-        if not matching_lines:
-            print(f"No matching lines found for channel: {channel_name}")  # 调试信息
-
-        append_to_file('iptv.txt', matching_lines)
+            append_to_file('iptv.txt', matching_lines)
             
     print("最终的 iptv.txt 文件已生成。")
 
