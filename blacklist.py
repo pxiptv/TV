@@ -20,11 +20,14 @@ def read_txt_file(file_path):
         ]
     return lines
 
-# 读取文件内容2
-def read_txt(file_path):
-    with open(file_path, 'r') as file:
-        content = file.read()
-    return content
+def read_txt(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        return f.readlines()
+
+def append_to_file(filename, lines):
+    with open(filename, 'a', encoding='utf-8') as f:
+        for line in lines:
+            f.write(line)
     
 # 检测URL是否可访问并记录响应时间
 headers = {
@@ -77,11 +80,6 @@ def process_urls_multithreaded(lines, max_workers=18):
 def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
-
-def append_to_file(file_path, lines):
-    with open(file_path, 'a', encoding='utf-8') as file:
-        for line in lines:
-            file.write(line + '\n')
             
 # 写入文件
 def write_list(file_path, data_list):
@@ -239,9 +237,14 @@ if __name__ == "__main__":
         if "#genre#" in channel_line:
             append_to_file('live.txt', [channel_line])
         else:
-            channel_name = channel_line.split(",")[0]
-            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
-            append_to_file('live.txt', matching_lines)
+            channel_name = channel_line.split(",")[0].strip()
+            print(f"Processing channel: {channel_name}")  # 调试信息
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
+        
+        if not matching_lines:
+            print(f"No matching lines found for channel: {channel_name}")  # 调试信息
+
+        append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
 
