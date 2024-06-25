@@ -235,12 +235,11 @@ if __name__ == "__main__":
     tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
-    with open('channel.txt', 'r', encoding='utf-8') as file:
-    for line in file:
-        if "#genre#" in line:
-            append_to_file('live.txt', [line])
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('live.txt', [channel_line])
         else:
-            channel_name = line.strip()
+            channel_name = channel_line.strip()
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file('live.txt', matching_lines)
 
