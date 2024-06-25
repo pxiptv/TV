@@ -248,17 +248,43 @@ if __name__ == "__main__":
     lines = read_txt_file('live.txt')
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('live.txt',lines)
-    
+
     # 计算合并后合计个数
     urls_hj = len(lines)
-
-
+    
+    # 处理URL并生成成功清单和黑名单
+    successlist, blacklist = process_urls_multithreaded(lines)
+    
+    # 给successlist, blacklist排序
+    # 定义排序函数
+    def successlist_sort_key(item):
+        time_str = item.split(',')[0].replace('ms', '')
+        return float(time_str)
+    
+    successlist=sorted(successlist, key=successlist_sort_key)
+    blacklist=sorted(blacklist)
 
     # 计算check后ok和ng个数
     urls_ok = len(successlist)
     urls_ng = len(blacklist)
 
+    # 把successlist整理一下，生成一个可以直接引用的源，方便用zyplayer手动check
+    def remove_prefix_from_lines(lines):
+        result = []
+        for line in lines:
+            if  "#genre#" not in line and "," in line and "://" in line:
+                parts = line.split(",")
+                result.append(",".join(parts[1:]))
+        return result
 
+    # 加时间戳等
+    version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+    successlist_tv = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["whitelist,#genre#"] + remove_prefix_from_lines(successlist)
+    successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["RespoTime,whitelist,#genre#"] + successlist
+    blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                ["blacklist,#genre#"]  + blacklist
 
     # 写入成功清单文件
     write_list(success_file, successlist)
