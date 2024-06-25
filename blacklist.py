@@ -283,6 +283,3 @@ if __name__ == "__main__":
     print(f"开始时间: {timestart_str}")
     print(f"结束时间: {timeend_str}")
     print(f"执行时间: {minutes} 分 {seconds} 秒")
-    print(f"urls_hj: {urls_hj} ")
-    print(f"urls_ok: {urls_ok} ")
-    print(f"urls_ng: {urls_ng} ")
