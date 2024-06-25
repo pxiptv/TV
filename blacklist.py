@@ -19,12 +19,6 @@ def read_txt_file(file_path):
             if not any(skip_str in line for skip_str in skip_strings) and all(req_str in line for req_str in required_strings)
         ]
     return lines
-    
-# 读取文件内容2
-def read_txt(file_path):
-    with open(file_path, 'r') as file:
-        content = file.read()
-    return content
 
 # 检测URL是否可访问并记录响应时间
 headers = {
@@ -229,41 +223,93 @@ if __name__ == "__main__":
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('tv.txt',lines)
 
-# 打开channel.txt文件进行读取
-    with open('channel.txt', 'r', encoding='utf-8') as channel_file:
-        channels = channel_file.readlines()
-    
-    # 打开tv.txt文件进行读取，并存储内容到列表中
-    with open('tv.txt', 'r', encoding='utf-8') as tv_file:
-        tv_lines = [line.strip() for line in tv_file.readlines()]  # 去除每行末尾的换行符
-    
-    # 准备一个字典用于快速查找tv.txt中的关键字
-    tv_dict = {line.split(',')[0]: line for line in tv_lines}
-    
-    # 打开live.txt文件准备写入
-    with open('live.txt', 'w', encoding='utf-8') as live_file:
-        # 遍历channel.txt中的每一行
-        for channel_line in channels:
-            channel_line = channel_line.strip()  # 去除行首行尾的空白字符
-    
-            # 检查当前行是否包含'#genre#'
-            if '#genre#' in channel_line:
-                # 如果包含，则直接写入live.txt
-                live_file.write(channel_line + '\n')
-            else:
-                # 如果不包含，则在tv_dict中搜索匹配的关键字
-                tv_line = tv_dict.get(channel_line)
-                if tv_line:
-                    # 如果找到匹配，则将tv_line写入live.txt
-                    live_file.write(tv_line + '\n')
+    # 清空 live.txt 文件后读取 channel.txt 文件
+    open('live.txt', 'w').close()
+    channel_lines = read_txt_file('channel.txt')
+    tv_lines = read_txt_file('tv.txt')
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('live.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
+            append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
 
-    lines = read_txt('live.txt')
+    lines = read_txt_file('live.txt')
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('live.txt',lines)
     
+    # 计算合并后合计个数
+    urls_hj = len(lines)
+
+    # 处理URL并生成成功清单和黑名单
+    successlist, blacklist = process_urls_multithreaded(lines)
     
+    # 给successlist, blacklist排序
+    # 定义排序函数
+    def successlist_sort_key(item):
+        time_str = item.split(',')[0].replace('ms', '')
+        return float(time_str)
+    
+    successlist=sorted(successlist, key=successlist_sort_key)
+    blacklist=sorted(blacklist)
+
+    # 计算check后ok和ng个数
+    urls_ok = len(successlist)
+    urls_ng = len(blacklist)
+
+    # 把successlist整理一下，生成一个可以直接引用的源，方便用zyplayer手动check
+    def remove_prefix_from_lines(lines):
+        result = []
+        for line in lines:
+            if  "#genre#" not in line and "," in line and "://" in line:
+                parts = line.split(",")
+                result.append(",".join(parts[1:]))
+        return result
+
+    # 加时间戳等
+    version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+    successlist_tv = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["whitelist,#genre#"] + remove_prefix_from_lines(successlist)
+    successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["RespoTime,whitelist,#genre#"] + successlist
+    blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                ["blacklist,#genre#"]  + blacklist
+
+    # 写入成功清单文件
+    write_list(success_file, successlist)
+    write_list(input_file1, successlist_tv)
+
+    # 写入黑名单文件
+    write_list(blacklist_file, blacklist)
+
+    print(f"成功清单文件已生成: {success_file}")
+    print(f"黑名单文件已生成: {blacklist_file}")
+    print(f"iptv.txt 文件已生成: {input_file1}")
+
+    # 清空 iptv.txt 文件后读取 channel.txt 文件
+    channel_lines = read_txt_file('channel.txt')
+    tv_lines = read_txt_file('iptv.txt')
+    open('iptv.txt', 'w').close()
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('iptv.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0]
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
+            append_to_file('iptv.txt', matching_lines)
+            
+    lines = read_txt_file('iptv.txt')
+    lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('iptv.txt',lines)
+    
+    print("最终的 iptv.txt 文件已生成。")
 
     # 执行的代码
     timeend = datetime.now()
@@ -283,3 +329,6 @@ if __name__ == "__main__":
     print(f"开始时间: {timestart_str}")
     print(f"结束时间: {timeend_str}")
     print(f"执行时间: {minutes} 分 {seconds} 秒")
+    print(f"urls_hj: {urls_hj} ")
+    print(f"urls_ok: {urls_ok} ")
+    print(f"urls_ng: {urls_ng} ")
