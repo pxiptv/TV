@@ -20,6 +20,12 @@ def read_txt_file(file_path):
         ]
     return lines
 
+# 读取文件内容2
+def read_txt(file_path):
+    with open(file_path, 'r') as file:
+        content = file.read()
+    return content
+    
 # 检测URL是否可访问并记录响应时间
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -225,7 +231,7 @@ if __name__ == "__main__":
 
     # 清空 live.txt 文件后读取 channel.txt 文件
     open('live.txt', 'w').close()
-    channel_lines = read_txt_file('channel.txt')
+    channel_lines = read_txt('channel.txt')
     tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
