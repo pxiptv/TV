@@ -296,11 +296,12 @@ if __name__ == "__main__":
                 ["blacklist,#genre#"]  + blacklist
 
     # 写入成功清单文件
-    write_list(success_file, successlist)
+    write_list(success_file, successlist_tv)
     write_list(input_file1, successlist_tv)
 
     # 写入黑名单文件
     merged_lines = list(set(blacklist + lines2))
+    merged_lines = [line.strip() for line in merged_lines if line.strip()]
     write_txt_file(blacklist_file, merged_lines)
 
     print(f"成功清单文件已生成: {success_file}")
