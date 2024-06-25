@@ -115,7 +115,29 @@ def filter_lines(input_file, comparison_files):
     filtered_lines = [line for line in input_lines if line not in comparison_lines]
     
     return filtered_lines
-    
+
+# 文件内去重
+def remove_duplicates_from_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            lines = file.readlines()
+        
+        # 去除重复行，同时保持行的顺序
+        seen = set()
+        unique_lines = []
+        for line in lines:
+            if line not in seen:
+                unique_lines.append(line)
+                seen.add(line)
+        
+        # 写入去重后的内容
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.writelines(unique_lines)
+        
+        print(f"已成功去重并写入文件: {file_path}")
+    except Exception as e:
+        print(f"处理文件时发生错误：{e}")
+        
 # 增加外部url到检测清单，同时支持检测m3u格式url
 # urls里所有的源都读到这里。
 urls_all_lines = []
@@ -215,9 +237,9 @@ if __name__ == "__main__":
     blacklist_file = 'blacklist.txt'  # 黑名单文件路径
 
     # 合并 iptv.txt, blacklist.txt 和 others.txt 的所有行
-    comparison_files = ['iptv.txt', 'blacklist.txt', 'others.txt']
+    comparison_files = ['iptv.txt', 'blacklist.txt']
 
-    # 过滤 新获取的网址中历史文件的重复行
+    # 过滤 新获取的网址与历史文件的重复行
     filtered_live_lines = filter_lines(online_file, comparison_files)
     
     # 读取输入文件内容
@@ -284,11 +306,15 @@ if __name__ == "__main__":
                 ["blacklist,#genre#"]  + blacklist
 
     # 写入成功清单文件
-    write_list(success_file, successlist)
+    append_to_file(success_file, successlist)
+    # 使用函数去重 whitelist.txt 文件
+    remove_duplicates_from_file('whitelist.txt')
     write_list(input_file1, successlist_tv)
 
     # 写入黑名单文件
-    write_list(blacklist_file, blacklist)
+    append_to_file(blacklist_file, blacklist)
+    # 使用函数去重 blacklist.txt 文件
+    remove_duplicates_from_file('blacklist.txt')
 
     print(f"成功清单文件已生成: {success_file}")
     print(f"黑名单文件已生成: {blacklist_file}")
