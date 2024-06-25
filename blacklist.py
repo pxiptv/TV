@@ -19,6 +19,12 @@ def read_txt_file(file_path):
             if not any(skip_str in line for skip_str in skip_strings) and all(req_str in line for req_str in required_strings)
         ]
     return lines
+    
+# 读取文件内容2
+def read_txt(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        data = f.read()
+    return data
 
 # 检测URL是否可访问并记录响应时间
 headers = {
@@ -175,17 +181,17 @@ def process_url(url):
 if __name__ == "__main__":
     # 定义要访问的多个URL
     urls = [
-        'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
-        'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
-        'https://raw.githubusercontent.com/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
-        'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
-        'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
-        'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
-        'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
-        'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
-        'https://raw.githubusercontent.com/mlvjfchen/TV/main/iptv_list.txt',
-        'https://raw.githubusercontent.com/maitel2020/iptv-self-use/main/iptv.txt',
-        'https://raw.githubusercontent.com/zwc456baby/iptv_alive/master/live.txt',
+        'https://raw.bgithub.xyz/YanG-1989/m3u/main/Gather.m3u',
+        'https://raw.bgithub.xyz/iptv-org/iptv/master/streams/cn.m3u',
+        'https://raw.bgithub.xyz/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
+        'https://raw.bgithub.xyz/joevess/IPTV/main/iptv.m3u8',
+        'https://raw.bgithub.xyz/Supprise0901/TVBox_live/main/live.txt',
+        'https://raw.bgithub.xyz/ssili126/tv/main/itvlist.txt',
+        'https://raw.bgithub.xyz/fenxp/iptv/main/live/ipv6.txt',
+        'https://raw.bgithub.xyz/yuanzl77/IPTV/main/live.txt',
+        'https://raw.bgithub.xyz/mlvjfchen/TV/main/iptv_list.txt',
+        'https://raw.bgithub.xyz/maitel2020/iptv-self-use/main/iptv.txt',
+        'https://raw.bgithub.xyz/zwc456baby/iptv_alive/master/live.txt',
         'https://m3u.ibert.me/txt/fmml_ipv6.txt',
         'https://m3u.ibert.me/txt/fmml_dv6.txt',
         'https://m3u.ibert.me/txt/ycl_iptv.txt',
@@ -225,21 +231,22 @@ if __name__ == "__main__":
 
     # 清空 live.txt 文件后读取 channel.txt 文件
     open('live.txt', 'w').close()
-    channel_lines = read_txt_file('channel.txt')
+    channel_lines = read_txt('channel.txt')
     tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
-    for channel_line in channel_lines:
-        if "#genre#" in channel_line:
-            append_to_file('live.txt', [channel_line])
+    with open('channel.txt', 'r', encoding='utf-8') as file:
+    for line in file:
+        if "#genre#" in line:
+            append_to_file('live.txt', [line])
         else:
-            channel_name = channel_line.split(",")[0]
+            channel_name = line.strip()
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0] == channel_name]
             append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
 
-    lines = read_txt_file('live.txt')
+    lines = read_txt('live.txt')
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('live.txt',lines)
     
