@@ -276,6 +276,9 @@ def process_url(url):
 if __name__ == "__main__":
     # 定义要访问的多个URL
     urls = [
+        'https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u',
+        'https://raw.githubusercontent.com/BurningC4/Chinese-IPTV/master/TV-IPV4.m3u',
+        'https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u',
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
         'https://raw.githubusercontent.com/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
@@ -294,8 +297,12 @@ if __name__ == "__main__":
         'https://m3u.ibert.me/txt/y_g.txt',
         'https://m3u.ibert.me/txt/j_iptv.txt',
         'https://live.zhoujie218.top/dsyy/mylist.txt',
+        'https://iptv-org.github.io/iptv/countries/cn.m3u',
+        'https://live.fanmingming.com/tv/m3u/ipv6.m3u',
         'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
         'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
+        'https://gitee.com/happy-is-not-closed/IPTV/raw/main/IPTV.m3u',
+        'https://gitee.com/guangshanleige/iptv/raw/master/iptv.m3u',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
     ]
