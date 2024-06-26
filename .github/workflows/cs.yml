@@ -28,21 +28,13 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: 安装运行环境
       run: |
         pip install requests
-
-    - name: Install ffmpy
-      run: |
         pip install ffmpy
-
-    - name: Install func_timeout
-      run: |
         pip install func_timeout
-
-    - name: Install tqdm
-      run: |
         pip install tqdm
+        pip installtermcolor
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
