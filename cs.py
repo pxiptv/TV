@@ -2,27 +2,16 @@ import csv
 import json
 import os
 import re
-import traceback
 import requests
 import time
 from ffmpy import FFprobe
 from subprocess import PIPE
 from datetime import datetime
 from func_timeout import func_set_timeout, FunctionTimedOut
-from requests.adapters import HTTPAdapter
-from tqdm import tqdm
 
 dt = datetime.now()
 
-SKIP_FFPROBE_MESSAGES = [re.compile(pattern) for pattern in (
-    'Last message repeated',
-    'mmco: unref short failure',
-    'number of reference frames .+ exceeds max',
-)]
-
-
 uniqueList = []
-
 
 @func_set_timeout(18)
 def get_stream(uri):
@@ -31,70 +20,69 @@ def get_stream(uri):
         cdata = json.loads(ffprobe.run(stdout=PIPE, stderr=PIPE)[0].decode('utf-8'))
         return cdata
     except Exception as e:
-        print(f"Error getting stream info for {uri}: {str(e)}")
         return False
 
-
-def check_channel(uri):
-    requests.adapters.DEFAULT_RETRIES = 3
+def check_channel(row, num):
+    uri = row[1]
     try:
-        start_time = time.time()
-        r = requests.get(uri, timeout=10)
-        response_time = (time.time() - start_time) * 1000  # in milliseconds
+        r = requests.get(uri, timeout=3)
         if r.status_code == requests.codes.ok:
             cdata = get_stream(uri)
             if cdata:
                 flagAudio = 0
                 flagVideo = 0
-                for i in cdata['streams']:
-                    if i['codec_type'] == 'video':
+                flagHDR = 0
+                flagHEVC = 0
+                vwidth = 0
+                vheight = 0
+                for stream in cdata['streams']:
+                    if stream['codec_type'] == 'video':
                         flagVideo = 1
-                    elif i['codec_type'] == 'audio':
+                        if 'color_space' in stream and 'bt2020' in stream['color_space']:
+                            flagHDR = 1
+                        if stream['codec_name'] == 'hevc':
+                            flagHEVC = 1
+                        if vwidth <= stream['coded_width']:
+                            vwidth = stream['coded_width']
+                            vheight = stream['coded_height']
+                    elif stream['codec_type'] == 'audio':
                         flagAudio = 1
                 if flagAudio == 0 or flagVideo == 0:
-                    print(f"Error: Video or Audio Only for {uri}")
-                    return False, float('inf')
-                return True, response_time
+                    return False
+                return True
         else:
-            print(f"Error: {r.status_code} for {uri}")
-            return False, float('inf')
+            return False
     except Exception as e:
-        print(f"Error checking channel for {uri}: {str(e)}")
-        return False, float('inf')
-
+        return False
 
 def main():
-    urls = []
-    with open('live.txt', 'r') as f:
-        urls = [line.strip().split(',')[1] for line in f.readlines() if ',' in line]
+    with open('live.txt', 'r', encoding='utf-8') as f:
+        lines = f.readlines()
 
     valid_urls = []
+    for num, line in enumerate(lines, start=1):
+        if '#genre#' in line:
+            valid_urls.append(line.strip())
+            continue
 
-    for num, url in tqdm(enumerate(urls, 1), desc="Checking URLs", total=len(urls)):
+        parts = line.strip().split(',')
+        if len(parts) < 2:
+            continue
+
+        url = parts[1]
         if url in uniqueList:
             continue
+
         uniqueList.append(url)
         try:
-            ret, response_time = check_channel(url)
-            if ret:
-                valid_urls.append((url, response_time))
-        except FunctionTimedOut as e:
-            print(f"Timeout for {url}: {str(e)}")
-    
-    # Sort by response time, ascending
-    valid_urls.sort(key=lambda x: x[1])
+            if check_channel(parts, num):
+                valid_urls.append(line.strip())
+        except FunctionTimedOut:
+            continue
 
-    # Debug: Print valid URLs and their response times
-    for url, response_time in valid_urls:
-        print(f"Valid URL: {url}, Response Time: {response_time}ms")
-
-    # Write valid URLs to iptv.txt
-    with open('iptv.txt', 'w') as f:
-        for url, _ in valid_urls:
-            f.write(f"{url}\n")
-
-    print(f"Total valid URLs: {len(valid_urls)}")
-
+    with open('iptv.txt', 'w', encoding='utf-8') as f:
+        for url in valid_urls:
+            f.write(url + '\n')
 
 if __name__ == '__main__':
     main()
