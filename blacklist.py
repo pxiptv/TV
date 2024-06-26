@@ -188,20 +188,16 @@ def remove_duplicates(lines, file_paths):
         file_lines = read_txt_file(file_path)
         lines = [line for line in lines if line not in file_lines]
     return lines
-    
-# 过滤掉在 comparison_files 中出现的行
-def extract_lines_with_colon(files):
-    lines_with_colon = []
 
-    for file in files:
-        lines = read_txt_file(file)
-        for line in lines:
-            if ',' in line:
-                parts = line.split(',', 1)  # 以第一个逗号为分割点
-                if '://' in parts[1]:
-                    lines_with_colon.append(parts[1].strip())
-
-    return lines_with_colon
+# 定义了一个函数 get_comparison_set，用于从指定文件中提取 "," 后的部分并存入一个集合。
+def get_comparison_set(file_path):
+    comparison_set = set()
+    with open(file_path, 'r', encoding='utf-8') as file:
+        for line in file:
+            parts = line.split(',')
+            if len(parts) > 1:
+                comparison_set.add(parts[1].strip())
+    return comparison_set
 
 # 将iptv.txt转换为iptv.m3u文件
 def convert_to_m3u(iptv_file, m3u_file):
@@ -321,23 +317,32 @@ if __name__ == "__main__":
     success_file = 'whitelist.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist.txt'  # 黑名单文件路径
 
-    # 合并 iptv.txt, blacklist.txt 的所有行
-    comparison_files = ['iptv.txt', 'blacklist.txt']
+    # 获取 iptv.txt 和 blacklist.txt 中的所有比对内容
+    iptv_set = get_comparison_set(input_file1)
+    blacklist_set = get_comparison_set(blacklist_file)
 
-    # 过滤 新获取的网址与历史文件的重复行
-    LS_lines = extract_lines_with_colon(comparison_files)
-    
-    # 提取 online_file 中逗号之后并包含 "://" 的内容
-    online_lines = read_txt_file(online_file)
-    OL_lines = [line.split(',', 1)[1].strip() for line in online_lines if ',' in line and '://' in line.split(',', 1)[1]]
+    # 打开 online.txt 并处理内容
+    with open(online_file, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
 
-    # 将 OL_lines 中不在 LS_lines 的行存入 filtered_live_lines
-    filtered_live_lines = [line for line in OL_lines if line not in LS_lines]
+    filtered_lines = []
+
+    # 比对 online.txt 中的每一行
+    for line in lines:
+        parts = line.split(',')
+        if len(parts) > 1:
+            comparison_part = parts[1].strip()
+            if comparison_part not in iptv_set and comparison_part not in blacklist_set:
+                filtered_lines.append(line)
+
+    # 将过滤后的内容重新写回 online.txt
+    with open(online_file, 'w', encoding='utf-8') as file:
+        file.writelines(filtered_lines)
     
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
     lines2 = read_txt_file(input_file2)
-    lines=list(set(filtered_live_lines + lines1))
+    lines=list(set(filtered_lines + lines1))
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('tv.txt',lines)
 
