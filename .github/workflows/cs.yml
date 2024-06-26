@@ -32,6 +32,10 @@ jobs:
       run: |
         pip install requests
 
+    - name: Install ffmpy
+      run: |
+        pip install ffmpy
+
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
         
