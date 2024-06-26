@@ -274,9 +274,7 @@ if __name__ == "__main__":
     # 写入 online.txt 文件
     write_txt_file('online.txt',urls_all_lines)
     online_file = 'online.txt'
-    channel_names_file = 'others.txt'
-    filter_and_save_channel_names(online_file, channel_names_file)
-    print(f"Filtered channel names have been saved to {channel_names_file}")
+    filter_and_save_channel_names(online_file)
     
     input_file1 = 'iptv.txt'  # 输入文件路径
     input_file2 = 'blacklist.txt'  # 输入文件路径2 
