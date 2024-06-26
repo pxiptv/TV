@@ -74,6 +74,7 @@ def process_part(part_str):
     part_str = part_str.replace(" (240p)", "")  # 替换 240p
     part_str = part_str.replace(" (180p)", "")  # 替换 180p
     part_str = part_str.replace("  [Geo-blocked]", "")  # 替换[Geo-blocked]
+    
     if "CCTV" in part_str and "://" not in part_str:
         part_str = part_str.replace("PLUS", "+")  # 替换 PLUS
         part_str = part_str.replace("1080", "")  # 替换 1080
@@ -206,11 +207,12 @@ def extract_lines_with_colon(files):
 def convert_to_m3u(iptv_file, m3u_file):
     lines = read_txt(iptv_file)
     with open(m3u_file, 'w', encoding='utf-8') as file:
-        file.write("#EXTM3U\n")
+        file.write("#EXTM3U#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+\n")
         for line in lines:
             parts = line.split(',', 1)
             if len(parts) == 2:
-                file.write(f"#EXTINF:-1,{parts[0]}\n")
+                file.write(f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n")
                 file.write(f"{parts[1]}\n")
                 
 # 增加外部url到检测清单，同时支持检测m3u格式url
@@ -424,7 +426,8 @@ if __name__ == "__main__":
             append_to_file('iptv.txt', matching_lines)
             
     # 生成 iptv.m3u 文件
-    output_text = "#EXTM3U\n"
+    output_text = "#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+\n"
 
     with open("iptv.txt", "r", encoding='utf-8') as file:
         input_text = file.read()
