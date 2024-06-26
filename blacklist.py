@@ -207,8 +207,7 @@ def extract_lines_with_colon(files):
 def convert_to_m3u(iptv_file, m3u_file):
     lines = read_txt(iptv_file)
     with open(m3u_file, 'w', encoding='utf-8') as file:
-        file.write("#EXTM3U#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
-\n")
+        file.write("#EXTM3U\n")
         for line in lines:
             parts = line.split(',', 1)
             if len(parts) == 2:
@@ -425,9 +424,10 @@ if __name__ == "__main__":
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
             append_to_file('iptv.txt', matching_lines)
             
-    # 生成 iptv.m3u 文件
-    output_text = "#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
-\n"
+    # 生成 iptv.m3u 文件 x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+
+    output_text = '#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+\n'
 
     with open("iptv.txt", "r", encoding='utf-8') as file:
         input_text = file.read()
