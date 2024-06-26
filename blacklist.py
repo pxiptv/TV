@@ -42,12 +42,12 @@ def process_name_string(input_str):
 
 def process_part(part_str):
     # 处理逻辑
-    part_str = part_str.replace("「IPV6」", "")  # 先剔除 「IPV6」
-    part_str = part_str.replace("IPV6", "")  # 先剔除 IPV6
-    part_str = part_str.replace("「IPV4」", "")  # 先剔除 「IPV4」
-    part_str = part_str.replace("IPV4", "")  # 先剔除 IPV4 
-    part_str = part_str.replace("[V4]", "")  # 先剔除 [V4]
-    part_str = part_str.replace("[V6]", "")  # 先剔除 [V6]
+    part_str = part_str.replace("「IPV6」", "")  # 剔除 「IPV6」
+    part_str = part_str.replace("IPV6", "")  # 剔除 IPV6
+    part_str = part_str.replace("「IPV4」", "")  # 剔除 「IPV4」
+    part_str = part_str.replace("IPV4", "")  # 剔除 IPV4 
+    part_str = part_str.replace("[V4]", "")  # 剔除 [V4]
+    part_str = part_str.replace("[V6]", "")  # 剔除 [V6]
     part_str = part_str.replace("𝟘", "0")  # 替换 𝟘
     part_str = part_str.replace("𝟙", "1")  # 替换 𝟙
     part_str = part_str.replace("𝟚", "2")  # 替换 𝟚
@@ -62,18 +62,18 @@ def process_part(part_str):
     part_str = part_str.replace("咪咕直播", "咪咕体育")  # 替换 咪咕直播
     part_str = part_str.replace("咪咕视频", "咪咕体育")  # 替换 咪咕视频
     part_str = part_str.replace("•", "")  # 先剔除 •  
-    part_str = part_str.replace("(1080p)", "")  # 替换1080p
-    part_str = part_str.replace("(900p)", "")  # 替换900p
-    part_str = part_str.replace("(720p)", "")  # 替换720p
-    part_str = part_str.replace("(576p)", "")  # 替换576p
-    part_str = part_str.replace("(540p)", "")  # 替换540p
-    part_str = part_str.replace("(360p)", "")  # 替换360p
-    part_str = part_str.replace("(240p)", "")  # 替换240p
-    part_str = part_str.replace("(180p)", "")  # 替换180p
+    part_str = part_str.replace("(1080p)", "")  # 替换 1080p
+    part_str = part_str.replace("(900p)", "")  # 替换 900p
+    part_str = part_str.replace("(720p)", "")  # 替换 720p
+    part_str = part_str.replace("(576p)", "")  # 替换 576p
+    part_str = part_str.replace("(540p)", "")  # 替换 540p
+    part_str = part_str.replace("(360p)", "")  # 替换 360p
+    part_str = part_str.replace("(240p)", "")  # 替换 240p
+    part_str = part_str.replace("(180p)", "")  # 替换 180p
     part_str = part_str.replace("[Geo-blocked]", "")  # 替换[Geo-blocked]
     if "CCTV" in part_str and "://" not in part_str:
-        part_str = part_str.replace("PLUS", "+")  # 替换PLUS
-        part_str = part_str.replace("1080", "")  # 替换1080
+        part_str = part_str.replace("PLUS", "+")  # 替换 PLUS
+        part_str = part_str.replace("1080", "")  # 替换 1080
         filtered_str = ''.join(char for char in part_str if char.isdigit() or char == 'K' or char == '+')
         if not filtered_str.strip():  # 处理特殊情况，如果发现没有找到频道数字返回原名称
             filtered_str = part_str.replace("CCTV", "")
@@ -85,7 +85,7 @@ def process_part(part_str):
                 filtered_str = re.sub(r'(4K|8K)', r'(\1)', filtered_str)
         return "CCTV" + filtered_str 
     elif "卫视" in part_str:
-        part_str = part_str.replace("-卫视", "卫视")
+        part_str = part_str.replace("-卫视", "卫视")  # 替换 -卫视
         # 定义正则表达式模式，匹配“卫视”后面的内容
         pattern = r'卫视「.*」'
         # 使用sub函数替换匹配的内容为空字符串
