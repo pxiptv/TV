@@ -35,7 +35,7 @@ jobs:
         pip install ffmpy
         pip install func_timeout
         pip install tqdm
-        pip installtermcolor
+        pip install termcolor
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
