@@ -42,8 +42,26 @@ def process_name_string(input_str):
 
 def process_part(part_str):
     # 处理逻辑
-    part_str = part_str.replace("IPV6", "")  # 先剔除IPV6字样
-    part_str = part_str.replace("•", "")  # 先剔除 • 字样
+    part_str = part_str.replace("「IPV6」", "")  # 先剔除 「IPV6」
+    part_str = part_str.replace("IPV6", "")  # 先剔除 IPV6
+    part_str = part_str.replace("「IPV4」", "")  # 先剔除 「IPV4」
+    part_str = part_str.replace("IPV4", "")  # 先剔除 IPV4 
+    part_str = part_str.replace("[V4]", "")  # 先剔除 [V4]
+    part_str = part_str.replace("[V6]", "")  # 先剔除 [V6]
+    part_str = part_str.replace("𝟘", "0")  # 替换 𝟘
+    part_str = part_str.replace("𝟙", "1")  # 替换 𝟙
+    part_str = part_str.replace("𝟚", "2")  # 替换 𝟚
+    part_str = part_str.replace("𝟛", "3")  # 替换 𝟛
+    part_str = part_str.replace("𝟜", "4")  # 替换 𝟜
+    part_str = part_str.replace("𝟝", "5")  # 替换 𝟝
+    part_str = part_str.replace("𝟞", "6")  # 替换 𝟞
+    part_str = part_str.replace("𝟟", "7")  # 替换 𝟟
+    part_str = part_str.replace("𝟠", "8")  # 替换 𝟠
+    part_str = part_str.replace("𝟡", "9")  # 替换 𝟡
+    part_str = part_str.replace("移动咪咕直播", "咪咕体育")  # 替换 移动咪咕直播
+    part_str = part_str.replace("咪咕直播", "咪咕体育")  # 替换 咪咕直播
+    part_str = part_str.replace("咪咕视频", "咪咕体育")  # 替换 咪咕视频
+    part_str = part_str.replace("•", "")  # 先剔除 •  
     part_str = part_str.replace("(1080p)", "")  # 替换1080p
     part_str = part_str.replace("(900p)", "")  # 替换900p
     part_str = part_str.replace("(720p)", "")  # 替换720p
