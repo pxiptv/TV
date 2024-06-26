@@ -3,6 +3,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 from datetime import datetime
 import os
+import re #正则
 from urllib.parse import urlparse
 
 
@@ -29,6 +30,7 @@ def append_to_file(filename, lines):
         for line in lines:
             f.write(line)
 
+# 格式化频道名称
 def process_name_string(input_str):
     parts = input_str.split(',')
     processed_parts = []
@@ -65,7 +67,17 @@ def process_part(part_str):
         return result_str
     
     return part_str
+
+def filter_and_save_channel_names(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
     
+    channel_names = [process_name_string(line.split(',')[0]) for line in lines if ',' in line]
+
+    with open(output_file, 'w', encoding='utf-8') as out_file:
+        for name in channel_names:
+            out_file.write(name + '\n')
+            
 # 检测URL是否可访问并记录响应时间
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
@@ -258,9 +270,9 @@ if __name__ == "__main__":
     # 写入 online.txt 文件
     write_txt_file('online.txt',urls_all_lines)
     online_file = 'online.txt'
-    online_file = process_name_string(online_file)
-    online_file = process_part(online_file)
-    write_txt_file('others.txt',online_file)
+    channel_names_file = 'others.txt'
+    filter_and_save_channel_names(online_file, channel_names_file)
+    print(f"Filtered channel names have been saved to {channel_names_file}")
     
     input_file1 = 'iptv.txt'  # 输入文件路径
     input_file2 = 'blacklist.txt'  # 输入文件路径2 
