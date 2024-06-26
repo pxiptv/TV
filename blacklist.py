@@ -57,6 +57,16 @@ def process_part(part_str):
                 filtered_str = re.sub(r'(4K|8K)', r'(\1)', filtered_str)
         return "CCTV" + filtered_str 
     elif "卫视" in part_str:
+        part_str = part_str.replace("IPV6", "")  # 先剔除IPV6字样
+        part_str = part_str.replace("1080p", "")  # 替换1080p
+        part_str = part_str.replace("900p", "")  # 替换900p
+        part_str = part_str.replace("720p", "")  # 替换720p
+        part_str = part_str.replace("576p", "")  # 替换576p
+        part_str = part_str.replace("540p", "")  # 替换540p
+        part_str = part_str.replace("360p", "")  # 替换360p
+        part_str = part_str.replace("240p", "")  # 替换240p
+        part_str = part_str.replace("180p", "")  # 替换180p
+        part_str = part_str.replace("[Geo-blocked]", "")  # 替换[Geo-blocked]
         # 定义正则表达式模式，匹配“卫视”后面的内容
         pattern = r'卫视「.*」'
         # 使用sub函数替换匹配的内容为空字符串
