@@ -3,7 +3,7 @@ name: 测试
 # 分支 应替换为  branches
 on:
   schedule:
-    - cron: '18 22 * * *'
+    - cron: '18 22 1 * *'
   workflow_dispatch:
     branches:
       - main
