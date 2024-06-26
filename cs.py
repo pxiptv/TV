@@ -4,9 +4,7 @@ import os
 import re
 import traceback
 import requests
-import subprocess
 import time
-import shutil
 from ffmpy import FFprobe
 from subprocess import PIPE
 from datetime import datetime
@@ -41,7 +39,7 @@ def check_channel(uri):
     requests.adapters.DEFAULT_RETRIES = 3
     try:
         start_time = time.time()
-        r = requests.get(uri, timeout=3)
+        r = requests.get(uri, timeout=10)
         response_time = (time.time() - start_time) * 1000  # in milliseconds
         if r.status_code == requests.codes.ok:
             cdata = get_stream(uri)
@@ -85,6 +83,10 @@ def main():
     
     # Sort by response time, ascending
     valid_urls.sort(key=lambda x: x[1])
+
+    # Debug: Print valid URLs and their response times
+    for url, response_time in valid_urls:
+        print(f"Valid URL: {url}, Response Time: {response_time}ms")
 
     # Write valid URLs to iptv.txt
     with open('iptv.txt', 'w') as f:
