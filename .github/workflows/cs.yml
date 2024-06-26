@@ -30,6 +30,7 @@ jobs:
 
     - name: 安装运行环境
       run: |
+        pip install --upgrade pip
         pip install requests
         pip install ffmpy
         pip install func_timeout
