@@ -42,41 +42,45 @@ def process_name_string(input_str):
 
 def process_part(part_str):
     # 处理逻辑
-    if "CCTV" in part_str  and "://" not in part_str:
-        part_str=part_str.replace("IPV6", "")  #先剔除IPV6字样
-        part_str=part_str.replace("PLUS", "+")  #替换PLUS
-        part_str=part_str.replace("1080", "")  #替换1080
+    if "CCTV" in part_str and "://" not in part_str:
+        part_str = part_str.replace("IPV6", "")  # 先剔除IPV6字样
+        part_str = part_str.replace("PLUS", "+")  # 替换PLUS
+        part_str = part_str.replace("1080", "")  # 替换1080
         filtered_str = ''.join(char for char in part_str if char.isdigit() or char == 'K' or char == '+')
-        if not filtered_str.strip(): #处理特殊情况，如果发现没有找到频道数字返回原名称
-            filtered_str=part_str.replace("CCTV", "")
-
-        if len(filtered_str) > 2 and re.search(r'4K|8K', filtered_str):   # 特殊处理CCTV中部分4K和8K名称
+        if not filtered_str.strip():  # 处理特殊情况，如果发现没有找到频道数字返回原名称
+            filtered_str = part_str.replace("CCTV", "")
+        if len(filtered_str) > 2 and re.search(r'4K|8K', filtered_str):  # 特殊处理CCTV中部分4K和8K名称
             # 使用正则表达式替换，删除4K或8K后面的字符，并且保留4K或8K
             filtered_str = re.sub(r'(4K|8K).*', r'\1', filtered_str)
             if len(filtered_str) > 2: 
                 # 给4K或8K添加括号
                 filtered_str = re.sub(r'(4K|8K)', r'(\1)', filtered_str)
-
-        return "CCTV"+filtered_str 
-        
+        return "CCTV" + filtered_str 
     elif "卫视" in part_str:
         # 定义正则表达式模式，匹配“卫视”后面的内容
         pattern = r'卫视「.*」'
         # 使用sub函数替换匹配的内容为空字符串
         result_str = re.sub(pattern, '卫视', part_str)
         return result_str
-    
     return part_str
 
-def filter_and_save_channel_names(input_file, output_file):
+def filter_and_save_channel_names(input_file):
     with open(input_file, 'r', encoding='utf-8') as file:
         lines = file.readlines()
     
-    channel_names = [process_name_string(line.split(',')[0]) for line in lines if ',' in line]
-
-    with open(output_file, 'w', encoding='utf-8') as out_file:
-        for name in channel_names:
-            out_file.write(name + '\n')
+    processed_lines = []
+    for line in lines:
+        if ',' in line:
+            channel_name, url = line.split(',', 1)
+            processed_channel_name = process_name_string(channel_name)
+            processed_line = f"{processed_channel_name},{url}"
+            processed_lines.append(processed_line)
+        else:
+            processed_lines.append(line)
+    
+    with open(input_file, 'w', encoding='utf-8') as out_file:
+        for line in processed_lines:
+            out_file.write(line)
             
 # 检测URL是否可访问并记录响应时间
 headers = {
