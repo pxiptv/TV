@@ -10,7 +10,7 @@ timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#', '192', '198', 'ChiSheng9', 'epg.pw', '/udp/', '(576p)', '(540p)', '(360p)', '(480p)', '(180p)', '(404p)', 'generationnexxxt']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
+    skip_strings = ['#genre#', '192', '198', 'ChiSheng9', 'epg.pw', '/udp/', '(576p)', '(540p)', '(360p)', '(480p)', '(180p)', '(404p)', 'generationnexxxt', 'live.goodiptv.club']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
 
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -104,17 +104,18 @@ def remove_duplicates(lines, file_paths):
     return lines
     
 # 过滤掉在 comparison_files 中出现的行
-def filter_lines(input_file, comparison_files):
-    # 读取对比文件中的所有行
-    comparison_lines = set()
-    for file in comparison_files:
-        comparison_lines.update(read_txt_file(file))
+def extract_lines_with_colon(files):
+    lines_with_colon = []
 
-    # 读取输入文件并过滤行
-    input_lines = read_txt_file(input_file)
-    filtered_lines = [line for line in input_lines if line not in comparison_lines]
-    
-    return filtered_lines
+    for file in files:
+        lines = read_txt_file(file)
+        for line in lines:
+            if ',' in line:
+                parts = line.split(',', 1)  # 以第一个逗号为分割点
+                if '://' in parts[1]:
+                    lines_with_colon.append(parts[1].strip())
+
+    return lines_with_colon
 
 # 将iptv.txt转换为iptv.m3u文件
 def convert_to_m3u(iptv_file, m3u_file):
@@ -230,7 +231,14 @@ if __name__ == "__main__":
     comparison_files = ['iptv.txt', 'blacklist.txt']
 
     # 过滤 新获取的网址与历史文件的重复行
-    filtered_live_lines = filter_lines(online_file, comparison_files)
+    LS_lines = extract_lines_with_colon(comparison_files)
+    
+    # 提取 online_file 中逗号之后并包含 "://" 的内容
+    online_lines = read_txt_file(online_file)
+    OL_lines = [line.split(',', 1)[1].strip() for line in online_lines if ',' in line and '://' in line.split(',', 1)[1]]
+
+    # 将 OL_lines 中不在 LS_lines 的行存入 filtered_live_lines
+    filtered_live_lines = [line for line in OL_lines if line not in LS_lines]
     
     # 读取输入文件内容
     lines1 = read_txt_file(input_file1)
