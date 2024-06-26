@@ -44,14 +44,6 @@ jobs:
       run: |
         pip install tqdm
 
-    - name: Install subprocess 
-      run: |
-        pip install subprocess 
-
-    - name: Install requests.adapters 
-      run: |
-        pip install requests.adapters
-
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
         
