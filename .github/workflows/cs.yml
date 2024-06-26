@@ -1,5 +1,5 @@
 
-name: 电视节目地址校验
+name: 测试
 # 分支 应替换为  branches
 on:
   schedule:
