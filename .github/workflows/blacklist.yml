@@ -45,7 +45,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         if [ -n "$(git status --porcelain)" ]; then
-        git add EPG.xml iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt
+        git add EPG.xml iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt
         # iptv.m3u blacklist.txt whitelist.txt tv.txt live.txt online.txt others.txt 
         git commit -m "Automatic update"
         git push
