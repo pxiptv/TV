@@ -36,6 +36,11 @@ jobs:
       run: |
         pip install ffmpy
 
+
+    - name: Install func_timeout
+      run: |
+        pip install func_timeout
+
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
         
