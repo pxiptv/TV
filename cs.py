@@ -66,7 +66,7 @@ def check_channel(uri):
 def main():
     urls = []
     with open('live.txt', 'r') as f:
-        urls = [line.strip() for line in f.readlines()]
+        urls = [line.strip().split(',')[1] for line in f.readlines() if ',' in line]
 
     valid_urls = []
 
