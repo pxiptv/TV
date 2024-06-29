@@ -1,5 +1,5 @@
 
-name: m3uChecker
+name: m3uCheck
 # 分支 应替换为  branches
 on:
   schedule:
@@ -30,22 +30,17 @@ jobs:
 
     - name: 安装运行环境
       run: |
-        pip install certifi==2020.12.5
-        pip install chardet==4.0.0
-        pip install idna==2.10
-        pip install iso8601==0.1.14
-        pip install requests==2.25.1
-        pip install urllib3==1.26.3
+        pip install requests
 
     - name: Run blacklist update
-      run: python ${{ github.workspace }}/m3uChecker.py
+      run: python ${{ github.workspace }}/m3uCheck.py
         
     - name: Commit results
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         if [ -n "$(git status --porcelain)" ]; then
-        git add checkOutput.m3u 
+        git add others.txt 
         # iptv.m3u blacklist.txt whitelist.txt tv.txt live.txt online.txt others.txt 
         git commit -m "Automatic update"
         git push
