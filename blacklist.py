@@ -304,14 +304,14 @@ if __name__ == "__main__":
         process_url(url)   #读取上面url清单中直播源存入urls_all_lines
 
     # 写入 online.txt 文件
-    #write_txt_file('online.txt',urls_all_lines)
-    open('online.txt', 'w').close()
-    online_file = 'online.txt'
+    write_txt_file('online.txt',urls_all_lines)
+    online_file = read_txt_file('online.txt')
     
     input_file1 = 'iptv.txt'  # 输入文件路径
     input_file2 = 'blacklist.txt'  # 输入文件路径2 
     success_file = 'whitelist.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist.txt'  # 黑名单文件路径
+    others_file = 'others.txt'
 
     # 获取 iptv.txt 和 blacklist.txt 中的所有比对内容
     iptv_set = get_comparison_set(input_file1)
@@ -319,12 +319,11 @@ if __name__ == "__main__":
 
     # 合并并去重
     merged_lines = iptv_set.union(blacklist_set)
-    write_txt_file('others.txt', merged_lines)
 
     filtered_lines = []
 
     # 比对 online.txt 中的每一行
-    for line in urls_all_lines:
+    for line in online_file:
         parts = line.split(',')
         if len(parts) > 1:
             comparison_part = parts[1].strip()
@@ -333,5 +332,5 @@ if __name__ == "__main__":
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
-    with open(online_file, 'w', encoding='utf-8') as file:
+    with open(others_file, 'w', encoding='utf-8') as file:
         file.writelines(filtered_lines)
