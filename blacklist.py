@@ -289,7 +289,6 @@ if __name__ == "__main__":
         'https://m3u.ibert.me/txt/ycl_iptv.txt',
         'https://m3u.ibert.me/txt/y_g.txt',
         'https://m3u.ibert.me/txt/j_iptv.txt',
-        'https://live.zhoujie218.top/dsyy/mylist.txt',
         'https://iptv-org.github.io/iptv/countries/cn.m3u',
         'https://live.fanmingming.com/tv/m3u/ipv6.m3u',
         'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
@@ -327,7 +326,7 @@ if __name__ == "__main__":
         if len(parts) > 1:
             comparison_part = parts[1].strip()
             if comparison_part not in merged_lines:
-                print(f"新获取网址: {comparison_part}")
+                #print(f"新获取网址: {comparison_part}")
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
