@@ -148,13 +148,19 @@ headers = {
 }
 def check_url(url, timeout=18):
     try:
-    	if  "://" in url:
+    	if "://" in url:
             start_time = time.time()
             req = urllib.request.Request(url, headers=headers)
             with urllib.request.urlopen(req, timeout=timeout) as response:
-                elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+                elapsed_time = (time.time() - start_time) * 1000
                 if response.status == 200:
                     return elapsed_time, True
+        elif url.startswith("[240"):
+            start_time = time.time()
+            result = subprocess.run(["ping6", "-c", "1", "-W", str(timeout), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            elapsed_time = (time.time() - start_time) * 1000
+            if result.returncode == 0:
+                return elapsed_time, True
     except Exception as e:
         print(f"网址检测发现错误： {url}: {e}")
     return None, False
