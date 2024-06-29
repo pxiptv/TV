@@ -311,7 +311,6 @@ if __name__ == "__main__":
     input_file2 = 'blacklist.txt'  # 输入文件路径2 
     success_file = 'whitelist.txt'  # 成功清单文件路径
     blacklist_file = 'blacklist.txt'  # 黑名单文件路径
-    others_file = 'others.txt'
 
     # 获取 iptv.txt 和 blacklist.txt 中的所有比对内容
     iptv_set = get_comparison_set(input_file1)
@@ -332,5 +331,139 @@ if __name__ == "__main__":
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
-    with open(others_file, 'w', encoding='utf-8') as file:
+    with open(online_file, 'w', encoding='utf-8') as file:
         file.writelines(filtered_lines)
+
+    # 读取输入文件内容
+    lines1 = read_txt_file(input_file1)
+    lines2 = read_txt_file(input_file2)
+    lines=list(set(filtered_lines + lines1))
+    #lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('tv.txt',lines)
+
+    # 清空 live.txt 文件后读取 channel.txt 文件
+    open('live.txt', 'w').close()
+    channel_lines = read_txt('channel.txt')
+    tv_lines = read_txt_file('tv.txt')
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('live.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0].strip()
+            print(f"Processing channel: {channel_name}")  # 调试信息
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
+            append_to_file('live.txt', matching_lines)
+
+    print("待检测文件已生成。")
+    
+    lines = read_txt_file('live.txt')
+
+    # 计算合并后合计个数
+    urls_hj = len(lines)
+    
+    # 处理URL并生成成功清单和黑名单
+    successlist, blacklist = process_urls_multithreaded(lines)
+    
+    # 给successlist, blacklist排序
+    # 定义排序函数
+    def successlist_sort_key(item):
+        time_str = item.split(',')[0].replace('ms', '')
+        return float(time_str)
+    
+    successlist=sorted(successlist, key=successlist_sort_key)
+    blacklist=sorted(blacklist)
+
+    # 计算check后ok和ng个数
+    urls_ok = len(successlist)
+    urls_ng = len(blacklist)
+
+    # 把successlist整理一下，生成一个可以直接引用的源，方便用zyplayer手动check
+    def remove_prefix_from_lines(lines):
+        result = []
+        for line in lines:
+            if  "#genre#" not in line and "," in line and "://" in line:
+                parts = line.split(",")
+                result.append(",".join(parts[1:]))
+        return result
+
+    # 加时间戳等
+    version=datetime.now().strftime("%Y%m%d-%H-%M-%S")+",url"
+    successlist_tv = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["whitelist,#genre#"] + remove_prefix_from_lines(successlist)
+    successlist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                  ["RespoTime,whitelist,#genre#"] + successlist
+    blacklist = ["更新时间,#genre#"] +[version] + ['\n'] +\
+                ["blacklist,#genre#"]  + blacklist
+
+    # 写入成功清单文件
+    write_list(success_file, successlist_tv)
+    write_list(input_file1, successlist_tv)
+
+    # 写入黑名单文件
+    merged_lines = list(set(blacklist + lines2))
+    merged_lines = [line.strip() for line in merged_lines if line.strip()]
+    write_txt_file(blacklist_file, merged_lines)
+
+    print(f"成功清单文件已生成: {success_file}")
+    print(f"黑名单文件已生成: {blacklist_file}")
+    print(f"iptv.txt 文件已生成: {input_file1}")
+
+    # 清空 iptv.txt 文件后读取 channel.txt 文件
+    channel_lines = read_txt('channel.txt')
+    tv_lines = read_txt_file('iptv.txt')
+    open('iptv.txt', 'w').close()
+
+    # 处理 channel.txt 文件中的每一行
+    for channel_line in channel_lines:
+        if "#genre#" in channel_line:
+            append_to_file('iptv.txt', [channel_line])
+        else:
+            channel_name = channel_line.split(",")[0].strip()
+            matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",http")[0].strip() == channel_name]
+            append_to_file('iptv.txt', matching_lines)
+            
+    # 生成 iptv.m3u 文件 x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+
+    output_text = '#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz"\n'
+
+    with open("iptv.txt", "r", encoding='utf-8') as file:
+        input_text = file.read()
+
+    lines = input_text.strip().split("\n")
+    group_name = ""
+    for line in lines:
+        parts = line.split(",")
+        if len(parts) == 2 and "#genre#" in line:
+            group_name = parts[0]
+        elif len(parts) == 2:
+            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+            output_text += f"{parts[1]}\n"
+
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
+
+    print("iptv.m3u文件已生成。")
+
+    # 执行的代码
+    timeend = datetime.now()
+
+    # 计算时间差
+    elapsed_time = timeend - timestart
+    total_seconds = elapsed_time.total_seconds()
+
+    # 转换为分钟和秒
+    minutes = int(total_seconds // 60)
+    seconds = int(total_seconds % 60)
+
+    # 格式化开始和结束时间
+    timestart_str = timestart.strftime("%Y%m%d_%H_%M_%S")
+    timeend_str = timeend.strftime("%Y%m%d_%H_%M_%S")
+
+    print(f"开始时间: {timestart_str}")
+    print(f"结束时间: {timeend_str}")
+    print(f"执行时间: {minutes} 分 {seconds} 秒")
+    print(f"urls_hj: {urls_hj} ")
+    print(f"urls_ok: {urls_ok} ")
+    print(f"urls_ng: {urls_ng} ")
