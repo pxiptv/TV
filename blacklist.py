@@ -335,4 +335,4 @@ if __name__ == "__main__":
     # 将过滤后的内容重新写回 online.txt
     with open(online_file, 'w', encoding='utf-8') as file:
         file.writelines(filtered_lines)
-    
+    write_txt_file('others.txt',blacklist_set)
