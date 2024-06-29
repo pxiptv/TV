@@ -11,7 +11,7 @@ timestart = datetime.now()
 
 # 读取文件内容
 def read_txt_file(file_path):
-    skip_strings = ['#genre#', '192', '198', 'ChiSheng9', 'epg.pw', 'p3p', '/udp/', '(576p)', '(540p)', '(360p)', '(480p)', '(180p)', '(404p)', 'r.jdshipin', 'generationnexxxt', 'live.goodiptv.club', 'playtv-live.ifeng']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
+    skip_strings = ['#genre#', '127.0.0.1', '192.168', '198.168', 'ChiSheng9', 'epg.pw', 'p3p', '/udp/', '(576p)', '(540p)', '(360p)', '(480p)', '(180p)', '(404p)', 'r.jdshipin', 'generationnexxxt', 'live.goodiptv.club', 'playtv-live.ifeng']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
 
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -65,6 +65,7 @@ def process_part(part_str):
     part_str = part_str.replace("灣", "湾")  # 替换
     part_str = part_str.replace("環", "环")  # 替换
     part_str = part_str.replace("蓮", "莲")  # 替换
+    part_str = part_str.replace("鏡", "镜")  # 替换
     part_str = part_str.replace("財經", "财经")  # 替换
     part_str = part_str.replace("凤凰-", "凤凰")  # 替换
     part_str = part_str.replace("鳳凰", "凤凰")  # 替换
@@ -88,6 +89,8 @@ def process_part(part_str):
     part_str = part_str.replace("咪咕体育-", "咪咕体育")  # 替换 咪咕体育
     part_str = part_str.replace("咪咕体育_", "咪咕体育")  # 替换 咪咕体育
     part_str = part_str.replace("•", "")  # 先剔除 •  
+    part_str = part_str.replace("_4M1080HEVC", "")  # 剔除
+    part_str = part_str.replace("_2.5M1080HEVC", "")  # 剔除
     part_str = part_str.replace(" (1080p)", "")  # 替换 1080p
     part_str = part_str.replace(" (900p)", "")  # 替换 900p
     part_str = part_str.replace(" (720p)", "")  # 替换 720p
@@ -298,7 +301,10 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u',
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
-        'https://raw.githubusercontent.com/kimwang1978/tvbox/main/%E5%A4%A9%E5%A4%A9%E5%BC%80%E5%BF%83/lives/%E2%91%AD%E5%BC%80%E5%BF%83%E7%BA%BF%E8%B7%AF.txt',
+        'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/9dd572be7497b94c976e9cb62b2830770d430088/history/20240623_005422_merged_output.txt',
+        'https://raw.githubusercontent.com/qist/tvbox/6685fc6f7bb9b0eeece374c45a1cf406c98b70f8/tvlive.txt',
+        'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/596fdf93c9c69008b9aab0a04d42f51867726723/live.txt',
+        'https://raw.githubusercontent.com/leyan1987/iptv/43fb1c8cca63bd6bebbeb0e8b77e229a2bfa2550/iptv.txt',
         'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
         'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
         'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
