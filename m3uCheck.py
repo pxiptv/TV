@@ -12,22 +12,26 @@ def read_urls(file_path):
                 parts = line.split(',')
                 if len(parts) == 2:
                     urls.append((parts[0], parts[1]))
+                else:
+                    print(f"Invalid format: {line}")
+            else:
+                print(f"No comma found in line: {line}")
     return urls
 
 # 检测单个URL的响应时间
 def check_url(channel, url):
     try:
         start_time = time.time()
-        response = requests.get(url, timeout=18)
+        response = requests.get(url, timeout=8)
         end_time = time.time()
         if response.status_code == 200:
             response_time = end_time - start_time
             print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
             return channel, url, response_time
         else:
-            print(f"Channel: {channel}, URL: {url}, Status: Failed, Response Time: N/A")
-    except requests.RequestException:
-        print(f"Channel: {channel}, URL: {url}, Status: Failed, Response Time: N/A")
+            print(f"Channel: {channel}, URL: {url}, Status: Failed, Status Code: {response.status_code}, Response Time: N/A")
+    except requests.RequestException as e:
+        print(f"Channel: {channel}, URL: {url}, Status: Exception, Error: {e}")
     return channel, url, None
 
 # 多线程检测URL
@@ -59,7 +63,15 @@ def write_best_urls(results, file_path):
 # 主函数
 def main():
     urls = read_urls('iptv.txt')
+    if not urls:
+        print("No valid URLs found in iptv.txt")
+        return
+    
     results = detect_urls(urls)
+    if not results:
+        print("No valid responses received from URLs")
+        return
+    
     write_best_urls(results, 'live.txt')
 
 if __name__ == "__main__":
