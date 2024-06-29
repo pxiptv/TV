@@ -1,6 +1,7 @@
 import concurrent.futures
 import subprocess
 import time
+from urllib.parse import urlparse
 
 # 读取IPTV网址列表
 def read_urls(file_path):
@@ -18,24 +19,24 @@ def read_urls(file_path):
                 print(f"No comma found in line: {line}")
     return urls
 
-# 使用 curl 检测单个URL的响应时间
+# 使用 ping 检测单个URL的响应时间
 def check_url(channel, url):
     try:
-        start_time = time.time()
-        result = subprocess.run(
-            ['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url],
-            capture_output=True,
-            timeout=8
-        )
-        end_time = time.time()
-        http_code = result.stdout.decode().strip()
+        parsed_url = urlparse(url)
+        host = parsed_url.hostname
+        if not host:
+            print(f"Invalid URL: {url}")
+            return channel, url, None
         
-        if result.returncode == 0 and http_code == '200':
+        start_time = time.time()
+        result = subprocess.run(['ping', '-c', '1', '-W', '8', host], capture_output=True)
+        end_time = time.time()
+        if result.returncode == 0:
             response_time = end_time - start_time
             print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
             return channel, url, response_time
         else:
-            print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {http_code}, Response Time: N/A")
+            print(f"Channel: {channel}, URL: {url}, Status: Failed, Response Time: N/A")
     except subprocess.TimeoutExpired:
         print(f"Channel: {channel}, URL: {url}, Status: Timeout, Response Time: N/A")
     except Exception as e:
