@@ -104,11 +104,13 @@ def work(m3u_data,outputFile,workname='Default'):
         url= m3u_data[data] # 播放链接
         if checkLink(url):
             displayMsg(workname, f'{name} 访问成功')
+            print(f"成功检测到频道地址：{name}")
             with open(outputFile, 'a',encoding='utf8') as file:
                 file.write(data + '\n')
                 file.write(url + '\n')
         else:
             displayMsg(workname, f'{name} 【失败】！')
+            print(f"没有检测到频道地址：{name}")
 
 if __name__ == '__main__':
     print(welcome())
