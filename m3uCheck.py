@@ -4,9 +4,15 @@ import time
 
 # 读取IPTV网址列表
 def read_urls(file_path):
+    urls = []
     with open(file_path, 'r') as file:
-        urls = file.readlines()
-    return [(url.strip().split(',')[0], url.strip().split(',')[1]) for url in urls]
+        for line in file:
+            line = line.strip()
+            if ',' in line:
+                parts = line.split(',')
+                if len(parts) == 2:
+                    urls.append((parts[0], parts[1]))
+    return urls
 
 # 检测单个URL的响应时间
 def check_url(channel, url):
