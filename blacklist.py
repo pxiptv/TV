@@ -318,7 +318,7 @@ if __name__ == "__main__":
     blacklist_set = get_comparison_set(blacklist_file)
 
     # 合并并去重
-    merged_lines = list(set(iptv_set + blacklist_set))
+    merged_lines = iptv_set.union(blacklist_set)
     write_txt_file('others.txt', merged_lines)
 
     filtered_lines = []
