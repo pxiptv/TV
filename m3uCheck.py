@@ -22,14 +22,20 @@ def read_urls(file_path):
 def check_url(channel, url):
     try:
         start_time = time.time()
-        result = subprocess.run(['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url], capture_output=True, timeout=8)
+        result = subprocess.run(
+            ['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url],
+            capture_output=True,
+            timeout=8
+        )
         end_time = time.time()
-        if result.returncode == 0 and result.stdout == b'200':
+        http_code = result.stdout.decode().strip()
+        
+        if result.returncode == 0 and http_code == '200':
             response_time = end_time - start_time
             print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
             return channel, url, response_time
         else:
-            print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {result.stdout.decode().strip()}, Response Time: N/A")
+            print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {http_code}, Response Time: N/A")
     except subprocess.TimeoutExpired:
         print(f"Channel: {channel}, URL: {url}, Status: Timeout, Response Time: N/A")
     except Exception as e:
