@@ -156,13 +156,15 @@ def check_url(url, timeout=18):
                 if response.status == 200:
                     print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
                     return elapsed_time, True
-        elif url.startswith("[240"):
+
+    	elif url.startswith("[240"):
             start_time = time.time()
             result = subprocess.run(["ping6", "-c", "1", "-W", str(timeout), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             elapsed_time = (time.time() - start_time) * 1000
-            if result.returncode == 0:
-                print(f"成功检测到IPv6地址：{url}, 响应时间：{elapsed_time:.2f}ms")
-                return elapsed_time, True
+                if result.returncode == 0:
+                    print(f"成功检测到IPv6地址：{url}, 响应时间：{elapsed_time:.2f}ms")
+                    return elapsed_time, True
+                
     except Exception as e:
         print(f"网址检测发现错误： {url}: {e}")
     return None, False
