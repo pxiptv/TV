@@ -48,6 +48,7 @@ def process_part(part_str):
     part_str = part_str.replace("IPV4", "")  # 剔除 IPV4 
     part_str = part_str.replace("[V4]", "")  # 剔除 [V4]
     part_str = part_str.replace("[V6]", "")  # 剔除 [V6]
+    part_str = part_str.replace("台,http", ",http")  # 剔除 台
     part_str = part_str.replace("𝟘", "0")  # 替换 𝟘
     part_str = part_str.replace("𝟙", "1")  # 替换 𝟙
     part_str = part_str.replace("𝟚", "2")  # 替换 𝟚
