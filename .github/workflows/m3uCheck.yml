@@ -1,5 +1,5 @@
 
-name: m3uCheck
+name: m3uChecker
 # 分支 应替换为  branches
 on:
   schedule:
@@ -31,10 +31,11 @@ jobs:
     - name: 安装运行环境
       run: |
         pip install --upgrade pip
-        pip install requests
+        # pip install requests
+        pip3 install -r require.txt
 
     - name: Run blacklist update
-      run: python ${{ github.workspace }}/m3uCheck.py
+      run: python ${{ github.workspace }}/m3uChecker.py
         
     - name: Commit results
       run: |
