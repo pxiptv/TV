@@ -12,12 +12,16 @@ def read_urls(file_path):
 def check_url(channel, url):
     try:
         start_time = time.time()
-        response = requests.get(url, timeout=2)
+        response = requests.get(url, timeout=8)
         end_time = time.time()
         if response.status_code == 200:
-            return channel, url, end_time - start_time
+            response_time = end_time - start_time
+            print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
+            return channel, url, response_time
+        else:
+            print(f"Channel: {channel}, URL: {url}, Status: Failed, Response Time: N/A")
     except requests.RequestException:
-        return channel, url, None
+        print(f"Channel: {channel}, URL: {url}, Status: Failed, Response Time: N/A")
     return channel, url, None
 
 # 多线程检测URL
@@ -44,7 +48,7 @@ def write_best_urls(results, file_path):
     with open(file_path, 'w') as file:
         for channel, (url, response_time) in best_results.items():
             file.write(f"{channel},{url}\n")
-            print(f"Best URL for {channel}: {url} with response time: {response_time} seconds")
+            print(f"Best URL for {channel}: {url} with response time: {response_time:.2f} seconds")
 
 # 主函数
 def main():
