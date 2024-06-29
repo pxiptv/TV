@@ -302,6 +302,7 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
         'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/9dd572be7497b94c976e9cb62b2830770d430088/history/20240623_005422_merged_output.txt',
+        'https://raw.githubusercontent.com/alonezou/yn-iptv/17b0cc6a26f2d4ded720d9350875473e4f44a65e/reference/MyIPTV',
         'https://raw.githubusercontent.com/qist/tvbox/6685fc6f7bb9b0eeece374c45a1cf406c98b70f8/tvlive.txt',
         'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/596fdf93c9c69008b9aab0a04d42f51867726723/live.txt',
         'https://raw.githubusercontent.com/leyan1987/iptv/43fb1c8cca63bd6bebbeb0e8b77e229a2bfa2550/iptv.txt',
