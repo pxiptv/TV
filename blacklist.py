@@ -330,7 +330,7 @@ if __name__ == "__main__":
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
-    with open(online_file, 'w', encoding='utf-8') as file:
+    with open('online.txt', 'w', encoding='utf-8') as file:
         file.writelines(filtered_lines)
 
     # 读取输入文件内容
