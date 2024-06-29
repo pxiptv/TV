@@ -176,7 +176,7 @@ def write_best_url(results, file_path):
 def main():
     iptv_file = 'iptv.txt'
     filter_and_save_channel_names(iptv_file)
-    lines = read_txt_file('iptv.txt')
+    urls = read_txt_file('iptv.txt')
         
     results = detect_urls(urls)
     write_best_url(results, 'others.txt')
