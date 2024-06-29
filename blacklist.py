@@ -177,10 +177,6 @@ def write_list(file_path, data_list):
 def merge_files(file1, file2, output_file):
     lines1 = read_txt_file(file1)
     lines2 = read_txt_file(file2)
-
-# 合并并去重
-    merged_lines = list(set(lines1 + lines2))
-    write_txt_file(output_file, merged_lines)
     
 # 删除重复行
 def remove_duplicates(lines, file_paths):
@@ -321,6 +317,9 @@ if __name__ == "__main__":
     iptv_set = get_comparison_set(input_file1)
     blacklist_set = get_comparison_set(blacklist_file)
 
+    # 合并并去重
+    merged_lines = list(set(iptv_set + blacklist_set))
+    write_txt_file('others.txt', merged_lines)
 
     filtered_lines = []
 
@@ -329,10 +328,9 @@ if __name__ == "__main__":
         parts = line.split(',')
         if len(parts) > 1:
             comparison_part = parts[1].strip()
-            if comparison_part not in iptv_set and comparison_part not in blacklist_set:
+            if comparison_part not in merged_lines:
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
     with open(online_file, 'w', encoding='utf-8') as file:
         file.writelines(filtered_lines)
-    write_txt_file('others.txt',blacklist_set)
