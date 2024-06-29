@@ -49,7 +49,7 @@ def write_best_url(results, file_path):
 def main():
     urls = read_urls('iptv.txt')
     results = detect_urls(urls)
-    write_best_url(results, 'live.txt')
+    write_best_url(results, 'others.txt')
 
 if __name__ == "__main__":
     main()
