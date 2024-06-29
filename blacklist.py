@@ -29,35 +29,6 @@ def append_to_file(filename, lines):
     with open(filename, 'a', encoding='utf-8') as f:
         for line in lines:
             f.write(line)
-
-def process_file():
-    with open('online.txt', 'r') as file:
-        lines = file.readlines()
-
-    with open('others.txt', 'w') as others_file, open('online_temp.txt', 'w') as online_file:
-        for line in lines:
-            if '#' in line and not any(exclude in line for exclude in ["#EXTM3U", "#EXTINF", "#genre#"]):
-                name = line.split(',')[0]
-                modified_line = line.replace('#', f'\n{name},')
-                others_file.write(modified_line)
-            else:
-                online_file.write(line)
-    
-    # 合并 online_temp.txt 和 others.txt 为 online.txt
-    with open('online.txt', 'w') as final_online_file:
-        with open('online_temp.txt', 'r') as online_temp_file:
-            final_online_file.write(online_temp_file.read())
-        with open('others.txt', 'r') as others_file:
-            final_online_file.write(others_file.read())
-            
-    # 删除临时文件
-    import os
-    os.remove('online_temp.txt')
-    os.remove('others.txt')
-
-    print("一个频道多个网址的行已处理并合并为 online.txt。")
-
-process_file()
             
 # 格式化频道名称
 def process_name_string(input_str):
@@ -333,7 +304,33 @@ if __name__ == "__main__":
 
     # 写入 online.txt 文件
     write_txt_file('online.txt',urls_all_lines)
-    process_file('online.txt')
+
+    with open('online.txt', 'r') as file:
+        lines = file.readlines()
+
+    with open('others.txt', 'w') as others_file, open('online_temp.txt', 'w') as online_file:
+        for line in lines:
+            if '#' in line and not any(exclude in line for exclude in ["#EXTM3U", "#EXTINF", "#genre#"]):
+                name = line.split(',')[0]
+                modified_line = line.replace('#', f'\n{name},')
+                others_file.write(modified_line)
+            else:
+                online_file.write(line)
+    
+    # 合并 online_temp.txt 和 others.txt 为 online.txt
+    with open('online.txt', 'w') as final_online_file:
+        with open('online_temp.txt', 'r') as online_temp_file:
+            final_online_file.write(online_temp_file.read())
+        with open('others.txt', 'r') as others_file:
+            final_online_file.write(others_file.read())
+            
+    # 删除临时文件
+    import os
+    os.remove('online_temp.txt')
+    os.remove('others.txt')
+
+    print("一个频道多个网址的行已处理并合并为 online.txt。")
+
     online_file = read_txt_file('online.txt')
     
     input_file1 = 'iptv.txt'  # 输入文件路径
