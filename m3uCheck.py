@@ -18,7 +18,7 @@ def read_urls(file_path):
 def check_url(channel, url):
     try:
         start_time = time.time()
-        response = requests.get(url, timeout=8)
+        response = requests.get(url, timeout=18)
         end_time = time.time()
         if response.status_code == 200:
             response_time = end_time - start_time
