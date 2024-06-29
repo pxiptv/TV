@@ -329,7 +329,7 @@ if __name__ == "__main__":
         if len(parts) > 1:
             comparison_part = parts[1].strip()
             if comparison_part not in merged_lines:
-                print(f"新获取网址": {comparison_part}")
+                print(f"新获取网址: {comparison_part}")
                 filtered_lines.append(line)
 
     # 将过滤后的内容重新写回 online.txt
