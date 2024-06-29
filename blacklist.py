@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
     # 写入 online.txt 文件
     #write_txt_file('online.txt',urls_all_lines)
-    open('iptv.txt', 'w').close()
+    open('online.txt', 'w').close()
     online_file = 'online.txt'
     
     input_file1 = 'iptv.txt'  # 输入文件路径
@@ -315,7 +315,7 @@ if __name__ == "__main__":
 
     # 获取 iptv.txt 和 blacklist.txt 中的所有比对内容
     iptv_set = get_comparison_set(input_file1)
-    blacklist_set = get_comparison_set(blacklist_file)
+    blacklist_set = get_comparison_set(input_file2)
 
     # 合并并去重
     merged_lines = iptv_set.union(blacklist_set)
