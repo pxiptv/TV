@@ -154,7 +154,7 @@ def check_url(url, timeout=18):
             with urllib.request.urlopen(req, timeout=timeout) as response:
                 elapsed_time = (time.time() - start_time) * 1000
                 if response.status == 200:
-                    print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
+                    print(f"成功检测到IPv4地址：{url}, 响应时间：{elapsed_time:.2f}ms")
                     return elapsed_time, True
 
     	elif url.startswith("[240"):
@@ -166,7 +166,7 @@ def check_url(url, timeout=18):
                 return elapsed_time, True
                 
     except Exception as e:
-        print(f"网址检测发现错误： {url}: {e}")
+        print(f"地址检测出现错误： {url}: {e}")
     return None, False
 
 # 处理单行文本并检测URL
