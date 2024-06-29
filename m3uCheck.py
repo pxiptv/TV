@@ -1,5 +1,5 @@
 import concurrent.futures
-import requests
+import subprocess
 import time
 
 # 读取IPTV网址列表
@@ -18,19 +18,21 @@ def read_urls(file_path):
                 print(f"No comma found in line: {line}")
     return urls
 
-# 检测单个URL的响应时间
+# 使用 curl 检测单个URL的响应时间
 def check_url(channel, url):
     try:
         start_time = time.time()
-        response = requests.get(url, timeout=8)
+        result = subprocess.run(['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url], capture_output=True, timeout=8)
         end_time = time.time()
-        if response.status_code == 200:
+        if result.returncode == 0 and result.stdout == b'200':
             response_time = end_time - start_time
             print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
             return channel, url, response_time
         else:
-            print(f"Channel: {channel}, URL: {url}, Status: Failed, Status Code: {response.status_code}, Response Time: N/A")
-    except requests.RequestException as e:
+            print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {result.stdout.decode().strip()}, Response Time: N/A")
+    except subprocess.TimeoutExpired:
+        print(f"Channel: {channel}, URL: {url}, Status: Timeout, Response Time: N/A")
+    except Exception as e:
         print(f"Channel: {channel}, URL: {url}, Status: Exception, Error: {e}")
     return channel, url, None
 
