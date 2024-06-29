@@ -129,7 +129,7 @@ def check_url(url, timeout=8):
                 if response.status == 200:
                     return elapsed_time, True
     except Exception as e:
-        print(f"Error checking {url}: {e}")
+        print(f"网址检测发现错误： {url}: {e}")
     return None, False
 
 # 处理单行文本并检测URL
