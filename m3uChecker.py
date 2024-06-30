@@ -1,132 +1,100 @@
-import requests
+import concurrent.futures
+import subprocess
 import time
-import os
-from multiprocessing import Pool
-def welcome():
-    msg = '''
-=========================================================================
-888b     d888  .d8888b.  888     888      88888888888                888 
-8888b   d8888 d88P  Y88b 888     888          888                    888 
-88888b.d88888      .d88P 888     888          888                    888 
-888Y88888P888     8888"  888     888          888   .d88b.   .d88b.  888 
-888 Y888P 888      "Y8b. 888     888          888  d88""88b d88""88b 888 
-888  Y8P  888 888    888 888     888          888  888  888 888  888 888 
-888   "   888 Y88b  d88P Y88b. .d88P          888  Y88..88P Y88..88P 888 
-888       888  "Y8888P"   "Y88888P"           888   "Y88P"   "Y88P"  888
-=========================================================================
-'''
-    return msg
+from urllib.parse import urlparse
 
-def get(url,GetStatus=0):
-    headers = {
-        'Accept-Language': "zh-CN,zh",
-        'User-Agent': "Mozilla/5.0 (Linux; U; Android 8.1.0; zh-cn; BLA-AL00 Build/HUAWEIBLA-AL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/57.0.2987.132 MQQBrowser/8.9 Mobile Safari/537.36",
-        'Accept-Encoding': "gzip"
-    }
-    try:
-        res = requests.request("GET", url, headers=headers, timeout=1)  #此处设置超时时间
-    except:
-        return 0
-    if GetStatus == 1:
-        return res.status_code
-    else:
-        if res.status_code == 200:
-            res = str(res.content,'utf-8')
-        else:
-            res = 0
-        return res
-
-def checkLink(url):
-    res = get(url,1)
-    if res == 200:
-        return 1
-    else:
-        return 0
-
-def displayMsg(workname='Default',msg=''):
-    now = time.asctime( time.localtime(time.time()) )
-    print(f'{now} - {workname}: ' + msg)
-
-def writeFile(filename,content):
-    with open(filename,'w',encoding='utf8') as file:
-        file.write(content)
-
-def endWith(fileName, *endstring):
-    array = map(fileName.endswith, endstring)
-    if True in array:
-        return True
-    else:
-        return False
-
-def m3u_filelist(path):
-    fileList = os.listdir(path)
-    files = []
-    for filename in fileList:
-        if endWith(filename, '.m3u'):
-            files.append(filename)  # 所有m3u文件列表
-    return files
-
-
-def m3u_load(m3uFile):
-    channel = {}
-    errorNum = 0
-    status = 0   # 实时改变步骤状态
-    with open(m3uFile, 'r', encoding='utf8') as file:
-        displayMsg('m3u_load', f'当前载入列表：{m3uFile}')
+# 读取IPTV网址列表
+def read_urls(file_path):
+    urls = []
+    with open(file_path, 'r') as file:
         for line in file:
-            # 如果当前是描述行：
-            if line.startswith('#EXTINF:-1'):
-                if status !=0:
-                    displayMsg('m3u_load', f'{m3uFile}当前列表缺少行')
-                    errorNum+=1
-                    exit()
-                channelInfo = str(line).replace('\n','')
-                status = 1
+            line = line.strip()
+            if ',' in line:
+                parts = line.split(',')
+                if len(parts) == 2:
+                    urls.append((parts[0], parts[1]))
+                else:
+                    print(f"Invalid format: {line}")
+            else:
+                print(f"No comma found in line: {line}")
+    return urls
 
-            # 如果当前是URL行
-            if line.startswith('http') or line.startswith('rtsp'): # 当前行为URL
-                if status != 1:
-                    displayMsg('m3u_load', f'{m3uFile}当前列表缺少行')
-                    errorNum += 1
-                    exit()
-                channel[channelInfo] = str(line).replace('\n','')
-                status = 2
-            # 上述判断完成
-            if status == 2: # 上述步骤处理完毕
-                status = 0
-        displayMsg('m3u_load', f'{m3uFile} 解析完毕')
-        return channel
+# 使用 curl 检测单个URL的响应时间
+def check_url(channel, url):
+    parsed_url = urlparse(url)
+    host = parsed_url.hostname
 
-def work(m3u_data,outputFile,workname='Default'):
-    for data in m3u_data:
-        txt1 = data.split(',') # 分割节目名称与标签属性
-        name = txt1[1] # 电视名称
-        url= m3u_data[data] # 播放链接
-        if checkLink(url):
-            displayMsg(workname, f'{name} 访问成功')
-            print(f"成功检测到频道地址：{name}")
-            with open(outputFile, 'a',encoding='utf8') as file:
-                file.write(data + '\n')
-                file.write(url + '\n')
-        else:
-            displayMsg(workname, f'{name} 【失败】！')
-            print(f"没有检测到频道地址：{name}")
-
-if __name__ == '__main__':
-    print(welcome())
-
-    outputFile = 'checkOutput.m3u'
-
-    displayMsg('Master','开始读取文件列表：')
-    fileList = m3u_filelist(os.getcwd())
+    # 检查IPv6地址
+    if host and host.startswith('[240'):
+        command = ['ping6', '-c', '1', '-W', '8', host.strip('[]')]
+    else:
+        command = ['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url]
     
-    if outputFile in fileList: # 除去输出文件本身
-        fileList.remove(outputFile)
+    try:
+        start_time = time.time()
+        result = subprocess.run(command, capture_output=True, timeout=8)
+        end_time = time.time()
 
-    writeFile(outputFile,'#EXTM3U\n')
+        if host and host.startswith('['):
+            if result.returncode == 0:
+                response_time = end_time - start_time
+                print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
+                return channel, url, response_time
+            else:
+                print(f"Channel: {channel}, URL: {url}, Status: Failed, ping6 Return Code: {result.returncode}, Response Time: N/A")
+        else:
+            http_code = result.stdout.decode().strip()
+            if result.returncode == 0 and http_code == '200':
+                response_time = end_time - start_time
+                print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
+                return channel, url, response_time
+            else:
+                print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {http_code}, Response Time: N/A")
+    except subprocess.TimeoutExpired:
+        print(f"Channel: {channel}, URL: {url}, Status: Timeout, Response Time: N/A")
+    except Exception as e:
+        print(f"Channel: {channel}, URL: {url}, Status: Exception, Error: {e}")
+    return channel, url, None
 
-    p = Pool(4)
-    for file in fileList:
-        p.apply_async(work, args=(m3u_load(file),outputFile,file))
-    p.close()
-    p.join()
+# 多线程检测URL
+def detect_urls(urls):
+    results = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_url = {executor.submit(check_url, channel, url): (channel, url) for channel, url in urls}
+        for future in concurrent.futures.as_completed(future_to_url):
+            try:
+                channel, url, response_time = future.result()
+                if response_time is not None:
+                    results.append((channel, url, response_time))
+            except Exception as e:
+                print(f"URL {future_to_url[future]} generated an exception: {e}")
+    return results
+
+# 将每个频道响应速度最快的URL写入文件
+def write_best_urls(results, file_path):
+    best_results = {}
+    for channel, url, response_time in results:
+        if channel not in best_results or response_time < best_results[channel][1]:
+            best_results[channel] = (url, response_time)
+    
+    with open(file_path, 'w') as file:
+        for channel, (url, response_time) in best_results.items():
+            file.write(f"{channel},{url}\n")
+            print(f"Best URL for {channel}: {url} with response time: {response_time:.2f} seconds")
+
+# 主函数
+def main():
+    urls = read_urls('iptv.txt')
+    if not urls:
+        print("No valid URLs found in iptv.txt")
+        return
+    
+    results = detect_urls(urls)
+    if not results:
+        print("No valid responses received from URLs")
+        return
+    
+    write_best_urls(results, 'live.txt')
+
+if __name__ == "__main__":
+    main()
