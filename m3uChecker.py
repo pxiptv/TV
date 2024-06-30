@@ -2,7 +2,7 @@ import requests
 
 def check_url(url):
     try:
-        response = requests.get(url, timeout=5)
+        response = requests.get(url, timeout=2)
         return response.status_code == 200
     except requests.RequestException:
         return False
@@ -15,12 +15,12 @@ def process_iptv_file(input_file, output_file):
                 if len(parts) == 2:
                     channel_name, url = parts
                     url = url.strip()
-                    print(f"正在检测 {channel_name} ({url}) ... ", end="")
+                    print(f"Checking {channel_name} ({url}) ... ", end="")
                     if check_url(url):
-                        print("联网检测正常")
+                        print("Online")
                         outfile.write(line)
                     else:
-                        print("网址错误")
+                        print("Offline or Timed Out")
 
 input_file = 'iptv.txt'
 output_file = 'live.txt'
