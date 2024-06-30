@@ -21,7 +21,7 @@ def read_urls(file_path):
 
 # 使用 curl 检测单个URL的响应时间
 def check_url(channel, url):
-    parsed_url = urlparse(url).strip(',')
+    parsed_url = urlparse(url)
     host = parsed_url.hostname
 
     # 检查IPv6地址
@@ -35,7 +35,7 @@ def check_url(channel, url):
         result = subprocess.run(command, capture_output=True, timeout=8)
         end_time = time.time()
 
-        if host and host.startswith('['):
+        if host and host.startswith('[240'):
             if result.returncode == 0:
                 response_time = end_time - start_time
                 print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
