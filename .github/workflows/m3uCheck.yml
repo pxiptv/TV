@@ -33,6 +33,7 @@ jobs:
         # pip install --upgrade pip
         # pip install requests
         pip install ffmpeg
+        pip install subprocess
         # pip3 install -r require.txt
 
     - name: Run blacklist update
