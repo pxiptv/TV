@@ -36,8 +36,8 @@ jobs:
       
     - name: 安装运行环境
       run: |
-        # pip install --upgrade pip
-        pip install requests
+        pip install --upgrade pip
+        pip3 install requests
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/m3uChecker.py
