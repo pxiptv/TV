@@ -7,6 +7,9 @@ def check_url(url):
     except requests.Timeout:
         print("Timed out")
         return False
+    except requests.ConnectionError:
+        print("Connection error")
+        return False
     except requests.RequestException as e:
         print(f"Request failed: {e}")
         return False
