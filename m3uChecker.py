@@ -1,100 +1,54 @@
-import concurrent.futures
+import urllib.request
 import subprocess
 import time
-from urllib.parse import urlparse
 
-# 读取IPTV网址列表
-def read_urls(file_path):
-    urls = []
-    with open(file_path, 'r') as file:
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+}
+
+def check_url(url, timeout=8):
+    try:
+        if "://" in url:
+            start_time = time.time()
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=timeout) as response:
+                elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+                if response.status == 200:
+                    print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
+                    return elapsed_time, True
+        elif url.startswith("[240"):  # 检测是否为IPv6地址
+            start_time = time.time()
+            result = subprocess.run(["ping6", "-c", "1", "-W", str(timeout), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+            if result.returncode == 0:
+                print(f"成功检测到IPv6地址：{url}, 响应时间：{elapsed_time:.2f}ms")
+                return elapsed_time, True
+    except Exception as e:
+        print(f"网址检测发现错误： {url}: {e}")
+    return None, False
+
+def main():
+    channel_urls = {}
+
+    # 读取 iptv.txt 文件
+    with open('iptv.txt', 'r', encoding='utf-8') as file:
         for line in file:
             line = line.strip()
-            if ',' in line:
-                parts = line.split(',')
-                if len(parts) == 2:
-                    urls.append((parts[0], parts[1]))
+            if "://" in line:
+                channel, url = line.split(",", 1)
+                print(f"正在检测频道：{channel}, URL：{url}")
+                response_time, success = check_url(url)
+                if success:
+                    if channel not in channel_urls or response_time < channel_urls[channel][0]:
+                        channel_urls[channel] = (response_time, url)
                 else:
-                    print(f"Invalid format: {line}")
-            else:
-                print(f"No comma found in line: {line}")
-    return urls
+                    print(f"检测失败：{url}")
 
-# 使用 curl 检测单个URL的响应时间
-def check_url(channel, url):
-    parsed_url = urlparse(url)
-    host = parsed_url.hostname
-
-    # 检查IPv6地址
-    if host and host.startswith('[240'):
-        command = ['ping6', '-c', '1', '-W', '8', host.strip('[]')]
-    else:
-        command = ['curl', '-o', '/dev/null', '-s', '-w', '%{http_code}', url]
-    
-    try:
-        start_time = time.time()
-        result = subprocess.run(command, capture_output=True, timeout=8)
-        end_time = time.time()
-
-        if host and host.startswith('[240'):
-            if result.returncode == 0:
-                response_time = end_time - start_time
-                print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
-                return channel, url, response_time
-            else:
-                print(f"Channel: {channel}, URL: {url}, Status: Failed, ping6 Return Code: {result.returncode}, Response Time: N/A")
-        else:
-            http_code = result.stdout.decode().strip()
-            if result.returncode == 0 and http_code == '200':
-                response_time = end_time - start_time
-                print(f"Channel: {channel}, URL: {url}, Status: Success, Response Time: {response_time:.2f} seconds")
-                return channel, url, response_time
-            else:
-                print(f"Channel: {channel}, URL: {url}, Status: Failed, HTTP Code: {http_code}, Response Time: N/A")
-    except subprocess.TimeoutExpired:
-        print(f"Channel: {channel}, URL: {url}, Status: Timeout, Response Time: N/A")
-    except Exception as e:
-        print(f"Channel: {channel}, URL: {url}, Status: Exception, Error: {e}")
-    return channel, url, None
-
-# 多线程检测URL
-def detect_urls(urls):
-    results = []
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        future_to_url = {executor.submit(check_url, channel, url): (channel, url) for channel, url in urls}
-        for future in concurrent.futures.as_completed(future_to_url):
-            try:
-                channel, url, response_time = future.result()
-                if response_time is not None:
-                    results.append((channel, url, response_time))
-            except Exception as e:
-                print(f"URL {future_to_url[future]} generated an exception: {e}")
-    return results
-
-# 将每个频道响应速度最快的URL写入文件
-def write_best_urls(results, file_path):
-    best_results = {}
-    for channel, url, response_time in results:
-        if channel not in best_results or response_time < best_results[channel][1]:
-            best_results[channel] = (url, response_time)
-    
-    with open(file_path, 'w') as file:
-        for channel, (url, response_time) in best_results.items():
+    # 写入 live.txt 文件
+    with open('live.txt', 'w', encoding='utf-8') as file:
+        for channel, (response_time, url) in channel_urls.items():
             file.write(f"{channel},{url}\n")
-            print(f"Best URL for {channel}: {url} with response time: {response_time:.2f} seconds")
-
-# 主函数
-def main():
-    urls = read_urls('iptv.txt')
-    if not urls:
-        print("No valid URLs found in iptv.txt")
-        return
-    
-    results = detect_urls(urls)
-    if not results:
-        print("No valid responses received from URLs")
-        return
-    
-    write_best_urls(results, 'live.txt')
+            print(f"写入频道：{channel}, URL：{url}, 响应时间：{response_time:.2f}ms")
 
 if __name__ == "__main__":
     main()
