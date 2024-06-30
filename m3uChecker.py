@@ -1,47 +1,24 @@
-import subprocess
-import time
+import requests
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-}
-
-def check_url(url, timeout=8):
+def check_url(url):
     try:
-        start_time = time.time()
-        result = subprocess.run(
-            ["ffmpeg", "-t", str(timeout), "-i", url, "-v", "error", "-f", "null", "-"],
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        )
-        elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
-        if result.returncode == 0:
-            print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
-            return elapsed_time, True
-    except Exception as e:
-        print(f"网址检测发现错误： {url}: {e}")
-    return None, False
+        response = requests.get(url, timeout=10)
+        return response.status_code == 200
+    except requests.RequestException:
+        return False
 
-def main():
-    channel_urls = {}
+def process_iptv_file(input_file, output_file):
+    with open(input_file, 'r', encoding='utf-8') as infile, open(output_file, 'w', encoding='utf-8') as outfile:
+        for line in infile:
+            if "://" in line:
+                parts = line.split(',')
+                if len(parts) == 2:
+                    channel_name, url = parts
+                    url = url.strip()
+                    if check_url(url):
+                        outfile.write(line)
 
-    # 读取 iptv.txt 文件
-    with open('iptv.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            line = line.strip()
-            if "," in line:
-                channel, url = line.split(",", 1)
-                print(f"正在检测频道：{channel}, URL：{url}")
-                response_time, success = check_url(url)
-                if success:
-                    if channel not in channel_urls or response_time < channel_urls[channel][0]:
-                        channel_urls[channel] = (response_time, url)
-                else:
-                    print(f"检测失败：{url}")
+input_file = 'iptv.txt'
+output_file = 'live.txt'
 
-    # 写入 live.txt 文件
-    with open('live.txt', 'w', encoding='utf-8') as file:
-        for channel, (response_time, url) in channel_urls.items():
-            file.write(f"{channel},{url}\n")
-            print(f"写入频道：{channel}, URL：{url}, 响应时间：{response_time:.2f}ms")
-
-if __name__ == "__main__":
-    main()
+process_iptv_file(input_file, output_file)
