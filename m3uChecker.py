@@ -1,4 +1,3 @@
-import urllib.request
 import subprocess
 import time
 
@@ -8,21 +7,15 @@ headers = {
 
 def check_url(url, timeout=8):
     try:
-        if "://" in url:
-            start_time = time.time()
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=timeout) as response:
-                elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
-                if response.status == 200:
-                    print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
-                    return elapsed_time, True
-        elif url.startswith("[240"):  # 检测是否为IPv6地址
-            start_time = time.time()
-            result = subprocess.run(["ping6", "-c", "1", "-W", str(timeout), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
-            if result.returncode == 0:
-                print(f"成功检测到IPv6地址：{url}, 响应时间：{elapsed_time:.2f}ms")
-                return elapsed_time, True
+        start_time = time.time()
+        result = subprocess.run(
+            ["ffmpeg", "-t", str(timeout), "-i", url, "-v", "error", "-f", "null", "-"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
+        elapsed_time = (time.time() - start_time) * 1000  # 转换为毫秒
+        if result.returncode == 0:
+            print(f"成功检测到网址：{url}, 响应时间：{elapsed_time:.2f}ms")
+            return elapsed_time, True
     except Exception as e:
         print(f"网址检测发现错误： {url}: {e}")
     return None, False
@@ -34,7 +27,7 @@ def main():
     with open('iptv.txt', 'r', encoding='utf-8') as file:
         for line in file:
             line = line.strip()
-            if "://" in line:
+            if "," in line:
                 channel, url = line.split(",", 1)
                 print(f"正在检测频道：{channel}, URL：{url}")
                 response_time, success = check_url(url)
