@@ -21,7 +21,7 @@ def read_urls(file_path):
 
 # 使用 curl 检测单个URL的响应时间
 def check_url(channel, url):
-    parsed_url = urlparse(url)
+    parsed_url = urlparse(url).replace(",", "")
     host = parsed_url.hostname
 
     # 检查IPv6地址
