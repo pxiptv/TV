@@ -30,7 +30,7 @@ jobs:
 
     - name: 安装运行环境
       run: |
-        # pip install --upgrade pip
+        pip install --upgrade pip
         # pip install requests
         pip install ffmpeg
         pip install subprocess
