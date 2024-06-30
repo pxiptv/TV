@@ -32,7 +32,7 @@ jobs:
       run: |
         pip install --upgrade pip
         # pip install requests
-        pip3 install -r require.txt
+        # pip3 install -r require.txt
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/m3uChecker.py
