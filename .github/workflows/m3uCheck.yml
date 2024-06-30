@@ -30,8 +30,8 @@ jobs:
 
     - name: 安装运行环境
       run: |
-        pip install --upgrade pip
-        # pip install requests
+        # pip install --upgrade pip
+        pip install requests
         # pip3 install -r require.txt
 
     - name: Run blacklist update
