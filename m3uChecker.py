@@ -4,7 +4,11 @@ def check_url(url):
     try:
         response = requests.get(url, timeout=2)
         return response.status_code == 200
-    except requests.RequestException:
+    except requests.Timeout:
+        print("Timed out")
+        return False
+    except requests.RequestException as e:
+        print(f"Request failed: {e}")
         return False
 
 def process_iptv_file(input_file, output_file):
