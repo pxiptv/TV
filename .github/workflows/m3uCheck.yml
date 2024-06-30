@@ -28,18 +28,16 @@ jobs:
       with:
         python-version: '3.10'
         
-    - name: Install ffmpeg
-      run: sudo apt-get update && sudo apt-get install -y ffmpeg
+    #- name: Install ffmpeg
+    #  run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+    #- name: Install dependencies
+    #  run: pip install -r requirements.txt
       
-    # - name: 安装运行环境
-      # run: |
+    - name: 安装运行环境
+      run: |
         # pip install --upgrade pip
-        # pip install requests
-        # pip install ffmpeg
-        # pip3 install -r require.txt
+        pip install requests
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/m3uChecker.py
