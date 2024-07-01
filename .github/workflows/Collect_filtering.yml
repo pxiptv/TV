@@ -1,0 +1,47 @@
+
+name: 手动更新
+# 分支 应替换为  branches
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: GetTime
+      id: date
+      run: echo "::set-output name=date::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Run blacklist update
+      run: python ${{ github.workspace }}/cs.py
+
+        
+    - name: Commit results
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        if [ -n "$(git status --porcelain)" ]; then
+        git add blacklist.txt iptv.txt iptv.m3u
+        #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt 
+        git commit -m "Automatic update"
+        git push
+        else
+          echo "No changes detected, skipping commit."
+        fi
+      
+env:
+  TZ: Asia/Shanghai
