@@ -324,7 +324,7 @@ if __name__ == "__main__":
 
     # 获取 iptv.txt 和 blacklist.txt 中的所有比对内容
     whitelist_set = get_comparison_set(success_file)
-    blacklist_set = get_comparison_set(input_file2)
+    blacklist_set = get_comparison_set(blacklist_file)
 
     # 合并并去重
     merged_lines = whitelist_set.union(blacklist_set)
