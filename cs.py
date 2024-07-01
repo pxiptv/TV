@@ -362,6 +362,6 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0].strip()
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
-            append_to_file('live.txt', matching_lines)
+            append_to_file('live.txt', matching_lines + '\n')
 
     print("待检测文件已生成。")
