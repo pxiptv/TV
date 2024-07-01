@@ -17,16 +17,16 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4  # 检出代码
       
     - name: GetTime
       id: date
       run: echo "::set-output name=date::$(TZ=':Asia/Shanghai' date '+%Y-%m-%d %T')"
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.x'  # 设置Python版本
         
     #- name: Install ffmpeg
     #  run: sudo apt-get update && sudo apt-get install -y ffmpeg
@@ -36,9 +36,9 @@ jobs:
       
     - name: 安装运行环境
       run: |
-        pip install --upgrade pip
-        pip3 install requests
-
+        python -m pip install --upgrade pip
+        pip install requests  # 安装requests库
+        
     - name: Run blacklist update
       run: python ${{ github.workspace }}/m3uChecker.py
         
