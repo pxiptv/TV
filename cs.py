@@ -7,7 +7,7 @@ import re #正则
 from urllib.parse import urlparse
 
 
-# 读取文件内容
+# 读取文件内容1
 def read_txt_file(file_path):
     skip_strings = ['#genre#', '127.0.0.1', '192.168', '198.168', 'ChiSheng9', 'epg.pw', 'p3p', '/udp/', '(576p)', '(540p)', '(360p)', '(480p)', '(180p)', '(404p)', 'r.jdshipin', 'generationnexxxt', 'live.goodiptv.club', 'playtv-live.ifeng']  # 定义需要跳过的字符串数组['#', '@', '#genre#'] 
     required_strings = ['://']  # 定义需要包含的字符串数组['必需字符1', '必需字符2'] 
@@ -19,14 +19,16 @@ def read_txt_file(file_path):
         ]
     return lines
 
+# 读取文件内容2
 def read_txt(filename):
     with open(filename, 'r', encoding='utf-8') as f:
         return f.readlines()
 
+# 定义追加文件的函数
 def append_to_file(filename, lines):
-    with open(filename, 'a', encoding='utf-8') as f:
+    with open(filename, 'a', encoding='utf-8') as file:
         for line in lines:
-            file.write(line + '\n')
+            file.write(line)
             
 # 格式化频道名称
 def process_name_string(input_str):
@@ -363,5 +365,6 @@ if __name__ == "__main__":
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
             append_to_file('live.txt', matching_lines)
+            append_to_file('live.txt', [''])
 
     print("待检测文件已生成。")
