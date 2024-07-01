@@ -27,7 +27,7 @@ jobs:
         python-version: '3.10'
 
     - name: Run blacklist update
-      run: python ${{ github.workspace }}/cs.py
+      run: python ${{ github.workspace }}/Collect_filtering.py
 
         
     - name: Commit results
