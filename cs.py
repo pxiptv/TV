@@ -366,11 +366,11 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0].strip()
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
-            append_to_file('live.txt', matching_lines)
+            append_to_file('test.txt', matching_lines)
 
-    print("待检测文件已生成。")
+    print("待检测文件 test.txt 已生成。")
 
-    # 生成 iptv.m3u 文件 x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+    # 生成 test.m3u 文件 x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
 
     output_text = '#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz"\n'
 
@@ -387,7 +387,7 @@ if __name__ == "__main__":
             output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
             output_text += f"{parts[1]}\n"
 
-    with open("iptv.m3u", "w", encoding='utf-8') as file:
+    with open("test.m3u", "w", encoding='utf-8') as file:
         file.write(output_text)
 
-    print("iptv.m3u文件已生成。")
+    print("test.m3u文件已生成。")
