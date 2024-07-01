@@ -26,7 +26,7 @@ def read_txt(filename):
 def append_to_file(filename, lines):
     with open(filename, 'a', encoding='utf-8') as f:
         for line in lines:
-            f.write(line)
+            file.write(line + '\n')
             
 # 格式化频道名称
 def process_name_string(input_str):
@@ -362,6 +362,6 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0].strip()
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
-            append_to_file('live.txt', matching_lines + '\n')
+            append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
