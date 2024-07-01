@@ -1,0 +1,42 @@
+name: Check URLs with FFmpeg
+
+on:
+  # 你可以设置定时任务，例如每天凌晨6点20执行
+  schedule:
+    - cron: '20 22 1 * *'
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  check-urls:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install FFmpeg
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg
+
+    - name: Run Python Script
+      run: |
+        python check_urls.py
+
+    - name: Commit results
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        if [ -n "$(git status --porcelain)" ]; then
+        git add live.txt
+        #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt
+        git commit -m "Automatic update"
+        git push
+        else
+          echo "No changes detected, skipping commit."
+        fi
+        
+env:
+  TZ: Asia/Shanghai
