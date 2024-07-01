@@ -1,5 +1,5 @@
 
-name: 手动更新
+name: 手动更新频道网址
 # 分支 应替换为  branches
 on:
   workflow_dispatch:
