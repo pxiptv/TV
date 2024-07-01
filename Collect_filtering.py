@@ -15,7 +15,7 @@ def append_to_file(filename, lines):
             f.write(line)
             
 # 定义文件路径
-live_file_path = 'live.txt'
+test_file_path = 'test.txt'
 iptv_file = 'iptv.txt'
 whitelist_file_path = 'whitelist.txt'
 blacklist_file_path = 'blacklist.txt'
@@ -27,9 +27,9 @@ with open(whitelist_file_path, 'r') as whitelist_file:
 # 准备一个列表来存储最终结果
 blacklist_lines = []
 
-# 读取live.txt文件，找出不包含特定文本且不在whitelist中的行
-with open(live_file_path, 'r') as live_file:
-    for line in live_file:
+# 读取test.txt文件，找出不包含特定文本且不在whitelist中的行
+with open(test_file_path, 'r') as test_file:
+    for line in test_file:
         # 检查行是否包含特定文本
         if '#genre#' in line:
             continue  # 如果包含，跳过这一行
