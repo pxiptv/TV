@@ -350,11 +350,13 @@ if __name__ == "__main__":
     lines1 = read_txt_file(success_file)
     lines2 = read_txt_file(input_file2)
     lines=list(set(filtered_lines + lines1))
-    tv_lines = [line.strip() for line in lines if line.strip()]
+    lines = [line.strip() for line in lines if line.strip()]
+    write_txt_file('tv.txt',lines)
 
     # 清空 live.txt 文件后读取 channel.txt 文件
     open('live.txt', 'w').close()
     channel_lines = read_txt('channel.txt')
+    tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
@@ -365,6 +367,5 @@ if __name__ == "__main__":
             print(f"Processing channel: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
             append_to_file('live.txt', matching_lines)
-            append_to_file('live.txt', [''])
 
     print("待检测文件已生成。")
