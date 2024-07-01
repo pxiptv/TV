@@ -28,7 +28,6 @@ jobs:
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/Collect_filtering.py
-
         
     - name: Commit results
       run: |
