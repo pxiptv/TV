@@ -3,7 +3,7 @@ name: 测试
 # 分支 应替换为  branches
 on:
   schedule:
-    - cron: '18 22 1 * *'
+    - cron: '18 22 * * *'
   workflow_dispatch:
     branches:
       - main
@@ -28,30 +28,26 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: 安装运行环境
-      run: |
-        pip install --upgrade pip
-        pip install requests
-        pip install ffmpy
-        pip install func_timeout
-        pip install tqdm
-        pip install termcolor
+    - name: Install requests
+      run: pip install requests
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/cs.py
+
         
     - name: Commit results
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         if [ -n "$(git status --porcelain)" ]; then
-        git add groups/merged.txt groups/merged-simple.txt 
-        # iptv.m3u blacklist.txt whitelist.txt tv.txt live.txt online.txt others.txt 
+        git add iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt
+        #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt 
         git commit -m "Automatic update"
         git push
         else
           echo "No changes detected, skipping commit."
         fi
-  
+
+        
 env:
   TZ: Asia/Shanghai
