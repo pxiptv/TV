@@ -13,6 +13,7 @@ def append_to_file(filename, lines):
     with open(filename, 'a', encoding='utf-8') as f:
         for line in lines:
             f.write(line)
+            
 # 定义文件路径
 live_file_path = 'live.txt'
 iptv_file = 'iptv.txt'
@@ -26,9 +27,13 @@ with open(whitelist_file_path, 'r') as whitelist_file:
 # 准备一个列表来存储最终结果
 blacklist_lines = []
 
-# 读取live.txt文件，找出不重复的行
+# 读取live.txt文件，找出不包含特定文本且不在whitelist中的行
 with open(live_file_path, 'r') as live_file:
     for line in live_file:
+        # 检查行是否包含特定文本
+        if '#genre#' in line:
+            continue  # 如果包含，跳过这一行
+            
         # 如果行不在whitelist中，添加到blacklist_lines列表
         if line.strip() not in whitelist_lines:
             blacklist_lines.append(line)
