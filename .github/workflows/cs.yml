@@ -1,9 +1,9 @@
 
-name: 测试
+name: 收集整理待测网址
 # 分支 应替换为  branches
 on:
   schedule:
-    - cron: '18 22 * * *'
+    - cron: '28 22 * * *'
   workflow_dispatch:
     branches:
       - main
@@ -32,7 +32,7 @@ jobs:
       run: pip install requests
 
     - name: Run blacklist update
-      run: python ${{ github.workspace }}/cs.py
+      run: python ${{ github.workspace }}/Collect_organize.py
 
         
     - name: Commit results
