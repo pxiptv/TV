@@ -369,3 +369,25 @@ if __name__ == "__main__":
             append_to_file('live.txt', matching_lines)
 
     print("待检测文件已生成。")
+
+    # 生成 iptv.m3u 文件 x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}"
+
+    output_text = '#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz"\n'
+
+    with open("live.txt", "r", encoding='utf-8') as file:
+        input_text = file.read()
+
+    lines = input_text.strip().split("\n")
+    group_name = ""
+    for line in lines:
+        parts = line.split(",")
+        if len(parts) == 2 and "#genre#" in line:
+            group_name = parts[0]
+        elif len(parts) == 2:
+            output_text += f"#EXTINF:-1 group-title=\"{group_name}\",{parts[0]}\n"
+            output_text += f"{parts[1]}\n"
+
+    with open("iptv.m3u", "w", encoding='utf-8') as file:
+        file.write(output_text)
+
+    print("iptv.m3u文件已生成。")
