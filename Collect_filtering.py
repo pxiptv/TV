@@ -8,6 +8,11 @@ def write_txt_file(file_path, lines):
     with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n')
 
+# 追加文件内容
+def append_to_file(filename, lines):
+    with open(filename, 'a', encoding='utf-8') as f:
+        for line in lines:
+            f.write(line)
 # 定义文件路径
 live_file_path = 'live.txt'
 iptv_file = 'iptv.txt'
