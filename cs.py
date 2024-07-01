@@ -353,15 +353,15 @@ if __name__ == "__main__":
     lines = [line.strip() for line in lines if line.strip()]
     write_txt_file('tv.txt',lines)
 
-    # 清空 live.txt 文件后读取 channel.txt 文件
-    open('live.txt', 'w').close()
+    # 清空 test.txt 文件后读取 channel.txt 文件
+    open('test.txt', 'w').close()
     channel_lines = read_txt('channel.txt')
     tv_lines = read_txt_file('tv.txt')
 
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
-            append_to_file('live.txt', [channel_line])
+            append_to_file('test.txt', [channel_line])
         else:
             channel_name = channel_line.split(",")[0].strip()
             print(f"Processing channel: {channel_name}")  # 调试信息
@@ -374,7 +374,7 @@ if __name__ == "__main__":
 
     output_text = '#EXTM3U x-tvg-url="https://raw.bgithub.xyz/Troray/IPTV/main/tvxml.xml,https://raw.bgithub.xyz/Meroser/EPG-test/main/tvxml-test.xml.gz"\n'
 
-    with open("live.txt", "r", encoding='utf-8') as file:
+    with open("test.txt", "r", encoding='utf-8') as file:
         input_text = file.read()
 
     lines = input_text.strip().split("\n")
