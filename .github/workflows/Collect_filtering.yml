@@ -28,6 +28,11 @@ jobs:
 
     - name: Run blacklist update
       run: python ${{ github.workspace }}/Collect_filtering.py
+
+    - name: 更新 EPG.xml 和 README.md
+      run: |
+        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
+        echo "iptv.m3u iptv.txt 的网址 已于 ${{ steps.date.outputs.date }} 更新，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md 
         
     - name: Commit results
       run: |
@@ -41,6 +46,15 @@ jobs:
         else
           echo "No changes detected, skipping commit."
         fi
+        git add README.md
+        
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        cp iptv.m3u history/"${current_datetime}_IPTV.m3u"
+        cp iptv.txt history/"${current_datetime}_IPTV.txt"
+        git add history/"${current_datetime}_IPTV.m3u"
+        git add history/"${current_datetime}_IPTV.txt"
+        git commit -m "Archive file with timestamp"
+        git push
       
 env:
   TZ: Asia/Shanghai
