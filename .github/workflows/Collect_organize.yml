@@ -34,19 +34,24 @@ jobs:
     - name: Run blacklist update
       run: python ${{ github.workspace }}/Collect_organize.py
 
-        
+    - name: 更新 EPG.xml 和 README.md
+      run: |
+        rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
+        echo "待检测文件 test.txt test.m3u 的网址 已于 ${{ steps.date.outputs.date }} 生成，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md 
+
     - name: Commit results
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         if [ -n "$(git status --porcelain)" ]; then
-        git add test.txt test.m3u
+        git add test.txt test.m3u online.txt others.txt
         #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u
         git commit -m "Automatic update"
         git push
         else
           echo "No changes detected, skipping commit."
         fi
+        git add README.md
        
 env:
   TZ: Asia/Shanghai
