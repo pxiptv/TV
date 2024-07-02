@@ -39,7 +39,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         if [ -n "$(git status --porcelain)" ]; then
-        git add test.txt test.m3u
+        git add test.txt test.m3u online.txt  others.txt
         #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt 
         git commit -m "Automatic update"
         git push
