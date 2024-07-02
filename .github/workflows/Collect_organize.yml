@@ -41,8 +41,8 @@ jobs:
     
     - name: Commit changes
       run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
         if [ -n "$(git status --porcelain)" ]; then
         git add test.txt test.m3u online.txt EPG.xml
