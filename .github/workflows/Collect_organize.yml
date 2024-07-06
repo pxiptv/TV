@@ -5,11 +5,8 @@ on:
   schedule:
     - cron: '28 22 * * *'
   workflow_dispatch:
-     inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'production'
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -56,17 +53,17 @@ jobs:
     
     - name: Commit changes
       run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
-        #if [ -n "$(git status --porcelain)" ]; then
+        if [ -n "$(git status --porcelain)" ]; then
         git add test.txt test.m3u online.txt EPG.xml README.md
-        #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u EPG.xml README.md
+          iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u EPG.xml README.md
         git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
         git push
-        #else
-          #echo "No changes detected, skipping commit."
-        #fi
+        else
+          echo "No changes detected, skipping commit."
+        fi
         
     - name: Push changes
       uses: ad-m/github-push-action@master
