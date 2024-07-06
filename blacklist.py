@@ -146,16 +146,38 @@ def filter_and_save_channel_names(input_file):
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
 }
-def check_url(url, timeout=18):
+def check_url(url, timeout=2):
     try:
     	if "://" in url:
             start_time = time.time()
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=timeout, stream=True) as response:
+                response = requests.get(url, timeout=timeout, stream=True)
+                # 计算响应时间
                 elapsed_time = (time.time() - start_time) * 1000
-                if response.status == 200:
-                    print(f"成功检测到频道地址：{url}, 响应时间：{elapsed_time:.2f}ms")
-                    return elapsed_time, True
+                # 如果响应状态码为200，即网站在线，则写入others.txt
+                if response.status_code == 200:
+                    print(f'检测正常: {name},{url}, 响应时间: {elapsed_time:.2f}ms')
+                return elapsed_time, True
+            except requests.exceptions.Timeout:
+                # 如果超时，打印提示信息
+                print(f'超时错误: {name},{url}')
+            except requests.exceptions.HTTPError as e:
+                # 如果HTTP请求返回了错误的状态码
+                print(f'HTTP错误: {name},{url}, 状态码: {e.response.status_code}')
+            except requests.exceptions.TooManyRedirects:
+                # 如果重定向次数过多
+                print(f'重定向错误: {name},{url}')
+            except (requests.exceptions.URLRequired, requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
+                # 如果URL是必须的但未提供，或者URL的方案无效
+                print(f'URL错误: {name},{url}')
+            except requests.exceptions.ChunkedEncodingError:
+                # 如果尝试对不支持分块编码的响应进行分块读取
+                print(f'分块编码错误: {name},{url}')
+            except requests.exceptions.ContentDecodingError:
+                # 如果解码响应内容失败
+                print(f'内容解码错误: {name},{url}')
+            except requests.exceptions.RequestException as e:
+                # 打印其他异常信息
+                print(f'其他错误: {name},{url}, Error: {e}')
                 
     except Exception as e:
         print(f"频道地址检测出现错误： {url}: {e}")
