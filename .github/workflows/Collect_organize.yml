@@ -68,5 +68,10 @@ jobs:
           #echo "No changes detected, skipping commit."
         #fi
         
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        
 env:
   TZ: Asia/Shanghai
