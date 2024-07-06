@@ -424,7 +424,7 @@ if __name__ == "__main__":
             append_to_file('live.txt', [channel_line])
         else:
             channel_name = channel_line.split(",")[0].strip()
-            print(f"Processing channel: {channel_name}")  # 调试信息
+            print(f"正在过滤自选频道: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
             append_to_file('live.txt', matching_lines)
 
