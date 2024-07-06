@@ -157,27 +157,27 @@ def check_url(url, timeout=2):
             if response.status_code == 200:
                 print(f'检测正常: {name},{url}, 响应时间: {elapsed_time:.2f}ms')
             return elapsed_time, True
-        except requests.exceptions.Timeout:
-          # 如果超时，打印提示信息
-          print(f'超时错误: {name},{url}')
-        except requests.exceptions.HTTPError as e:
-          # 如果HTTP请求返回了错误的状态码
-          print(f'HTTP错误: {name},{url}, 状态码: {e.response.status_code}')
-        except requests.exceptions.TooManyRedirects:
-          # 如果重定向次数过多
-          print(f'重定向错误: {name},{url}')
-        except (requests.exceptions.URLRequired, requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
-          # 如果URL是必须的但未提供，或者URL的方案无效
-          print(f'URL错误: {name},{url}')
-        except requests.exceptions.ChunkedEncodingError:
-          # 如果尝试对不支持分块编码的响应进行分块读取
-          print(f'分块编码错误: {name},{url}')
-        except requests.exceptions.ContentDecodingError:
-          # 如果解码响应内容失败
-          print(f'内容解码错误: {name},{url}')
-        except requests.exceptions.RequestException as e:
-          # 打印其他异常信息
-          rint(f'其他错误: {name},{url}, Error: {e}')
+            except requests.exceptions.Timeout:
+                # 如果超时，打印提示信息
+                print(f'超时错误: {name},{url}')
+            except requests.exceptions.HTTPError as e:
+                # 如果HTTP请求返回了错误的状态码
+                print(f'HTTP错误: {name},{url}, 状态码: {e.response.status_code}')
+            except requests.exceptions.TooManyRedirects:
+                # 如果重定向次数过多
+                print(f'重定向错误: {name},{url}')
+            except (requests.exceptions.URLRequired, requests.exceptions.MissingSchema, requests.exceptions.InvalidSchema):
+                # 如果URL是必须的但未提供，或者URL的方案无效
+                print(f'URL错误: {name},{url}')
+            except requests.exceptions.ChunkedEncodingError:
+                # 如果尝试对不支持分块编码的响应进行分块读取
+                print(f'分块编码错误: {name},{url}')
+            except requests.exceptions.ContentDecodingError:
+                # 如果解码响应内容失败
+                print(f'内容解码错误: {name},{url}')
+            except requests.exceptions.RequestException as e:
+                # 打印其他异常信息
+                print(f'其他错误: {name},{url}, Error: {e}')
                 
     except Exception as e:
         print(f"频道地址检测出现错误： {url}: {e}")
