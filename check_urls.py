@@ -8,9 +8,10 @@ def check_url_with_ffmpeg(url):
             ["ffmpeg", "-i", url, "-t", "2", "-f", "null", "-"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=2
+            timeout=10  # 超时时间
         )
-        if result.returncode == 0:
+        # 检查标准错误输出中的特定消息
+        if "Duration" in result.stderr.decode() or "start" in result.stderr.decode():
             return True
         else:
             return False
@@ -38,4 +39,4 @@ with open('whitelist.txt', 'w') as whitelist, open('blacklist.txt', 'w') as blac
                 print(f"{url} 无法访问，已存入 blacklist.txt")
             time.sleep(2)
 
-print("频道检测完毕 whitelist.txt  blacklist.txt 文件已生成。")
+print("频道检测完毕 whitelist.txt 和 blacklist.txt 文件已生成。")
