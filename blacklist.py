@@ -320,6 +320,7 @@ if __name__ == "__main__":
         'https://raw.githubusercontent.com/qist/tvbox/6685fc6f7bb9b0eeece374c45a1cf406c98b70f8/tvlive.txt',
         'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/596fdf93c9c69008b9aab0a04d42f51867726723/live.txt',
         'https://raw.githubusercontent.com/leyan1987/iptv/43fb1c8cca63bd6bebbeb0e8b77e229a2bfa2550/iptv.txt',
+        'https://raw.githubusercontent.com/qjlxg/iptv4/master/iptv4.m3u',
         'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
         'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
         'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
