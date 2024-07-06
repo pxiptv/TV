@@ -53,12 +53,12 @@ jobs:
         fi
         git add README.md
         
-        current_datetime=$(date +"%Y%m%d_%H%M%S")
-        cp iptv.m3u history/"${current_datetime}_IPTV.m3u"
-        cp iptv.txt history/"${current_datetime}_IPTV.txt"
-        git add history/"${current_datetime}_IPTV.m3u"
-        git add history/"${current_datetime}_IPTV.txt"
-        git commit -m "Archive file with timestamp"
+        #current_datetime=$(date +"%Y%m%d_%H%M%S")
+        #cp iptv.m3u history/"${current_datetime}_IPTV.m3u"
+        #cp iptv.txt history/"${current_datetime}_IPTV.txt"
+        #git add history/"${current_datetime}_IPTV.m3u"
+        #git add history/"${current_datetime}_IPTV.txt"
+        #git commit -m "Archive file with timestamp"
         git push
         
 env:
