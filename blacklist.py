@@ -4,6 +4,7 @@ import time
 from datetime import datetime
 import os
 import re #正则
+import requests
 from urllib.parse import urlparse
 
 
