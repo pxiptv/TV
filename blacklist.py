@@ -150,23 +150,15 @@ def check_url(url, timeout=18):
     try:
     	if "://" in url:
             start_time = time.time()
-            req = urllib.request.Request(url, headers=headers)
+            req = urllib.request.Request(url, headers=headers, stream=True)
             with urllib.request.urlopen(req, timeout=timeout) as response:
                 elapsed_time = (time.time() - start_time) * 1000
                 if response.status == 200:
-                    print(f"成功检测到IPv4地址：{url}, 响应时间：{elapsed_time:.2f}ms")
+                    print(f"成功检测到频道地址：{url}, 响应时间：{elapsed_time:.2f}ms")
                     return elapsed_time, True
-
-    	elif url.startswith("[240"):
-            start_time = time.time()
-            result = subprocess.run(["ping6", "-c", "1", "-W", str(timeout), url], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            elapsed_time = (time.time() - start_time) * 1000
-            if result.returncode == 0:
-                print(f"成功检测到IPv6地址：{url}, 响应时间：{elapsed_time:.2f}ms")
-                return elapsed_time, True
                 
     except Exception as e:
-        print(f"地址检测出现错误： {url}: {e}")
+        print(f"频道地址检测出现错误： {url}: {e}")
     return None, False
 
 # 处理单行文本并检测URL
