@@ -417,7 +417,7 @@ if __name__ == "__main__":
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
             append_to_file('live.txt', matching_lines)
 
-    print("待检测文件已生成。")
+    print("待检测文件 live.txt 已生成。")
     
     lines = read_txt_file('live.txt')
 
