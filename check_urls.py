@@ -1,27 +1,41 @@
 import subprocess
 import time
 
-def check_url(url):
+def check_url_with_ffmpeg(url):
     try:
-        # 使用ffmpeg检测URL，5秒无响应则跳过
-        result = subprocess.run(['ffmpeg', '-i', url, '-f', 'null', '-'],
-                                timeout=5, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        return result.returncode == 0
+        # 使用 ffmpeg -i 检查 URL
+        result = subprocess.run(
+            ["ffmpeg", "-i", url, "-t", "2", "-f", "null", "-"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=2
+        )
+        if result.returncode == 0:
+            return True
+        else:
+            return False
     except subprocess.TimeoutExpired:
         return False
+    except Exception as e:
+        return False
 
-def process_file(input_file, output_file):
-    with open(input_file, 'r') as f, open(output_file, 'w') as out:
-        for line in f:
-            parts = line.strip().split(',')
-            if len(parts) < 2:
-                continue
-            key, url = parts[0], parts[1]
-            if check_url(url):
-                out.write(f"{key},{url}\n")
-                print(f"检测成功: {key} -> {url}")
+# 读取 live.txt 文件
+with open('live.txt', 'r') as file:
+    lines = file.readlines()
+
+# 打开 whitelist.txt 和 blacklist.txt 文件
+with open('whitelist.txt', 'w') as whitelist, open('blacklist.txt', 'w') as blacklist:
+    for line in lines:
+        line = line.strip()
+        if "://" in line:
+            url = line.split(',')[1].strip()
+            print(f"正在检测: {url}")
+            if check_url_with_ffmpeg(url):
+                whitelist.write(line + '\n')
+                print(f"{url} 可访问，已存入 whitelist.txt")
             else:
-                print(f"检测失败: {key} -> {url}")
+                blacklist.write(line + '\n')
+                print(f"{url} 无法访问，已存入 blacklist.txt")
+            time.sleep(2)
 
-if __name__ == "__main__":
-    process_file('test.txt', 'others.txt')
+print("频道检测完毕 whitelist.txt  blacklist.txt 文件已生成。")
