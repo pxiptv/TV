@@ -32,17 +32,17 @@ jobs:
     - name: 更新 EPG.xml 和 README.md
       run: |
         rm -f EPG.xml && wget https://epg.112114.xyz/pp.xml -O EPG.xml
-        echo "检测成功的文件 iptv.m3u iptv.txt 已于 ${{ steps.date.outputs.date }} 生成，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md 
-        
-    - name: Commit results
+        echo "待检测文件 test.txt test.m3u 已于 ${{ steps.date.outputs.date }} 生成，本仓库访客数：![Visitor's Count](https://profile-counter.glitch.me/pxiptv_TV/count.svg)" > README.md      
+    
+    - name: Commit changes
       run: |
-        git config --local user.email "actions@github.com"
-        git config --local user.name "GitHub Actions"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git commit -am "${{ steps.date.outputs.date }}"
         if [ -n "$(git status --porcelain)" ]; then
         git add iptv.txt iptv.m3u blacklist.txt EPG.xml README.md
-        #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u EPG.xml README.md
-        git commit -m "Automatic update"
+          iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u EPG.xml README.md
+        git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
         git push
         else
           echo "No changes detected, skipping commit."
@@ -55,6 +55,11 @@ jobs:
         git add history/"${current_datetime}_IPTV.txt"
         git commit -m "Archive file with timestamp"
         git push
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
       
 env:
   TZ: Asia/Shanghai
