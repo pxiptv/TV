@@ -418,6 +418,9 @@ if __name__ == "__main__":
     channel_lines = read_txt('channel.txt')
     tv_lines = read_txt_file('tv.txt')
 
+    print(f"channel.txt 行数: {len(channel_lines)}")
+    print(f"tv.txt 行数: {len(tv_lines)}")
+
     # 处理 channel.txt 文件中的每一行
     for channel_line in channel_lines:
         if "#genre#" in channel_line:
@@ -426,6 +429,8 @@ if __name__ == "__main__":
             channel_name = channel_line.split(",")[0].strip()
             print(f"正在过滤自选频道: {channel_name}")  # 调试信息
             matching_lines = [tv_line for tv_line in tv_lines if tv_line.split(",")[0].strip() == channel_name]
+            if not matching_lines:
+                print(f"没有找到匹配的频道: {channel_name}")
             append_to_file('live.txt', matching_lines)
 
     print("待检测文件 live.txt 已生成。")
