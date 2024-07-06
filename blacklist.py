@@ -150,8 +150,8 @@ def check_url(url, timeout=18):
     try:
     	if "://" in url:
             start_time = time.time()
-            req = urllib.request.Request(url, headers=headers, stream=True)
-            with urllib.request.urlopen(req, timeout=timeout) as response:
+            req = urllib.request.Request(url, headers=headers)
+            with urllib.request.urlopen(req, timeout=timeout, stream=True) as response:
                 elapsed_time = (time.time() - start_time) * 1000
                 if response.status == 200:
                     print(f"成功检测到频道地址：{url}, 响应时间：{elapsed_time:.2f}ms")
