@@ -63,7 +63,7 @@ jobs:
         git add test.txt test.m3u online.txt EPG.xml README.md
         #  iptv.txt iptv.m3u blacklist.txt whitelist.txt online.txt tv.txt live.txt others.txt test.txt test.m3u EPG.xml README.md
         git commit -m ":tada:  AutoUpdate $(date +'%Y%m%d')"
-        #git push
+        git push
         #else
           #echo "No changes detected, skipping commit."
         #fi
