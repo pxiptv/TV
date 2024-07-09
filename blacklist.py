@@ -70,6 +70,12 @@ def process_part(part_str):
     part_str = part_str.replace("財經", "财经")  # 替换
     part_str = part_str.replace("凤凰-", "凤凰")  # 替换
     part_str = part_str.replace("鳳凰", "凤凰")  # 替换
+    part_str = part_str.replace("TVB", "")  # 替换
+    part_str = part_str.replace("中天亚洲台", "中天亚洲")  # 替换
+    part_str = part_str.replace("广东｜", "")  # 替换
+    part_str = part_str.replace("湖南｜", "")  # 替换
+    part_str = part_str.replace("翡翠,http", "翡翠台,http")  # 替换
+    part_str = part_str.replace("明珠,http", "明珠台,http")  # 替换
     part_str = part_str.replace("資訊", "资讯")  # 替换
     part_str = part_str.replace("紀實", "纪实")  # 替换
     part_str = part_str.replace(" HD", "")  # 剔除 HD
@@ -86,6 +92,7 @@ def process_part(part_str):
     part_str = part_str.replace("𝟡", "9")  # 替换 𝟡
     part_str = part_str.replace("移动咪咕直播", "咪咕体育")  # 替换 移动咪咕直播
     part_str = part_str.replace("咪咕直播", "咪咕体育")  # 替换 咪咕直播
+    part_str = part_str.replace("咪咕直播 ", "咪咕体育")  # 替换 咪咕直播
     part_str = part_str.replace("咪咕视频", "咪咕体育")  # 替换 咪咕视频
     part_str = part_str.replace("咪咕体育-", "咪咕体育")  # 替换 咪咕体育
     part_str = part_str.replace("咪咕体育_", "咪咕体育")  # 替换 咪咕体育
@@ -311,18 +318,13 @@ if __name__ == "__main__":
     # 定义要访问的多个URL
     urls = [
         'https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u',
-        'https://raw.githubusercontent.com/BurningC4/Chinese-IPTV/master/TV-IPV4.m3u',
         'https://raw.githubusercontent.com/suxuang/myIPTV/main/ipv6.m3u',
         'https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u',
         'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u',
-        'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/9dd572be7497b94c976e9cb62b2830770d430088/history/20240623_005422_merged_output.txt',
-        'https://raw.githubusercontent.com/alonezou/yn-iptv/17b0cc6a26f2d4ded720d9350875473e4f44a65e/reference/MyIPTV',
-        'https://raw.githubusercontent.com/qist/tvbox/6685fc6f7bb9b0eeece374c45a1cf406c98b70f8/tvlive.txt',
-        'https://raw.githubusercontent.com/PizazzGY/TVBox_warehouse/596fdf93c9c69008b9aab0a04d42f51867726723/live.txt',
-        'https://raw.githubusercontent.com/leyan1987/iptv/43fb1c8cca63bd6bebbeb0e8b77e229a2bfa2550/iptv.txt',
-        'https://raw.githubusercontent.com/qjlxg/iptv4/master/iptv4.m3u',
-        'https://raw.githubusercontent.com/joevess/IPTV/main/iptv.m3u8',
-        'https://raw.githubusercontent.com/Supprise0901/TVBox_live/main/live.txt',
+        'https://raw.githubusercontent.com/kimwang1978/collect-tv-txt/main/merged_output.txt',
+        'https://raw.githubusercontent.com/alonezou/yn-iptv/main/reference/MyIPTV',
+        'https://raw.githubusercontent.com/qist/tvbox/master/tvlive.txt',
+        'https://raw.githubusercontent.com/leyan1987/iptv/main/iptvnew.txt',
         'https://raw.githubusercontent.com/ssili126/tv/main/itvlist.txt',
         'https://raw.githubusercontent.com/fenxp/iptv/main/live/ipv6.txt',
         'https://raw.githubusercontent.com/yuanzl77/IPTV/main/live.txt',
@@ -339,8 +341,6 @@ if __name__ == "__main__":
         'https://live.fanmingming.com/tv/m3u/ipv6.m3u',
         'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
         'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
-        'https://gitee.com/happy-is-not-closed/IPTV/raw/main/IPTV.m3u',
-        'https://gitee.com/guangshanleige/iptv/raw/master/iptv.m3u',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
     ]
