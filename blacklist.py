@@ -340,6 +340,7 @@ if __name__ == "__main__":
         'https://iptv-org.github.io/iptv/countries/cn.m3u',
         'https://live.fanmingming.com/tv/m3u/ipv6.m3u',
         'https://cdn.jsdelivr.net/gh/shidahuilang/shuyuan@shuyuan/iptv.txt',
+        'https://cdn.jsdelivr.net/gh/abc1763613206/myiptv@latest/utf8/merged-simple.txt',
         'https://gitee.com/xxy002/zhiboyuan/raw/master/zby.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/wang-tvlive.txt',
         'https://gitlab.com/p2v5/wangtv/-/raw/main/lunbo.txt'
