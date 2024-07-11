@@ -13,6 +13,17 @@ def append_to_file(filename, lines):
     with open(filename, 'a', encoding='utf-8') as f:
         for line in lines:
             f.write(line)
+
+# 去重文件内容
+def remove_duplicates(filename):
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        unique_lines = set(lines)  # 使用集合去重
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.writelines(unique_lines)
+    except IOError as e:
+        print(f'无法读取或写入文件{filename}: {e}')
             
 # 定义文件路径
 test_file_path = 'test.txt'
@@ -42,6 +53,8 @@ with open(test_file_path, 'r') as test_file:
 with open(blacklist_file_path, 'a') as blacklist_file:
     blacklist_file.writelines(blacklist_lines)
 
+# 去重
+remove_duplicates('blacklist.txt')
 print("Blacklist 已更新")
 
 # 清空 iptv.txt 文件后读取 channel.txt 文件
