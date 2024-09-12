@@ -3,7 +3,7 @@ name: 收集整理待测网址
 # 分支 应替换为  branches
 on:
   schedule:
-    - cron: '28 22 * * *'
+    - cron: '28 22 1 * *'
   workflow_dispatch:
     branches:
       - main
